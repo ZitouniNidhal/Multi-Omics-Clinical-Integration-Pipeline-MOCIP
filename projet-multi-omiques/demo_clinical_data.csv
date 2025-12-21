@@ -1,0 +1,11 @@
+patient_id,age,sex,stage,survival_months,treatment_response
+P001,58.0,F,III,33,Responder
+P002,,M,IV,1,Responder
+P003,46.0,F,II,6,Non-responder
+P004,62.0,M,I,1,Responder
+P005,67.0,M,III,60,Non-responder
+P006,66.0,F,III,22,Responder
+P007,44.0,F,III,42,Responder
+P008,51.0,M,III,142,Responder
+P009,58.0,M,II,17,Non-responder
+P010,66.0,F,III,31,Non-responder

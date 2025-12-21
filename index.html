@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet Multi-Omiques - Guide de Démarrage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #64748b;
+            --accent-color: #06b6d4;
+            --success-color: #059669;
+            --warning-color: #d97706;
+            --danger-color: #dc2626;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .main-content {
+            background: var(--card-background);
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .phase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .phase-card {
+            background: var(--background-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .phase-card.completed {
+            border-left-color: var(--success-color);
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+        }
+
+        .phase-card.in-progress {
+            border-left-color: var(--warning-color);
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+        }
+
+        .phase-card.pending {
+            border-left-color: var(--secondary-color);
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .phase-number {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .phase-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-completed {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .status-in-progress {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .status-pending {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .phase-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .phase-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .phase-duration {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-start {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .quick-start h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .resource-card {
+            background: var(--background-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .resource-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .resource-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .resource-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .download-section {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+
+        .download-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .main-content {
+                padding: 2rem;
+            }
+            
+            .phase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1><i class="fas fa-dna"></i> Projet Multi-Omiques</h1>
+            <p>Pipeline d'Intégration de Données Biomédicales - Guide Complet de Démarrage</p>
+        </header>
+
+        <main class="main-content">
+            <section class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-rocket"></i>
+                    Vue d'Ensemble du Projet
+                </h2>
+                <p>Le projet vise à développer un pipeline modulaire capable d'intégrer des données multi-omiques (génomiques, transcriptomiques, protéomiques) avec des données cliniques pour l'analyse biomédicale. Le pipeline gère le nettoyage, la normalisation, l'intégration et l'export vers des standards comme FHIR.</p>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-list-ol"></i>
+                    Phases du Projet (10 semaines)
+                </h2>
+                <div class="phase-grid">
+                    <div class="phase-card completed">
+                        <div class="phase-header">
+                            <div class="phase-number">1</div>
+                            <div class="phase-status status-completed">✓ Complété</div>
+                        </div>
+                        <div class="phase-title">Phase 1: Analyse des Besoins</div>
+                        <div class="phase-description">Analyse fonctionnelle, architecture technique, setup environnement</div>
+                        <div class="phase-duration"><i class="fas fa-clock"></i> Semaine 1</div>
+                    </div>
+
+                    <div class="phase-card completed">
+                        <div class="phase-header">
+                            <div class="phase-number">2</div>
+                            <div class="phase-status status-completed">✓ Complété</div>
+                        </div>
+                        <div class="phase-title">Phase 2: Collecte des Données</div>
+                        <div class="phase-description">Recherche et téléchargement des jeux de données TCGA/GEO</div>
+                        <div class="phase-duration"><i class="fas fa-clock"></i> Semaine 1-2</div>
+                    </div>
+
+                    <div class="phase-card in-progress">
+                        <div class="phase-header">
+                            <div class="phase-number">3</div>
+                            <div class="phase-status status-in-progress">▶ En Cours</div>
+                        </div>
+                        <div class="phase-title">Phase 3: Exploration des Données</div>
+                        <div class="phase-description">Analyse exploratoire, identification des problèmes de qualité</div>
+                        <div class="phase-duration"><i class="fas fa-clock"></i> Semaine 2-3</div>
+                    </div>
+
+                    <div class="phase-card pending">
+                        <div class="phase-header">
+                            <div class="phase-number">4</div>
+                            <div class="phase-status status-pending">⏳ En Attente</div>
+                        </div>
+                        <div class="phase-title">Phase 4: Nettoyage & Prétraitement</div>
+                        <div class="phase-description">Gestion valeurs manquantes, normalisation, contrôle qualité</div>
+                        <div class="phase-duration"><i class="fas fa-clock"></i> Semaine 3-5</div>
+                    </div>
+
+                    <div class="phase-card pending">
+                        <div class="phase-header">
+                            <div class="phase-number">5</div>
+                            <div class="phase-status status-pending">⏳ En Attente</div>
+                        </div>
+                        <div class="phase-title">Phase 5: Intégration Multi-Modalités</div>
+                        <div class="phase-description">Alignement échantillons, fusion données omiques et cliniques</div>
+                        <div class="phase-duration"><i class="fas fa-clock"></i> Semaine 5-7</div>
+                    </div>
+
+                    <div class="phase-card pending">
+                        <div class="phase-header">
+                            <div class="phase-number">6</div>
+                            <div class="phase-status status-pending">⏳ En Attente</div>
+                        </div>
+                        <div class="phase-title">Phase 6: Standardisation & Export</div>
+                        <div class="phase-description">Export FHIR R4, JSON schématisé, CSV standardisé</div>
+                        <div class="phase-duration"><i class="fas fa-clock"></i> Semaine 7-8</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="quick-start">
+                    <h3><i class="fas fa-play-circle"></i> Démarrage Rapide</h3>
+                    <p>Pour initialiser la structure du projet et commencer le développement :</p>
+                    
+                    <div class="code-block">
+# 1. Créer la structure du projet
+python structure_projet.py
+
+# 2. Créer l'environnement virtuel
+python -m venv omics_env
+source omics_env/bin/activate  # Linux/Mac
+omics_env\\Scripts\\activate    # Windows
+
+# 3. Installer les dépendances
+pip install -r requirements.txt
+
+# 4. Lancer le pipeline
+python src/pipeline.py --omic-data data/raw/expression.csv --clinical-data data/raw/clinical.csv
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-tools"></i>
+                    Ressources et Documentation
+                </h2>
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="resource-title">Guide Complet</div>
+                        <div class="resource-description">Documentation détaillée de toutes les phases du projet avec exemples de code</div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-icon"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="resource-title">Planning Détaillé</div>
+                        <div class="resource-description">Calendrier sur 10 semaines avec jalons et livrables pour chaque phase</div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-icon"><i class="fas fa-code"></i></div>
+                        <div class="resource-title">Structure Projet</div>
+                        <div class="resource-description">Script Python pour générer automatiquement l'arborescence complète du projet</div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-icon"><i class="fas fa-database"></i></div>
+                        <div class="resource-title">Jeu de Données</div>
+                        <div class="resource-description">Recommandations pour TCGA-BRCA et GEO GSE96058 avec guides de téléchargement</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section">
+                <h2 class="section-title">
+                    <i class="fas fa-download"></i>
+                    Téléchargements
+                </h2>
+                <div class="download-section">
+                    <a href="guide_projet_multi_omiques.md" class="download-btn" download>
+                        <i class="fas fa-file-pdf"></i>
+                        Guide Complet (Markdown)
+                    </a>
+                    <a href="planning_detaille.md" class="download-btn" download>
+                        <i class="fas fa-calendar"></i>
+                        Planning Détaillé
+                    </a>
+                    <a href="structure_projet.py" class="download-btn" download>
+                        <i class="fas fa-code"></i>
+                        Script Structure Projet
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Projet Multi-Omiques - Pipeline d'Intégration de Données Biomédicales</p>
+            <p>Durée estimée : 10 semaines | Technologies : Python, Pandas, FHIR, JSON</p>
+        </footer>
+    </div>
+
+    <script>
+        // Animation pour les cartes de phase
+        document.addEventListener('DOMContentLoaded', function() {
+            const phaseCards = document.querySelectorAll('.phase-card');
+            
+            phaseCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.style.animation = 'fadeInUp 0.6s ease forwards';
+            });
+        });
+
+        // CSS pour l'animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
