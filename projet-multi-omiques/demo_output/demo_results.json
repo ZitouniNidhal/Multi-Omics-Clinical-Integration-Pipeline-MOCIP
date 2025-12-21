@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "export_date": "2025-11-21",
+    "n_samples": 10,
+    "n_features": 11,
+    "pipeline_version": "1.0"
+  },
+  "data": [
+    {
+      "patient_id": "P001",
+      "TP53": 0.08846487343055078,
+      "BRCA1": 0.48074831288916803,
+      "EGFR": 2.075924155244725,
+      "KRAS": -0.25811941910004405,
+      "PTEN": 1.1012425719753025,
+      "age": 58.0,
+      "sex": "F",
+      "stage": "III",
+      "survival_months": 33,
+      "treatment_response": "Responder"
+    },
+    {
+      "patient_id": "P002",
+      "TP53": -0.7934491884925131,
+      "BRCA1": 0.47766817412127205,
+      "EGFR": -0.005960862471041048,
+      "KRAS": 1.8945246195450003,
+      "PTEN": 0.47073979139183497,
+      "age": 58.0,
+      "sex": "M",
+      "stage": "IV",
+      "survival_months": 1,
+      "treatment_response": "Responder"
+    },
+    {
+      "patient_id": "P003",
+      "TP53": 0.08846487343055078,
+      "BRCA1": 1.4209467700709075,
+      "EGFR": 0.35462189418749857,
+      "KRAS": 0.25585023812129853,
+      "PTEN": 0.15173730474000746,
+      "age": 46.0,
+      "sex": "F",
+      "stage": "II",
+      "survival_months": 6,
+      "treatment_response": "Non-responder"
+    },
+    {
+      "patient_id": "P004",
+      "TP53": 1.5141661917970173,
+      "BRCA1": -1.4455812576439362,
+      "EGFR": -1.4751090573123629,
+      "KRAS": -0.6548158836709774,
+      "PTEN": -0.05433209070736465,
+      "age": 62.0,
+      "sex": "M",
+      "stage": "I",
+      "survival_months": 1,
+      "treatment_response": "Responder"
+    },
+    {
+      "patient_id": "P005",
+      "TP53": -0.9266047249746082,
+      "BRCA1": -1.1962656106594982,
+      "EGFR": -0.3972723094280974,
+      "KRAS": 0.989084775874429,
+      "PTEN": -1.3607318856586255,
+      "age": 67.0,
+      "sex": "M",
+      "stage": "III",
+      "survival_months": 60,
+      "treatment_response": "Non-responder"
+    },
+    {
+      "patient_id": "P006",
+      "TP53": -0.9265819273187055,
+      "BRCA1": -0.11125790596093292,
+      "EGFR": 0.40799271883011556,
+      "KRAS": -0.7962266025701116,
+      "PTEN": -0.5194013650025353,
+      "age": 66.0,
+      "sex": "F",
+      "stage": "III",
+      "survival_months": 22,
+      "treatment_response": "Responder"
+    },
+    {
+      "patient_id": "P007",
+      "TP53": 1.5922162527141501,
+      "BRCA1": -0.25070184855678623,
+      "EGFR": -1.1406688047502418,
+      "KRAS": 0.4506205665706803,
+      "PTEN": -0.23155763767788418,
+      "age": 44.0,
+      "sex": "F",
+      "stage": "III",
+      "survival_months": 42,
+      "treatment_response": "Responder"
+    },
+    {
+      "patient_id": "P008",
+      "TP53": 0.4645163456416141,
+      "BRCA1": 1.517335656908606,
+      "EGFR": 0.7337438910394214,
+      "KRAS": -1.4319190354946012,
+      "PTEN": 1.4556036224063744,
+      "age": 51.0,
+      "sex": "M",
+      "stage": "III",
+      "survival_months": 142,
+      "treatment_response": "Responder"
+    },
+    {
+      "patient_id": "P009",
+      "TP53": -1.253339533413632,
+      "BRCA1": -0.11125790596093292,
+      "EGFR": -0.46631506701803727,
+      "KRAS": -0.8891013759553446,
+      "PTEN": 0.662224091648394,
+      "age": 58.0,
+      "sex": "M",
+      "stage": "II",
+      "survival_months": 17,
+      "treatment_response": "Non-responder"
+    },
+    {
+      "patient_id": "P010",
+      "TP53": 0.15214683718558358,
+      "BRCA1": -0.7816343852078638,
+      "EGFR": -0.0869565583219735,
+      "KRAS": 0.4401021166796748,
+      "PTEN": -1.6755244031155025,
+      "age": 66.0,
+      "sex": "F",
+      "stage": "III",
+      "survival_months": 31,
+      "treatment_response": "Non-responder"
+    }
+  ]
+}

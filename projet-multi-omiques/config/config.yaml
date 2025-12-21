@@ -1,0 +1,62 @@
+# Configuration du pipeline multi-omiques
+
+# Paramètres généraux
+general:
+  project_name: "multi_omics_pipeline"
+  version: "1.0.0"
+  author: "Votre Nom"
+  
+# Paramètres de collecte de données
+data_collection:
+  tcga:
+    base_url: "https://api.gdc.cancer.gov"
+    data_category: "Transcriptome Profiling"
+    data_type: "Gene Expression Quantification"
+  geo:
+    base_url: "https://www.ncbi.nlm.nih.gov/geo/"
+    
+# Paramètres de préprocessing
+preprocessing:
+  missing_values:
+    strategy: "knn"
+    k: 5
+    threshold_missing: 0.5
+  
+  normalization:
+    method: "tmm"
+    log_transform: true
+    
+  quality_control:
+    min_samples_per_gene: 10
+    max_missing_rate: 0.5
+    outlier_method: "iqr"
+
+# Paramètres d'intégration
+integration:
+  sample_alignment:
+    fuzzy_matching: false
+    match_threshold: 0.9
+  
+  data_fusion:
+    method: "horizontal"
+    scale_features: true
+
+# Paramètres d'export
+export:
+  fhir:
+    version: "R4"
+    resource_types: ["Patient", "Observation", "DiagnosticReport"]
+  
+  json:
+    schema_version: "1.0"
+    include_metadata: true
+  
+  csv:
+    separator: "\t"
+    include_header: true
+
+# Paramètres de logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/pipeline.log"

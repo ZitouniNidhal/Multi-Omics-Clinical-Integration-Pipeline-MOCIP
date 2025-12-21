@@ -1,0 +1,33 @@
+2025-11-21 23:27:50,256 - MultiOmicsPipeline - INFO - Système de logging configuré
+2025-11-21 23:27:50,256 - MultiOmicsPipeline - INFO - 🚀 Démarrage du pipeline multi-omiques
+2025-11-21 23:27:50,256 - MultiOmicsPipeline - INFO - 📊 Chargement des données
+2025-11-21 23:27:50,258 - MultiOmicsPipeline - INFO - ✅ Données chargées depuis demo_expression_data.csv : (10, 6)
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - ✅ Données chargées depuis demo_clinical_data.csv : (10, 6)
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - 🔧 Prétraitement des données
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - Prétraitement des données en cours...
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - Valeurs manquantes - Omiques : 2, Cliniques : 1
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - 🔗 Intégration des données
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - Intégration des données en cours...
+2025-11-21 23:27:50,259 - MultiOmicsPipeline - INFO - 📤 Export des résultats
+2025-11-21 23:27:50,260 - MultiOmicsPipeline - INFO - ✅ Données exportées en CSV : test_results/integrated_data.csv
+2025-11-21 23:27:50,260 - MultiOmicsPipeline - INFO - ✅ Pipeline terminé avec succès
+2025-11-21 23:41:55,386 - MultiOmicsPipeline - INFO - Système de logging configuré
+2025-11-21 23:41:55,474 - MultiOmicsPipeline - INFO - 🚀 Démarrage du pipeline multi-omiques
+2025-11-21 23:41:55,474 - MultiOmicsPipeline - INFO - 📊 Chargement des données
+2025-11-21 23:41:55,563 - MultiOmicsPipeline - INFO - ✅ Données chargées depuis demo_expression_data.csv : (10, 6)
+2025-11-21 23:41:55,651 - MultiOmicsPipeline - INFO - ✅ Données chargées depuis demo_clinical_data.csv : (10, 6)
+2025-11-21 23:41:55,651 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2025-11-21 23:41:55,651 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2025-11-21 23:41:55,651 - MultiOmicsPipeline - INFO - 🔧 Prétraitement des données
+2025-11-21 23:41:55,651 - MultiOmicsPipeline - ERROR - ❌ Erreur lors de l'exécution : attempted relative import with no known parent package
+2025-11-21 23:42:54,225 - MultiOmicsPipeline - INFO - Système de logging configuré
+2025-11-21 23:42:54,225 - MultiOmicsPipeline - INFO - 🚀 Démarrage du pipeline multi-omiques
+2025-11-21 23:42:54,225 - MultiOmicsPipeline - INFO - 📊 Chargement des données
+2025-11-21 23:42:54,226 - MultiOmicsPipeline - INFO - ✅ Données chargées depuis demo_expression_data.csv : (10, 6)
+2025-11-21 23:42:54,227 - MultiOmicsPipeline - INFO - ✅ Données chargées depuis demo_clinical_data.csv : (10, 6)
+2025-11-21 23:42:54,227 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2025-11-21 23:42:54,227 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2025-11-21 23:42:54,227 - MultiOmicsPipeline - INFO - 🔧 Prétraitement des données
+2025-11-21 23:42:54,228 - MultiOmicsPipeline - ERROR - ❌ Erreur lors de l'exécution : attempted relative import with no known parent package
