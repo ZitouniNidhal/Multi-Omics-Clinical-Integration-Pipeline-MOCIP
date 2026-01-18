@@ -1,6 +1,6 @@
 # Quick Start Guide – Multi-Omics Pipeline
 
-## 🚀 Installation and Usage (5 minutes)
+## 🚀 Installation and Usage 
 
 ### 1. Download
 
@@ -224,14 +224,14 @@ python test_final.py
 
 ## 🎉 Success!
 
-You now have a **complete and functional multi-omics pipeline**:
+ **complete and functional multi-omics pipeline**:
 
 ✅ **Fast installation** (5 minutes)
 ✅ **Simple usage** (one command line)
 ✅ **Professional outputs** (standard formats)
 ✅ **Complete documentation** (guides and examples)
 
-**The project is ready for professional use!**
+
 
 ---
 
