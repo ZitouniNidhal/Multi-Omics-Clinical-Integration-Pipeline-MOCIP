@@ -1,331 +1,424 @@
-"""
-Module de collecte des données TCGA via GDC API
-"""
-import pandas as pd
-import requests
-import json
-import time
-from pathlib import Path
-from typing import Dict, List, Optional, Any
-import logging
+"""TCGA data collector using GDC API."""
 
-class TCGADataCollector:
-    """Collecte les données TCGA via GDC API"""
+import json
+import pandas as pd
+from pathlib import Path
+from typing import Dict, Any, List, Optional, Union
+from datetime import datetime
+import logging
+from .base_collector import BaseCollector
+from ..exceptions import TCGAError, DataCollectionError
+
+logger = logging.getLogger(__name__)
+
+
+class TCGLCollector(BaseCollector):
+    """Collector for TCGA data using GDC API."""
     
-    def __init__(self, project_id: str = "TCGA-BRCA"):
-        self.project_id = project_id
-        self.base_url = "https://api.gdc.cancer.gov"
-        self.session = requests.Session()
-        self.logger = logging.getLogger('TCGADataCollector')
-        
-        # Configuration du logging
-        logging.basicConfig(level=logging.INFO)
-    
-    def search_files(self, 
-                    data_category: str = "Transcriptome Profiling",
-                    data_type: str = "Gene Expression Quantification",
-                    workflow_type: str = "HTSeq - Counts") -> List[str]:
+    def __init__(self, config: Dict[str, Any]):
         """
-        Recherche les fichiers de données dans TCGA
+        Initialize TCGA collector.
         
         Args:
-            data_category: Catégorie de données (ex: "Transcriptome Profiling")
-            data_type: Type de données (ex: "Gene Expression Quantification")
-            workflow_type: Type de workflow (ex: "HTSeq - Counts")
-        
-        Returns:
-            Liste des IDs de fichiers
+            config: Configuration dictionary
         """
-        self.logger.info(f"Recherche de fichiers pour {self.project_id}")
+        super().__init__(config.get('tcga', {}), config.get('tcga', {}).get('download_dir'))
         
-        endpoint = f"{self.base_url}/files"
+        self.api_endpoint = config.get('tcga', {}).get('gdc_api_endpoint', 'https://api.gdc.cancer.gov')
+        self.projects = config.get('tcga', {}).get('projects', [])
+        self.data_types = config.get('tcga', {}).get('data_types', ['gene_expression', 'clinical'])
         
-        filters = {
-            "op": "and",
-            "content": [
-                {
-                    "op": "in",
-                    "content": {
-                        "field": "cases.project.project_id",
-                        "value": [self.project_id]
-                    }
-                },
-                {
-                    "op": "in",
-                    "content": {
-                        "field": "data_category",
-                        "value": [data_category]
-                    }
-                },
-                {
-                    "op": "in",
-                    "content": {
-                        "field": "data_type",
-                        "value": [data_type]
-                    }
-                },
-                {
-                    "op": "in",
-                    "content": {
-                        "field": "analysis.workflow_type",
-                        "value": [workflow_type]
-                    }
-                }
-            ]
-        }
+        logger.info(f"Initialized TCGA collector with endpoint: {self.api_endpoint}")
+    
+    def search(self, query: str = None, **kwargs) -> List[Dict[str, Any]]:
+        """
+        Search for TCGA datasets.
         
-        params = {
-            "filters": json.dumps(filters),
-            "fields": "file_id,file_name,cases.case_id",
-            "size": 2000,
-            "format": "JSON"
-        }
-        
+        Args:
+            query: Search query (optional)
+            **kwargs: Additional search parameters
+            
+        Returns:
+            List of matching datasets
+        """
         try:
-            response = self.session.get(endpoint, params=params)
-            response.raise_for_status()
+            # Search for projects
+            projects_url = f"{self.api_endpoint}/projects"
+            params = {
+                'size': 100,
+                'fields': 'project_id,name,primary_site,disease_type',
+                'format': 'json'
+            }
             
+            if query:
+                params['query'] = query
+            
+            response = self.safe_api_call(projects_url, params=params)
             data = response.json()
-            files = data.get('data', {}).get('hits', [])
             
-            file_info = []
-            for file in files:
-                file_info.append({
-                    'file_id': file['file_id'],
-                    'file_name': file['file_name'],
-                    'case_id': file['cases'][0]['case_id']
+            datasets = []
+            for project in data.get('data', {}).get('hits', []):
+                datasets.append({
+                    'id': project['project_id'],
+                    'name': project.get('name', ''),
+                    'primary_site': project.get('primary_site', ''),
+                    'disease_type': project.get('disease_type', ''),
+                    'source': 'TCGA'
                 })
             
-            self.logger.info(f"Trouvé {len(file_info)} fichiers")
-            return file_info
+            logger.info(f"Found {len(datasets)} TCGA projects")
+            return datasets
             
-        except requests.RequestException as e:
-            self.logger.error(f"Erreur lors de la recherche : {e}")
-            return []
+        except Exception as e:
+            logger.error(f"Failed to search TCGA datasets: {e}")
+            raise TCGAError(f"TCGA search failed: {e}")
     
-    def download_file(self, file_id: str, output_path: str) -> bool:
+    def validate_dataset(self, dataset_id: str) -> bool:
         """
-        Télécharge un fichier depuis TCGA
+        Validate if a TCGA project exists.
         
         Args:
-            file_id: ID du fichier GDC
-            output_path: Chemin de sortie
-        
+            dataset_id: TCGA project ID (e.g., TCGA-BRCA)
+            
         Returns:
-            True si succès, False sinon
+            True if project exists
         """
-        self.logger.info(f"Téléchargement du fichier {file_id}")
-        
-        endpoint = f"{self.base_url}/data/{file_id}"
-        
         try:
-            response = self.session.get(endpoint, stream=True)
-            response.raise_for_status()
+            project_url = f"{self.api_endpoint}/projects/{dataset_id}"
+            response = self.safe_api_call(project_url)
             
-            # Créer le répertoire de sortie
-            Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-            
-            # Télécharger le fichier
-            with open(output_path, 'wb') as f:
-                for chunk in response.iter_content(chunk_size=8192):
-                    f.write(chunk)
-            
-            self.logger.info(f"✅ Fichier téléchargé : {output_path}")
-            return True
-            
-        except requests.RequestException as e:
-            self.logger.error(f"❌ Erreur lors du téléchargement : {e}")
+            if response.status_code == 200:
+                logger.info(f"Validated TCGA project: {dataset_id}")
+                return True
+            else:
+                logger.warning(f"TCGA project not found: {dataset_id}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Failed to validate TCGA project {dataset_id}: {e}")
             return False
     
-    def get_clinical_data(self, case_ids: List[str]) -> pd.DataFrame:
+    def collect(self, project: str = None, data_types: List[str] = None, 
+                **kwargs) -> Dict[str, Any]:
         """
-        Récupère les données cliniques pour une liste de cas
+        Collect TCGA data for specified project and data types.
         
         Args:
-            case_ids: Liste des IDs de cas
-        
+            project: TCGA project ID (e.g., TCGA-BRCA)
+            data_types: List of data types to collect
+            **kwargs: Additional parameters
+            
         Returns:
-            DataFrame avec les données cliniques
+            Dictionary containing collected data
         """
-        self.logger.info(f"Récupération des données cliniques pour {len(case_ids)} cas")
+        if not project:
+            project = kwargs.get('project_id', self.projects[0] if self.projects else None)
         
-        endpoint = f"{self.base_url}/cases"
+        if not project:
+            raise TCGAError("No TCGA project specified")
         
-        filters = {
-            "op": "in",
-            "content": {
-                "field": "case_id",
-                "value": case_ids
-            }
+        if not data_types:
+            data_types = self.data_types
+        
+        logger.info(f"Collecting TCGA data for project: {project}, types: {data_types}")
+        
+        # Validate project
+        if not self.validate_dataset(project):
+            raise TCGAError(f"Invalid TCGA project: {project}")
+        
+        collected_data = {
+            'project_id': project,
+            'data_types': data_types,
+            'collection_timestamp': datetime.now().isoformat(),
+            'data': {}
         }
         
-        params = {
-            "filters": json.dumps(filters),
-            "fields": "case_id,demographic,diagnoses,treatments",
-            "size": len(case_ids),
-            "format": "JSON"
-        }
+        # Collect different data types
+        for data_type in data_types:
+            try:
+                logger.info(f"Collecting {data_type} data for {project}")
+                
+                if data_type == 'gene_expression':
+                    data = self._collect_gene_expression(project, **kwargs)
+                elif data_type == 'clinical':
+                    data = self._collect_clinical_data(project, **kwargs)
+                elif data_type == 'copy_number':
+                    data = self._collect_copy_number(project, **kwargs)
+                elif data_type == 'mutation':
+                    data = self._collect_mutation_data(project, **kwargs)
+                else:
+                    logger.warning(f"Unsupported data type: {data_type}")
+                    continue
+                
+                collected_data['data'][data_type] = data
+                
+            except Exception as e:
+                logger.error(f"Failed to collect {data_type} data for {project}: {e}")
+                # Continue with other data types even if one fails
+                continue
         
+        # Save metadata
+        self.save_metadata(collected_data, f"tcga_{project.lower()}")
+        
+        logger.info(f"Successfully collected TCGA data for {project}")
+        return collected_data
+    
+    def _collect_gene_expression(self, project: str, **kwargs) -> Dict[str, Any]:
+        """Collect gene expression data."""
         try:
-            response = self.session.get(endpoint, params=params)
-            response.raise_for_status()
+            # Search for gene expression files
+            files_url = f"{self.api_endpoint}/files"
+            params = {
+                'filters': json.dumps({
+                    'op': 'and',
+                    'content': [
+                        {'op': '=', 'content': {'field': 'cases.project.project_id', 'value': project}},
+                        {'op': '=', 'content': {'field': 'data_type', 'value': 'Gene Expression Quantification'}},
+                        {'op': '=', 'content': {'field': 'experimental_strategy', 'value': 'RNA-Seq'}}
+                    ]
+                }),
+                'size': 1000,
+                'fields': 'file_id,file_name,cases.case_id,cases.samples.sample_type',
+                'format': 'json'
+            }
             
+            response = self.safe_api_call(files_url, params=params)
             data = response.json()
-            cases = data.get('data', {}).get('hits', [])
             
-            clinical_data = []
-            for case in cases:
-                record = {
-                    'case_id': case['case_id']
-                }
-                
-                # Informations démographiques
-                if 'demographic' in case:
-                    demo = case['demographic']
-                    record.update({
-                        'age_at_diagnosis': demo.get('age_at_index'),
-                        'gender': demo.get('gender'),
-                        'race': demo.get('race'),
-                        'ethnicity': demo.get('ethnicity')
-                    })
-                
-                # Informations sur le diagnostic
-                if 'diagnoses' in case and case['diagnoses']:
-                    diagnosis = case['diagnoses'][0]
-                    record.update({
-                        'primary_diagnosis': diagnosis.get('primary_diagnosis'),
-                        'tumor_stage': diagnosis.get('ajcc_pathologic_stage'),
-                        'tumor_grade': diagnosis.get('ajcc_pathologic_grade'),
-                        'histological_type': diagnosis.get('histological_type')
-                    })
-                
-                clinical_data.append(record)
+            files = data.get('data', {}).get('hits', [])
+            if not files:
+                logger.warning(f"No gene expression files found for {project}")
+                return {'expression_matrix': pd.DataFrame(), 'metadata': {}}
             
-            df = pd.DataFrame(clinical_data)
-            self.logger.info(f"✅ Données cliniques récupérées : {df.shape}")
-            return df
+            # Download expression files
+            expression_data = []
+            metadata = []
             
-        except requests.RequestException as e:
-            self.logger.error(f"❌ Erreur lors de la récupération des données cliniques : {e}")
-            return pd.DataFrame()
-    
-    def download_expression_matrix(self, 
-                                 output_dir: str,
-                                 max_files: Optional[int] = None) -> pd.DataFrame:
-        """
-        Télécharge les fichiers d'expression et construit une matrice
-        
-        Args:
-            output_dir: Répertoire de sortie
-            max_files: Nombre maximum de fichiers à télécharger
-        
-        Returns:
-            DataFrame avec la matrice d'expression
-        """
-        self.logger.info("Construction de la matrice d'expression")
-        
-        # Rechercher les fichiers
-        files = self.search_files()
-        
-        if not files:
-            self.logger.warning("Aucun fichier trouvé")
-            return pd.DataFrame()
-        
-        # Limiter le nombre de fichiers si demandé
-        if max_files:
-            files = files[:max_files]
-            self.logger.info(f"Limité à {max_files} fichiers")
-        
-        # Télécharger les fichiers et construire la matrice
-        expression_data = {}
-        case_ids = []
-        
-        for i, file_info in enumerate(files):
-            file_id = file_info['file_id']
-            case_id = file_info['case_id']
-            file_name = file_info['file_name']
-            
-            self.logger.info(f"Processing file {i+1}/{len(files)}: {file_name}")
-            
-            # Télécharger le fichier
-            file_path = f"{output_dir}/raw/{file_name}"
-            if self.download_file(file_id, file_path):
+            for i, file_info in enumerate(files):
                 try:
-                    # Lire le fichier d'expression (format HTSeq counts)
-                    df = pd.read_csv(file_path, sep='\t', header=None, names=['gene_id', 'count'])
-                    df['gene_id'] = df['gene_id'].str.split('.').str[0]  # Enlever la version
+                    file_id = file_info['file_id']
+                    file_name = file_info['file_name']
+                    case_id = file_info.get('cases', [{}])[0].get('case_id', '')
+                    sample_type = file_info.get('cases', [{}])[0].get('samples', [{}])[0].get('sample_type', '')
                     
-                    # Stocker les données
-                    expression_data[case_id] = df.set_index('gene_id')['count']
-                    case_ids.append(case_id)
+                    # Download file
+                    download_url = f"{self.api_endpoint}/data/{file_id}"
+                    local_file = self.download_file(download_url, f"{case_id}_{file_name}")
                     
+                    # Process expression data (assuming HTSeq counts format)
+                    if local_file.suffix == '.gz':
+                        import gzip
+                        with gzip.open(local_file, 'rt') as f:
+                            expr_data = self._parse_htseq_counts(f)
+                    else:
+                        with open(local_file, 'r') as f:
+                            expr_data = self._parse_htseq_counts(f)
+                    
+                    # Add to collection
+                    expr_data['case_id'] = case_id
+                    expr_data['sample_type'] = sample_type
+                    expression_data.append(expr_data)
+                    
+                    metadata.append({
+                        'case_id': case_id,
+                        'file_id': file_id,
+                        'file_name': file_name,
+                        'sample_type': sample_type
+                    })
+                    
+                    if (i + 1) % 10 == 0:
+                        logger.info(f"Processed {i + 1}/{len(files)} expression files")
+                        
                 except Exception as e:
-                    self.logger.error(f"Erreur lors de la lecture de {file_name}: {e}")
+                    logger.error(f"Failed to process expression file {file_info.get('file_name', 'unknown')}: {e}")
+                    continue
             
-            # Petite pause pour éviter de surcharger l'API
-            time.sleep(0.5)
-        
-        # Construire la matrice d'expression
-        if expression_data:
-            expression_matrix = pd.DataFrame(expression_data).T
-            expression_matrix.index.name = 'case_id'
+            # Combine expression data
+            if expression_data:
+                combined_expr = pd.concat(expression_data, ignore_index=True)
+                expression_matrix = combined_expr.pivot_table(
+                    index='gene_id', columns='case_id', values='count', fill_value=0
+                )
+            else:
+                expression_matrix = pd.DataFrame()
             
-            # Sauvegarder la matrice
-            output_file = f"{output_dir}/expression_matrix.csv"
-            expression_matrix.to_csv(output_file)
-            self.logger.info(f"✅ Matrice d'expression sauvegardée : {output_file}")
+            result = {
+                'expression_matrix': expression_matrix,
+                'metadata': pd.DataFrame(metadata),
+                'processing_info': {
+                    'num_samples': len(metadata),
+                    'num_genes': len(expression_matrix),
+                    'sample_types': list(set(m['sample_type'] for m in metadata))
+                }
+            }
             
-            return expression_matrix
-        
-        return pd.DataFrame()
+            logger.info(f"Collected gene expression data: {expression_matrix.shape}")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to collect gene expression data for {project}: {e}")
+            raise TCGAError(f"Gene expression collection failed: {e}")
     
-    def download_dataset(self, 
-                        output_dir: str,
-                        max_files: Optional[int] = None,
-                        download_clinical: bool = True) -> Dict[str, pd.DataFrame]:
-        """
-        Télécharge un jeu de données complet
-        
-        Args:
-            output_dir: Répertoire de sortie
-            max_files: Nombre maximum de fichiers
-            download_clinical: Télécharger aussi les données cliniques
-        
-        Returns:
-            Dictionnaire avec les données téléchargées
-        """
-        self.logger.info(f"Téléchargement du jeu de données {self.project_id}")
-        
-        results = {}
-        
-        # Télécharger la matrice d'expression
-        expression_matrix = self.download_expression_matrix(output_dir, max_files)
-        results['expression'] = expression_matrix
-        
-        # Télécharger les données cliniques
-        if download_clinical and not expression_matrix.empty:
-            case_ids = expression_matrix.index.tolist()
-            clinical_data = self.get_clinical_data(case_ids)
+    def _collect_clinical_data(self, project: str, **kwargs) -> Dict[str, Any]:
+        """Collect clinical data."""
+        try:
+            # Search for clinical files
+            files_url = f"{self.api_endpoint}/files"
+            params = {
+                'filters': json.dumps({
+                    'op': 'and',
+                    'content': [
+                        {'op': '=', 'content': {'field': 'cases.project.project_id', 'value': project}},
+                        {'op': '=', 'content': {'field': 'data_type', 'value': 'Clinical data'}}
+                    ]
+                }),
+                'size': 100,
+                'fields': 'file_id,file_name,cases.case_id',
+                'format': 'json'
+            }
             
-            if not clinical_data.empty:
-                clinical_file = f"{output_dir}/clinical_data.csv"
-                clinical_data.to_csv(clinical_file, index=False)
-                results['clinical'] = clinical_data
-                self.logger.info(f"✅ Données cliniques sauvegardées : {clinical_file}")
+            response = self.safe_api_call(files_url, params=params)
+            data = response.json()
+            
+            files = data.get('data', {}).get('hits', [])
+            if not files:
+                logger.warning(f"No clinical files found for {project}")
+                return {'clinical_data': pd.DataFrame(), 'metadata': {}}
+            
+            # Collect clinical data
+            clinical_data = []
+            metadata = []
+            
+            for file_info in files:
+                try:
+                    file_id = file_info['file_id']
+                    file_name = file_info['file_name']
+                    case_id = file_info.get('cases', [{}])[0].get('case_id', '')
+                    
+                    # Download clinical file
+                    download_url = f"{self.api_endpoint}/data/{file_id}"
+                    local_file = self.download_file(download_url, f"{case_id}_clinical_{file_name}")
+                    
+                    # Parse clinical data (assuming JSON format)
+                    if local_file.suffix == '.json':
+                        with open(local_file, 'r') as f:
+                            clinical_json = json.load(f)
+                        
+                        # Extract relevant clinical information
+                        patient_info = self._extract_clinical_info(clinical_json, case_id)
+                        clinical_data.append(patient_info)
+                        
+                        metadata.append({
+                            'case_id': case_id,
+                            'file_id': file_id,
+                            'file_name': file_name
+                        })
+                        
+                except Exception as e:
+                    logger.error(f"Failed to process clinical file {file_info.get('file_name', 'unknown')}: {e}")
+                    continue
+            
+            # Combine clinical data
+            if clinical_data:
+                clinical_df = pd.DataFrame(clinical_data)
+            else:
+                clinical_df = pd.DataFrame()
+            
+            result = {
+                'clinical_data': clinical_df,
+                'metadata': pd.DataFrame(metadata),
+                'processing_info': {
+                    'num_patients': len(clinical_df),
+                    'clinical_variables': list(clinical_df.columns) if not clinical_df.empty else []
+                }
+            }
+            
+            logger.info(f"Collected clinical data: {clinical_df.shape}")
+            return result
+            
+        except Exception as e:
+            logger.error(f"Failed to collect clinical data for {project}: {e}")
+            raise TCGAError(f"Clinical data collection failed: {e}")
+    
+    def _collect_copy_number(self, project: str, **kwargs) -> Dict[str, Any]:
+        """Collect copy number variation data."""
+        try:
+            # Similar implementation to gene expression but for CNV data
+            logger.info(f"Collecting copy number data for {project}")
+            
+            # Placeholder implementation
+            return {
+                'copy_number_matrix': pd.DataFrame(),
+                'metadata': pd.DataFrame(),
+                'processing_info': {'num_samples': 0, 'num_regions': 0}
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to collect copy number data for {project}: {e}")
+            raise TCGAError(f"Copy number collection failed: {e}")
+    
+    def _collect_mutation_data(self, project: str, **kwargs) -> Dict[str, Any]:
+        """Collect mutation data."""
+        try:
+            # Similar implementation to gene expression but for mutation data
+            logger.info(f"Collecting mutation data for {project}")
+            
+            # Placeholder implementation
+            return {
+                'mutation_matrix': pd.DataFrame(),
+                'metadata': pd.DataFrame(),
+                'processing_info': {'num_samples': 0, 'num_genes': 0}
+            }
+            
+        except Exception as e:
+            logger.error(f"Failed to collect mutation data for {project}: {e}")
+            raise TCGAError(f"Mutation data collection failed: {e}")
+    
+    def _parse_htseq_counts(self, file_handle) -> pd.DataFrame:
+        """Parse HTSeq count file."""
+        data = []
+        for line in file_handle:
+            if line.startswith('_'):  # Skip technical features
+                continue
+                
+            parts = line.strip().split('\t')
+            if len(parts) == 2:
+                gene_id, count = parts
+                try:
+                    count = float(count)
+                    data.append({'gene_id': gene_id, 'count': count})
+                except ValueError:
+                    continue
         
-        self.logger.info("✅ Téléchargement terminé")
-        return results
-
-# Exemple d'utilisation
-if __name__ == "__main__":
-    # Initialiser le collecteur
-    collector = TCGADataCollector(project_id="TCGA-BRCA")
+        return pd.DataFrame(data)
     
-    # Télécharger un petit jeu de données pour tester
-    results = collector.download_dataset(
-        output_dir="data/raw",
-        max_files=5,  # Limiter pour le test
-        download_clinical=True
-    )
-    
-    print(f"Données téléchargées : {list(results.keys())}")
+    def _extract_clinical_info(self, clinical_json: Dict[str, Any], case_id: str) -> Dict[str, Any]:
+        """Extract relevant clinical information from JSON."""
+        clinical_info = {'case_id': case_id}
+        
+        # Extract demographic information
+        demographic = clinical_json.get('demographic', {})
+        clinical_info['age'] = demographic.get('age_at_index', None)
+        clinical_info['gender'] = demographic.get('gender', None)
+        clinical_info['race'] = demographic.get('race', None)
+        clinical_info['ethnicity'] = demographic.get('ethnicity', None)
+        
+        # Extract diagnosis information
+        diagnoses = clinical_json.get('diagnoses', [])
+        if diagnoses:
+            diagnosis = diagnoses[0]  # Use primary diagnosis
+            clinical_info['primary_diagnosis'] = diagnosis.get('primary_diagnosis', None)
+            clinical_info['tumor_stage'] = diagnosis.get('ajcc_pathologic_stage', None)
+            clinical_info['tumor_grade'] = diagnosis.get('tumor_grade', None)
+            clinical_info['vital_status'] = diagnosis.get('vital_status', None)
+            clinical_info['days_to_death'] = diagnosis.get('days_to_death', None)
+            clinical_info['days_to_last_follow_up'] = diagnosis.get('days_to_last_follow_up', None)
+        
+        # Extract exposures (risk factors)
+        exposures = clinical_json.get('exposures', [])
+        if exposures:
+            exposure = exposures[0]
+            clinical_info['smoking_status'] = exposure.get('tobacco_smoking_status', None)
+            clinical_info['alcohol_history'] = exposure.get('alcohol_history', None)
+        
+        return clinical_info
