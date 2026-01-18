@@ -557,8 +557,7 @@ class MultiOmicsDimensionalityReduction:
             logger.warning(f"Failed to calculate MOFA variance explained: {e}")
             return {}
     
-    def apply_feature_selection(self, omics_data: Dict[str, pd.DataFrame], 
-                               target: pd.Series, method: str = 'mutual_info') -> Dict[str, pd.DataFrame]:
+    def apply_feature_selection(self, omics_data: Dict[str, pd.DataFrame], target: pd.Series, method: str = 'mutual_info') -> Dict[str, pd.DataFrame]:
         """
         Apply feature selection to each omics type.
         
@@ -626,8 +625,7 @@ class MultiOmicsDimensionalityReduction:
         
         return selected_data
     
-    def get_component_interpretation(self, reduction_results: Dict[str, Any], 
-                                   n_top_features: int = 10) -> Dict[str, pd.DataFrame]:
+    def get_component_interpretation(self, reduction_results: Dict[str, Any],n_top_features: int = 10) -> Dict[str, pd.DataFrame]:
         """
         Get interpretation of components (top contributing features).
         
