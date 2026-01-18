@@ -1,0 +1,111 @@
+# Multi-omics Pipeline Configuration
+
+# General settings
+pipeline:
+  name: "Multi-omics Data Integration Pipeline"
+  version: "0.1.0"
+  output_dir: "data"
+  temp_dir: "temp"
+  random_seed: 42
+  
+# Data collection settings
+data_collection:
+  tcga:
+    enabled: true
+    gdc_api_endpoint: "https://api.gdc.cancer.gov"
+    data_types:
+      - "gene_expression"
+      - "clinical"
+      - "copy_number"
+      - "mutation"
+    projects:
+      - "TCGA-BRCA"
+      - "TCGA-LUAD"
+      - "TCGA-COAD"
+    download_dir: "data/raw/tcga"
+    
+  geo:
+    enabled: true
+    ftp_endpoint: "ftp.ncbi.nlm.nih.gov"
+    search_limit: 100
+    datasets:
+      - "GSE96058"  # Breast cancer
+      - "GSE72094"  # Lung cancer
+    download_dir: "data/raw/geo"
+    
+  arrayexpress:
+    enabled: false
+    api_endpoint: "https://www.ebi.ac.uk/arrayexpress"
+    download_dir: "data/raw/arrayexpress"
+
+# Preprocessing settings
+preprocessing:
+  missing_data:
+    strategy: "iterative"  # Options: simple, iterative, knn
+    threshold: 0.3  # Maximum percentage of missing data allowed
+    
+  normalization:
+    gene_expression:
+      method: "tpm"  # Options: tpm, fpkm, deseq2_size_factors
+      log_transform: true
+    proteomics:
+      method: "median_centering"
+    metabolomics:
+      method: "pareto_scaling"
+      
+  quality_control:
+    enable_outlier_detection: true
+    outlier_method: "isolation_forest"
+    contamination: 0.05
+    
+  gene_mapping:
+    source_id: "ensembl"
+    target_id: "entrez"
+    species: "human"
+
+# Integration settings
+integration:
+  methods:
+    - "early_integration"  # Concatenate features
+    - "late_integration"   # Combine predictions
+    - "intermediate_integration"  # Combine at feature level
+    
+  dimensionality_reduction:
+    enable: true
+    method: "multi_omics_factor_analysis"  # Options: mofa, pca, pls
+    n_components: 50
+    
+  sample_alignment:
+    method: "match_by_patient_id"
+    fuzzy_matching: true
+    tolerance: 0.8
+
+# Export settings
+export:
+  formats:
+    - "parquet"
+    - "csv"
+    - "json"
+    
+  fhir:
+    enabled: true
+    version: "R4"
+    resource_types:
+      - "Patient"
+      - "Observation"
+      - "DiagnosticReport"
+      
+  ml_ready:
+    test_size: 0.2
+    stratify_by: "cancer_type"
+    feature_selection:
+      method: "mutual_info"
+      k_best: 1000
+
+# Logging configuration
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/pipeline.log"
+  max_bytes: 10485760  # 10MB
+  backup_count: 5
