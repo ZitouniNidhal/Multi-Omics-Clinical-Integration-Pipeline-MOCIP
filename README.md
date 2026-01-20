@@ -128,11 +128,6 @@ export:
 * **`RAPPORT_FINAL.md`** : Detailed technical documentation
 * **`PLANNING_2_SEMAINES.md`** : Project timeline
 
-### Examples
-
-* **`demo_simple.py`** : Functional demonstration
-* **`notebooks/01_data_exploration.ipynb`** : Exploratory data analysis
-* **`test_final.py`** : Module tests
 
 ### Data
 
