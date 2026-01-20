@@ -1,4 +1,3 @@
-"""Gene ID mapping utilities for multi-omics data integration."""
 
 import pandas as pd
 import numpy as np
