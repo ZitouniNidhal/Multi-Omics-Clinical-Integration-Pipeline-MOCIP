@@ -72,16 +72,30 @@ class MultiOmicsPipeline:
             self.logger.info("🔗 Intégration des données")
             integrated_data = self.integrate_data(processed_data)
             
-            # 4. Export
+            # 4. Modélisation ML
+            self.logger.info("🤖 Modélisation ML")
+            target = self.config.get('general', {}).get('target_variable', 'treatment_response')
+            ml_data, model_results = self.run_model(integrated_data, target_variable=target)
+            
+            # 5. Export
             self.logger.info("📤 Export des résultats")
             output_paths = self.export_data(integrated_data, output_dir)
+            
+            # Export du dataset ML si la modélisation a réussi
+            if ml_data is not None:
+                self.logger.info("📤 Export des données ML")
+                from .export.ml_exporter import MLExporter
+                exporter = MLExporter(config=self.config.get('ml', {}))
+                ml_export_results = exporter.save_ml_dataset(ml_data, f"{output_dir}/ml_data")
+                output_paths['ml_dataset'] = ml_export_results['output_directory']
             
             self.logger.info("✅ Pipeline terminé avec succès")
             
             return {
                 'status': 'success',
                 'output_paths': output_paths,
-                'summary': self.generate_summary(integrated_data)
+                'summary': self.generate_summary(integrated_data),
+                'model_results': model_results
             }
             
         except Exception as e:
@@ -195,6 +209,50 @@ class MultiOmicsPipeline:
         self.logger.info(f"✅ Intégration terminée : {integrated.shape}")
         return integrated
     
+    def run_model(self, integrated_data, target_variable='treatment_response'):
+        """Prépare les données ML et lance une évaluation rapide du modèle"""
+        from .export.ml_exporter import MLExporter
+        
+        self.logger.info("🤖 Exécution du modèle de Machine Learning")
+        
+        # Configuration ML de base si non présente
+        ml_config = self.config.get('ml', {
+            'test_size': 0.2,
+            'random_state': 42,
+            'scaling_method': 'standard',
+            'feature_selection': {'method': 'mutual_info', 'k_best': 50}
+        })
+        
+        exporter = MLExporter(config=ml_config)
+        
+        # L'exportateur ML attend un dictionnaire avec la clé 'integrated_data'
+        data_dict = {'integrated_data': integrated_data}
+        
+        try:
+            # Vérifier si la variable cible existe
+            if target_variable not in integrated_data.columns:
+                self.logger.warning(f"⚠️ Variable cible '{target_variable}' introuvable. Modélisation ignorée.")
+                return None, {'error': f"Target variable '{target_variable}' not found"}
+                
+            # 1. Préparer les données ML
+            self.logger.info("Préparation des données pour le ML...")
+            ml_data = exporter.prepare_ml_data(data_dict, target_variable=target_variable)
+            
+            # 2. Évaluer le modèle
+            self.logger.info("Évaluation du modèle (Random Forest)...")
+            eval_results = exporter.quick_model_evaluation(ml_data, model_type='random_forest')
+            
+            if 'test_accuracy' in eval_results:
+                self.logger.info(f"✅ Modèle évalué. Précision test : {eval_results.get('test_accuracy', 0):.3f}")
+            else:
+                self.logger.warning(f"⚠️ Modèle évalué mais précision non disponible: {eval_results.get('error', 'Erreur inconnue')}")
+                
+            return ml_data, eval_results
+            
+        except Exception as e:
+            self.logger.error(f"❌ Erreur lors de l'exécution du modèle : {str(e)}")
+            return None, {'error': str(e)}
+    
     def export_data(self, integrated_data, output_dir):
         """Exporte les données dans différents formats avec les modules d'export"""
         
@@ -288,5 +346,9 @@ if __name__ == "__main__":
         print("✅ Pipeline exécuté avec succès!")
         print(f"📁 Fichiers de sortie : {result['output_paths']}")
         print(f"📈 Résumé : {result['summary']}")
+        
+        if 'model_results' in result and 'test_accuracy' in result['model_results']:
+            acc = result['model_results']['test_accuracy']
+            print(f"🤖 Précision du modèle ML : {acc:.3f}")
     else:
         print(f"❌ Erreur : {result['error']}")
