@@ -1,12 +1,9 @@
-# Configuration du pipeline multi-omiques
 
-# Paramètres généraux
 general:
   project_name: "multi_omics_pipeline"
   version: "1.0.0"
   author: "Votre Nom"
-  
-# Paramètres de collecte de données
+
 data_collection:
   tcga:
     base_url: "https://api.gdc.cancer.gov"
@@ -15,7 +12,7 @@ data_collection:
   geo:
     base_url: "https://www.ncbi.nlm.nih.gov/geo/"
     
-# Paramètres de préprocessing
+
 preprocessing:
   missing_values:
     strategy: "knn"
@@ -31,7 +28,7 @@ preprocessing:
     max_missing_rate: 0.5
     outlier_method: "iqr"
 
-# Paramètres d'intégration
+
 integration:
   sample_alignment:
     fuzzy_matching: false
@@ -41,7 +38,7 @@ integration:
     method: "horizontal"
     scale_features: true
 
-# Paramètres d'export
+
 export:
   fhir:
     version: "R4"
@@ -55,7 +52,7 @@ export:
     separator: "\t"
     include_header: true
 
-# Paramètres de logging
+
 logging:
   level: "INFO"
   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
