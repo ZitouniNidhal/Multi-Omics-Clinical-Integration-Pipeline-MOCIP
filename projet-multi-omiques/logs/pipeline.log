@@ -844,3 +844,235 @@
 2026-04-28 01:41:20,388 - JSONExporter - INFO - [OK] JSON export completed: test_results_complet_2/integrated_data.json
 2026-04-28 01:41:20,388 - MultiOmicsPipeline - INFO -  Data exported to JSON: test_results_complet_2/integrated_data.json
 2026-04-28 01:41:20,388 - MultiOmicsPipeline - INFO -  Pipeline completed successfully
+2026-04-28 01:47:01,804 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-28 01:47:01,804 - MultiOmicsPipeline - INFO -  Starting multi-omics pipeline
+2026-04-28 01:47:01,806 - MultiOmicsPipeline - INFO -  Loading data
+2026-04-28 01:47:01,808 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-04-28 01:47:01,809 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-04-28 01:47:01,809 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-28 01:47:01,809 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-28 01:47:01,809 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:47:03,052 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:47:03,052 - MultiOmicsPipeline - INFO - Missing values handling
+2026-04-28 01:47:03,052 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:47:03,052 - MissingValueHandler - INFO - Missing values before imputation: 2
+2026-04-28 01:47:03,059 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:47:03,059 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:47:03,059 - MissingValueHandler - INFO - Missing values before imputation: 1
+2026-04-28 01:47:03,063 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:47:03,063 - MultiOmicsPipeline - INFO - Omics data normalization
+2026-04-28 01:47:03,063 - preprocessing.normalization - INFO - Initialized OmicsNormalizer
+2026-04-28 01:47:03,063 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-28 01:47:03,063 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-04-28 01:47:03,063 - preprocessing.normalization - INFO - Applying standard scaling
+2026-04-28 01:47:03,065 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-04-28 01:47:03,067 - MultiOmicsPipeline - INFO - Omics missing values: 0 -> 0
+2026-04-28 01:47:03,067 - MultiOmicsPipeline - INFO - Clinical missing values: 0 -> 0
+2026-04-28 01:47:03,067 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:47:03,109 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:47:03,109 - MultiOmicsPipeline - INFO - Sample alignment
+2026-04-28 01:47:03,109 - integration.sample_alignment - INFO - Initialized SampleAlignment with method: match_by_patient_id
+2026-04-28 01:47:03,109 - integration.sample_alignment - INFO - Aligning samples across omics datasets
+2026-04-28 01:47:03,110 - integration.sample_alignment - INFO - omic: 10 samples
+2026-04-28 01:47:03,110 - integration.sample_alignment - INFO - clinical: 10 samples
+2026-04-28 01:47:03,110 - integration.sample_alignment - INFO - Matching samples by patient ID
+2026-04-28 01:47:03,111 - integration.sample_alignment - INFO - Found 10 common patient IDs
+2026-04-28 01:47:03,111 - integration.sample_alignment - INFO - Creating aligned datasets
+2026-04-28 01:47:03,112 - integration.sample_alignment - INFO - Aligned omic: 10 samples
+2026-04-28 01:47:03,112 - integration.sample_alignment - INFO - Aligned clinical: 10 samples
+2026-04-28 01:47:03,112 - integration.sample_alignment - INFO - Sample alignment complete: 10 matched samples
+2026-04-28 01:47:03,113 - MultiOmicsPipeline - INFO - Multi-modality fusion
+2026-04-28 01:47:03,113 - integration.data_fusion - INFO - Initialized MultiOmicsFusion with methods: ['horizontal']
+2026-04-28 01:47:03,113 - integration.data_fusion - INFO - Performing early integration
+2026-04-28 01:47:03,118 - integration.data_fusion - INFO - Early integration complete: 10 samples, 7 features
+2026-04-28 01:47:03,118 - MultiOmicsPipeline - INFO - Feature scaling
+2026-04-28 01:47:03,121 - MultiOmicsPipeline - INFO -  Integration complete: (10, 8)
+2026-04-28 01:47:03,121 - MultiOmicsPipeline - INFO -  ML Modeling
+2026-04-28 01:47:03,131 - MultiOmicsPipeline - INFO -  Executing Machine Learning model
+2026-04-28 01:47:03,131 - export.ml_exporter - INFO - Initialized MLExporter with test_size: 0.2
+2026-04-28 01:47:03,132 - MultiOmicsPipeline - WARNING - Target variable 'treatment_response' not found. Modeling skipped.
+2026-04-28 01:47:03,132 - MultiOmicsPipeline - INFO -  Results export
+2026-04-28 01:47:03,134 - MultiOmicsPipeline - INFO -  CSV Export
+2026-04-28 01:47:03,134 - CSVExporter - INFO - CSV export to final_results/integrated_data.csv
+2026-04-28 01:47:03,137 - CSVExporter - INFO - [OK] CSV export complete: final_results/integrated_data.csv
+2026-04-28 01:47:03,137 - MultiOmicsPipeline - INFO -  Data exported to CSV: final_results/integrated_data.csv
+2026-04-28 01:47:03,137 - MultiOmicsPipeline - INFO -  JSON Export
+2026-04-28 01:47:03,137 - JSONExporter - INFO - Export JSON vers final_results/integrated_data.json
+2026-04-28 01:47:03,140 - JSONExporter - INFO - Creating JSON schema
+2026-04-28 01:47:03,147 - JSONExporter - INFO - [OK] JSON export completed: final_results/integrated_data.json
+2026-04-28 01:47:03,147 - MultiOmicsPipeline - INFO -  Data exported to JSON: final_results/integrated_data.json
+2026-04-28 01:47:03,147 - MultiOmicsPipeline - INFO -  Pipeline completed successfully
+2026-04-28 01:47:29,375 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-28 01:47:29,375 - MultiOmicsPipeline - INFO -  Starting multi-omics pipeline
+2026-04-28 01:47:29,375 - MultiOmicsPipeline - INFO -  Loading data
+2026-04-28 01:47:29,377 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-04-28 01:47:29,377 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-04-28 01:47:29,377 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-28 01:47:29,377 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-28 01:47:29,377 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:47:30,567 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:47:30,567 - MultiOmicsPipeline - INFO - Missing values handling
+2026-04-28 01:47:30,568 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:47:30,569 - MissingValueHandler - INFO - Missing values before imputation: 2
+2026-04-28 01:47:30,573 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:47:30,573 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:47:30,573 - MissingValueHandler - INFO - Missing values before imputation: 1
+2026-04-28 01:47:30,577 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:47:30,577 - MultiOmicsPipeline - INFO - Omics data normalization
+2026-04-28 01:47:30,577 - preprocessing.normalization - INFO - Initialized OmicsNormalizer
+2026-04-28 01:47:30,577 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-28 01:47:30,578 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-04-28 01:47:30,578 - preprocessing.normalization - INFO - Applying standard scaling
+2026-04-28 01:47:30,579 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-04-28 01:47:30,580 - MultiOmicsPipeline - INFO - Omics missing values: 0 -> 0
+2026-04-28 01:47:30,580 - MultiOmicsPipeline - INFO - Clinical missing values: 0 -> 0
+2026-04-28 01:47:30,580 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:47:30,621 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:47:30,621 - MultiOmicsPipeline - INFO - Sample alignment
+2026-04-28 01:47:30,621 - integration.sample_alignment - INFO - Initialized SampleAlignment with method: match_by_patient_id
+2026-04-28 01:47:30,621 - integration.sample_alignment - INFO - Aligning samples across omics datasets
+2026-04-28 01:47:30,621 - integration.sample_alignment - INFO - omic: 10 samples
+2026-04-28 01:47:30,621 - integration.sample_alignment - INFO - clinical: 10 samples
+2026-04-28 01:47:30,622 - integration.sample_alignment - INFO - Matching samples by patient ID
+2026-04-28 01:47:30,623 - integration.sample_alignment - INFO - Found 10 common patient IDs
+2026-04-28 01:47:30,623 - integration.sample_alignment - INFO - Creating aligned datasets
+2026-04-28 01:47:30,624 - integration.sample_alignment - INFO - Aligned omic: 10 samples
+2026-04-28 01:47:30,625 - integration.sample_alignment - INFO - Aligned clinical: 10 samples
+2026-04-28 01:47:30,625 - integration.sample_alignment - INFO - Sample alignment complete: 10 matched samples
+2026-04-28 01:47:30,625 - MultiOmicsPipeline - INFO - Multi-modality fusion
+2026-04-28 01:47:30,625 - integration.data_fusion - INFO - Initialized MultiOmicsFusion with methods: ['horizontal']
+2026-04-28 01:47:30,625 - integration.data_fusion - INFO - Performing early integration
+2026-04-28 01:47:30,629 - integration.data_fusion - INFO - Early integration complete: 10 samples, 7 features
+2026-04-28 01:47:30,629 - MultiOmicsPipeline - INFO - Feature scaling
+2026-04-28 01:47:30,631 - MultiOmicsPipeline - INFO -  Integration complete: (10, 8)
+2026-04-28 01:47:30,631 - MultiOmicsPipeline - INFO -  ML Modeling
+2026-04-28 01:47:30,642 - MultiOmicsPipeline - INFO -  Executing Machine Learning model
+2026-04-28 01:47:30,642 - export.ml_exporter - INFO - Initialized MLExporter with test_size: 0.2
+2026-04-28 01:47:30,642 - MultiOmicsPipeline - WARNING - Target variable 'treatment_response' not found. Modeling skipped.
+2026-04-28 01:47:30,642 - MultiOmicsPipeline - INFO -  Results export
+2026-04-28 01:47:30,644 - MultiOmicsPipeline - INFO -  CSV Export
+2026-04-28 01:47:30,644 - CSVExporter - INFO - CSV export to final_results/integrated_data.csv
+2026-04-28 01:47:30,647 - CSVExporter - INFO - [OK] CSV export complete: final_results/integrated_data.csv
+2026-04-28 01:47:30,647 - MultiOmicsPipeline - INFO -  Data exported to CSV: final_results/integrated_data.csv
+2026-04-28 01:47:30,647 - MultiOmicsPipeline - INFO -  JSON Export
+2026-04-28 01:47:30,647 - JSONExporter - INFO - Export JSON vers final_results/integrated_data.json
+2026-04-28 01:47:30,649 - JSONExporter - INFO - Creating JSON schema
+2026-04-28 01:47:30,655 - JSONExporter - INFO - [OK] JSON export completed: final_results/integrated_data.json
+2026-04-28 01:47:30,655 - MultiOmicsPipeline - INFO -  Data exported to JSON: final_results/integrated_data.json
+2026-04-28 01:47:30,655 - MultiOmicsPipeline - INFO -  Pipeline completed successfully
+2026-04-28 01:48:48,480 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-28 01:48:48,480 - MultiOmicsPipeline - INFO -  Starting multi-omics pipeline
+2026-04-28 01:48:48,480 - MultiOmicsPipeline - INFO -  Loading data
+2026-04-28 01:48:48,483 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-04-28 01:48:48,484 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-04-28 01:48:48,484 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-28 01:48:48,484 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-28 01:48:48,484 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:48:49,677 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:48:49,677 - MultiOmicsPipeline - INFO - Missing values handling
+2026-04-28 01:48:49,678 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:48:49,678 - MissingValueHandler - INFO - Missing values before imputation: 2
+2026-04-28 01:48:49,683 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:48:49,683 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:48:49,684 - MissingValueHandler - INFO - Missing values before imputation: 1
+2026-04-28 01:48:49,687 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:48:49,687 - MultiOmicsPipeline - INFO - Omics data normalization
+2026-04-28 01:48:49,687 - preprocessing.normalization - INFO - Initialized OmicsNormalizer
+2026-04-28 01:48:49,687 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-28 01:48:49,687 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-04-28 01:48:49,687 - preprocessing.normalization - INFO - Applying standard scaling
+2026-04-28 01:48:49,689 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-04-28 01:48:49,690 - MultiOmicsPipeline - INFO - Omics missing values: 0 -> 0
+2026-04-28 01:48:49,690 - MultiOmicsPipeline - INFO - Clinical missing values: 0 -> 0
+2026-04-28 01:48:49,690 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:48:49,731 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:48:49,731 - MultiOmicsPipeline - INFO - Sample alignment
+2026-04-28 01:48:49,731 - integration.sample_alignment - INFO - Initialized SampleAlignment with method: match_by_patient_id
+2026-04-28 01:48:49,731 - integration.sample_alignment - INFO - Aligning samples across omics datasets
+2026-04-28 01:48:49,731 - integration.sample_alignment - INFO - omic: 10 samples
+2026-04-28 01:48:49,731 - integration.sample_alignment - INFO - clinical: 10 samples
+2026-04-28 01:48:49,731 - integration.sample_alignment - INFO - Matching samples by patient ID
+2026-04-28 01:48:49,732 - integration.sample_alignment - INFO - Found 10 common patient IDs
+2026-04-28 01:48:49,732 - integration.sample_alignment - INFO - Creating aligned datasets
+2026-04-28 01:48:49,733 - integration.sample_alignment - INFO - Aligned omic: 10 samples
+2026-04-28 01:48:49,734 - integration.sample_alignment - INFO - Aligned clinical: 10 samples
+2026-04-28 01:48:49,734 - integration.sample_alignment - INFO - Sample alignment complete: 10 matched samples
+2026-04-28 01:48:49,734 - MultiOmicsPipeline - INFO - Multi-modality fusion
+2026-04-28 01:48:49,734 - integration.data_fusion - INFO - Initialized MultiOmicsFusion with methods: ['horizontal']
+2026-04-28 01:48:49,734 - integration.data_fusion - INFO - Performing early integration
+2026-04-28 01:48:49,738 - integration.data_fusion - INFO - Early integration complete: 10 samples, 7 features
+2026-04-28 01:48:49,738 - MultiOmicsPipeline - INFO - Feature scaling
+2026-04-28 01:48:49,739 - MultiOmicsPipeline - INFO -  Integration complete: (10, 8)
+2026-04-28 01:48:49,740 - MultiOmicsPipeline - INFO -  ML Modeling
+2026-04-28 01:48:49,750 - MultiOmicsPipeline - INFO -  Executing Machine Learning model
+2026-04-28 01:48:49,750 - export.ml_exporter - INFO - Initialized MLExporter with test_size: 0.2
+2026-04-28 01:48:49,750 - MultiOmicsPipeline - WARNING - Target variable 'treatment_response' not found. Modeling skipped.
+2026-04-28 01:48:49,750 - MultiOmicsPipeline - INFO -  Results export
+2026-04-28 01:48:49,753 - MultiOmicsPipeline - INFO -  CSV Export
+2026-04-28 01:48:49,753 - CSVExporter - INFO - CSV export to results_final_check/integrated_data.csv
+2026-04-28 01:48:49,756 - CSVExporter - INFO - [OK] CSV export complete: results_final_check/integrated_data.csv
+2026-04-28 01:48:49,756 - MultiOmicsPipeline - INFO -  Data exported to CSV: results_final_check/integrated_data.csv
+2026-04-28 01:48:49,756 - MultiOmicsPipeline - INFO -  JSON Export
+2026-04-28 01:48:49,756 - JSONExporter - INFO - Export JSON vers results_final_check/integrated_data.json
+2026-04-28 01:48:49,758 - JSONExporter - INFO - Creating JSON schema
+2026-04-28 01:48:49,764 - JSONExporter - INFO - [OK] JSON export completed: results_final_check/integrated_data.json
+2026-04-28 01:48:49,764 - MultiOmicsPipeline - INFO -  Data exported to JSON: results_final_check/integrated_data.json
+2026-04-28 01:48:49,764 - MultiOmicsPipeline - INFO -  Pipeline completed successfully
+2026-04-28 01:49:13,893 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-28 01:49:13,893 - MultiOmicsPipeline - INFO -  Starting multi-omics pipeline
+2026-04-28 01:49:13,893 - MultiOmicsPipeline - INFO -  Loading data
+2026-04-28 01:49:13,896 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-04-28 01:49:13,897 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-04-28 01:49:13,897 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-28 01:49:13,897 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-28 01:49:13,897 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:49:15,069 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-04-28 01:49:15,069 - MultiOmicsPipeline - INFO - Missing values handling
+2026-04-28 01:49:15,069 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:49:15,072 - MissingValueHandler - INFO - Missing values before imputation: 2
+2026-04-28 01:49:15,076 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:49:15,076 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-04-28 01:49:15,077 - MissingValueHandler - INFO - Missing values before imputation: 1
+2026-04-28 01:49:15,081 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-04-28 01:49:15,081 - MultiOmicsPipeline - INFO - Omics data normalization
+2026-04-28 01:49:15,082 - preprocessing.normalization - INFO - Initialized OmicsNormalizer
+2026-04-28 01:49:15,082 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-28 01:49:15,082 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-04-28 01:49:15,082 - preprocessing.normalization - INFO - Applying standard scaling
+2026-04-28 01:49:15,084 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-04-28 01:49:15,085 - MultiOmicsPipeline - INFO - Omics missing values: 0 -> 0
+2026-04-28 01:49:15,086 - MultiOmicsPipeline - INFO - Clinical missing values: 0 -> 0
+2026-04-28 01:49:15,086 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:49:15,128 - MultiOmicsPipeline - INFO -  Data integration
+2026-04-28 01:49:15,128 - MultiOmicsPipeline - INFO - Sample alignment
+2026-04-28 01:49:15,128 - integration.sample_alignment - INFO - Initialized SampleAlignment with method: match_by_patient_id
+2026-04-28 01:49:15,128 - integration.sample_alignment - INFO - Aligning samples across omics datasets
+2026-04-28 01:49:15,128 - integration.sample_alignment - INFO - omic: 10 samples
+2026-04-28 01:49:15,128 - integration.sample_alignment - INFO - clinical: 10 samples
+2026-04-28 01:49:15,128 - integration.sample_alignment - INFO - Matching samples by patient ID
+2026-04-28 01:49:15,130 - integration.sample_alignment - INFO - Found 10 common patient IDs
+2026-04-28 01:49:15,130 - integration.sample_alignment - INFO - Creating aligned datasets
+2026-04-28 01:49:15,131 - integration.sample_alignment - INFO - Aligned omic: 10 samples
+2026-04-28 01:49:15,132 - integration.sample_alignment - INFO - Aligned clinical: 10 samples
+2026-04-28 01:49:15,132 - integration.sample_alignment - INFO - Sample alignment complete: 10 matched samples
+2026-04-28 01:49:15,132 - MultiOmicsPipeline - INFO - Multi-modality fusion
+2026-04-28 01:49:15,132 - integration.data_fusion - INFO - Initialized MultiOmicsFusion with methods: ['horizontal']
+2026-04-28 01:49:15,133 - integration.data_fusion - INFO - Performing early integration
+2026-04-28 01:49:15,136 - integration.data_fusion - INFO - Early integration complete: 10 samples, 7 features
+2026-04-28 01:49:15,136 - MultiOmicsPipeline - INFO - Feature scaling
+2026-04-28 01:49:15,139 - MultiOmicsPipeline - INFO -  Integration complete: (10, 8)
+2026-04-28 01:49:15,139 - MultiOmicsPipeline - INFO -  ML Modeling
+2026-04-28 01:49:15,149 - MultiOmicsPipeline - INFO -  Executing Machine Learning model
+2026-04-28 01:49:15,149 - export.ml_exporter - INFO - Initialized MLExporter with test_size: 0.2
+2026-04-28 01:49:15,149 - MultiOmicsPipeline - WARNING - Target variable 'treatment_response' not found. Modeling skipped.
+2026-04-28 01:49:15,149 - MultiOmicsPipeline - INFO -  Results export
+2026-04-28 01:49:15,152 - MultiOmicsPipeline - INFO -  CSV Export
+2026-04-28 01:49:15,152 - CSVExporter - INFO - CSV export to results_final_check/integrated_data.csv
+2026-04-28 01:49:15,155 - CSVExporter - INFO - [OK] CSV export complete: results_final_check/integrated_data.csv
+2026-04-28 01:49:15,155 - MultiOmicsPipeline - INFO -  Data exported to CSV: results_final_check/integrated_data.csv
+2026-04-28 01:49:15,155 - MultiOmicsPipeline - INFO -  JSON Export
+2026-04-28 01:49:15,155 - JSONExporter - INFO - Export JSON vers results_final_check/integrated_data.json
+2026-04-28 01:49:15,157 - JSONExporter - INFO - Creating JSON schema
+2026-04-28 01:49:15,163 - JSONExporter - INFO - [OK] JSON export completed: results_final_check/integrated_data.json
+2026-04-28 01:49:15,163 - MultiOmicsPipeline - INFO -  Data exported to JSON: results_final_check/integrated_data.json
+2026-04-28 01:49:15,163 - MultiOmicsPipeline - INFO -  Pipeline completed successfully

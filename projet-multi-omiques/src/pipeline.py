@@ -346,8 +346,8 @@ if __name__ == "__main__":
     
     if result['status'] == 'success':
         print(" Pipeline executed successfully!")
-        print(f"📁 Output files: {result['output_paths']}")
-        print(f"📈 Summary: {result['summary']}")
+        print(f"[*] Output files: {result['output_paths']}")
+        print(f"[*] Summary: {result['summary']}")
         
         if 'model_results' in result and 'test_accuracy' in result['model_results']:
             acc = result['model_results']['test_accuracy']

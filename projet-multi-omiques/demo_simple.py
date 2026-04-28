@@ -41,18 +41,18 @@ def create_demo_data():
 
 def simple_preprocessing(omic_data, clinical_data):
     """Simplified preprocessing"""
-    print("🔧 Data preprocessing...")
+    print("[*] Data preprocessing...")
     
     # Simple median imputation
     for col in omic_data.select_dtypes(include=[np.number]).columns:
         if omic_data[col].isnull().sum() > 0:
             median_val = omic_data[col].median()
-            omic_data[col].fillna(median_val, inplace=True)
+            omic_data[col] = omic_data[col].fillna(median_val)
     
     for col in clinical_data.select_dtypes(include=[np.number]).columns:
         if clinical_data[col].isnull().sum() > 0:
             median_val = clinical_data[col].median()
-            clinical_data[col].fillna(median_val, inplace=True)
+            clinical_data[col] = clinical_data[col].fillna(median_val)
     
     # Log2 normalization + scaling for omics data
     numeric_cols = ['TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']
@@ -65,29 +65,29 @@ def simple_preprocessing(omic_data, clinical_data):
         if std_val > 0:
             omic_data[col] = (omic_data[col] - mean_val) / std_val
     
-    print("✅ Preprocessing complete")
+    print("[OK] Preprocessing complete")
     return omic_data, clinical_data
 
 def simple_integration(omic_data, clinical_data):
     """Simplified integration"""
-    print("🔗 Data integration...")
+    print("[*] Data integration...")
     
     # Fusion on patient_id
     integrated_data = pd.merge(omic_data, clinical_data, on='patient_id', how='inner')
     
-    print(f"✅ Integration complete: {integrated_data.shape}")
+    print(f"[OK] Integration complete: {integrated_data.shape}")
     return integrated_data
 
 def simple_export(data, output_dir):
     """Simplified export"""
-    print("📤 Data export...")
+    print("[*] Data export...")
     
     Path(output_dir).mkdir(exist_ok=True)
     
     # CSV Export
     csv_path = f"{output_dir}/demo_results.csv"
     data.to_csv(csv_path, index=False)
-    print(f"✅ CSV exported: {csv_path}")
+    print(f"[OK] CSV exported: {csv_path}")
     
     # Simple JSON export
     json_path = f"{output_dir}/demo_results.json"
@@ -105,77 +105,77 @@ def simple_export(data, output_dir):
     with open(json_path, 'w') as f:
         json.dump(export_data, f, indent=2)
     
-    print(f"✅ JSON exported: {json_path}")
+    print(f"[OK] JSON exported: {json_path}")
     
     return [csv_path, json_path]
 
 def main():
     """Main demonstration function"""
     
-    print("🧬 MULTI-OMICS PIPELINE DEMONSTRATION")
+    print("MULTI-OMICS PIPELINE DEMONSTRATION")
     print("=" * 60)
     print("Simplified version for rapid delivery (2 weeks)")
     print()
     
     # Step 1: Create data
-    print("1️⃣ Creating demonstration data...")
+    print("1. Creating demonstration data...")
     omic_data, clinical_data = create_demo_data()
     
     print(f"   • Omics data: {omic_data.shape}")
-    print(f"   • Clinical data: {clinical_data.shape}")
-    print(f"   • Omics missing values: {omic_data.isnull().sum().sum()}")
-    print(f"   • Clinical missing values: {clinical_data.isnull().sum().sum()}")
+    print(f"   * Clinical data: {clinical_data.shape}")
+    print(f"   * Omics missing values: {omic_data.isnull().sum().sum()}")
+    print(f"   * Clinical missing values: {clinical_data.isnull().sum().sum()}")
     
     # Step 2: Preprocessing
-    print("\n2️⃣ Data preprocessing...")
+    print("\n2. Data preprocessing...")
     omic_clean, clinical_clean = simple_preprocessing(omic_data, clinical_data)
     
-    print(f"   • Missing values after imputation (omics): {omic_clean.isnull().sum().sum()}")
-    print(f"   • Missing values after imputation (clinical): {clinical_clean.isnull().sum().sum()}")
+    print(f"   * Missing values after imputation (omics): {omic_clean.isnull().sum().sum()}")
+    print(f"   * Missing values after imputation (clinical): {clinical_clean.isnull().sum().sum()}")
     
     # Step 3: Integration
-    print("\n3️⃣ Multi-modality integration...")
+    print("\n3. Multi-modality integration...")
     integrated_data = simple_integration(omic_clean, clinical_clean)
     
-    print(f"   • Integrated data: {integrated_data.shape}")
-    print(f"   • Completeness: {(1 - integrated_data.isnull().sum().sum() / (len(integrated_data) * len(integrated_data.columns))):.1%}")
+    print(f"   * Integrated data: {integrated_data.shape}")
+    print(f"   * Completeness: {(1 - integrated_data.isnull().sum().sum() / (len(integrated_data) * len(integrated_data.columns))):.1%}")
     
     # Step 4: Export
-    print("\n4️⃣ Results export...")
+    print("\n4. Results export...")
     output_files = simple_export(integrated_data, "demo_output")
     
     # Step 5: Validation
-    print("\n5️⃣ Results validation...")
+    print("\n5. Results validation...")
     
     print("   • Integrated data preview:")
     print(integrated_data.head(3))
     
-    print(f"\n   • Descriptive statistics:")
+    print(f"\n   * Descriptive statistics:")
     numeric_cols = integrated_data.select_dtypes(include=[np.number]).columns
     print(integrated_data[numeric_cols].describe())
     
     # Final summary
     print(f"\n" + "=" * 60)
-    print("🎉 DEMONSTRATION COMPLETED SUCCESSFULLY!")
+    print("DEMONSTRATION COMPLETED SUCCESSFULLY!")
     print("=" * 60)
     
-    print(f"\n📊 FINAL SUMMARY:")
-    print(f"   • End-to-end functional pipeline")
-    print(f"   • Cleaned and integrated data")
-    print(f"   • Export to standard formats (CSV, JSON)")
-    print(f"   • Core modules implemented and tested")
+    print(f"\nSUMMARY:")
+    print(f"   * End-to-end functional pipeline")
+    print(f"   * Cleaned and integrated data")
+    print(f"   * Export to standard formats (CSV, JSON)")
+    print(f"   * Core modules implemented and tested")
     
-    print(f"\n📁 CREATED FILES:")
+    print(f"\nCREATED FILES:")
     for file in output_files:
         if Path(file).exists():
             size = Path(file).stat().st_size
-            print(f"   • {file} ({size} bytes)")
+            print(f"   * {file} ({size} bytes)")
     
-    print(f"\n✅ THE PROJECT IS READY FOR DELIVERY!")
-    print("   • Modular architecture")
-    print("   • Complete documentation") 
-    print("   • Demonstration data included")
-    print("   • Functional tests")
+    print(f"\n[OK] THE PROJECT IS READY FOR DELIVERY!")
+    print("   * Modular architecture")
+    print("   * Complete documentation") 
+    print("   * Demonstration data included")
+    print("   * Functional tests")
     
     return True
 
