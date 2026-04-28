@@ -1,5 +1,5 @@
 """
-Module d'export vers format JSON avec schéma - Version simplifiée pour livraison rapide
+Module for exporting to JSON format with schema - Simplified version for rapid delivery
 """
 import json
 import pandas as pd
@@ -9,15 +9,15 @@ from datetime import datetime
 import logging
 
 class JSONExporter:
-    """Exporte les données vers JSON avec schéma standardisé - Version accélérée"""
+    """Exports data to JSON with standardized schema - Accelerated version Ratio"""
     
     def __init__(self, schema_version: str = '1.0'):
         self.schema_version = schema_version
         self.logger = logging.getLogger('JSONExporter')
     
     def create_schema(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Crée un schéma JSON pour les données"""
-        self.logger.info("Création du schéma JSON")
+        """Creates a JSON schema for the data"""
+        self.logger.info("Creating JSON schema")
         
         schema = {
             "schema_version": self.schema_version,
@@ -31,7 +31,7 @@ class JSONExporter:
             "columns": {}
         }
         
-        # Décrire chaque colonne
+        # Describe each column
         for col in data.columns:
             col_info = {
                 "name": col,
@@ -40,7 +40,7 @@ class JSONExporter:
                 "missing_percentage": (data[col].isnull().sum() / len(data)) * 100
             }
             
-            # Ajouter des statistiques selon le type
+            # Add statistics depending on type
             if pd.api.types.is_numeric_dtype(data[col]):
                 col_info.update({
                     "min": float(data[col].min()) if not data[col].isnull().all() else None,
@@ -63,21 +63,21 @@ class JSONExporter:
                           output_path: str,
                           include_schema: bool = True) -> bool:
         """
-        Exporte les données avec leur schéma
+        Exports the data with its schema
         
         Args:
-            data: Données à exporter
-            output_path: Chemin de sortie
-            include_schema: Inclure le schéma dans l'export
+            data: Data to export
+            output_path: Output path
+            include_schema: Include the schema in the export
         
         Returns:
-            True si succès, False sinon
+            True if success, False otherwise
         """
         self.logger.info(f"Export JSON vers {output_path}")
         
         try:
-            # Préparer les données pour la sérialisation JSON
-            # Convertir les types numpy en types Python natifs
+            # Prepare data for JSON serialization
+            # Convert numpy types to native Python types
             def convert_numpy_types(obj):
                 if isinstance(obj, np.integer):
                     return int(obj)
@@ -89,7 +89,7 @@ class JSONExporter:
                     return obj.isoformat()
                 return obj
             
-            # Convertir le DataFrame en dictionnaire
+            # Convert DataFrame to dictionary
             data_dict = {
                 "data": data.map(convert_numpy_types).to_dict('records'),
                 "metadata": {
@@ -99,106 +99,106 @@ class JSONExporter:
                 }
             }
             
-            # Ajouter le schéma si demandé
+            # Add schema if requested
             if include_schema:
                 data_dict["schema"] = self.create_schema(data)
             
-            # Sauvegarder le fichier
+            # Save the file
             with open(output_path, 'w', encoding='utf-8') as f:
                 json.dump(data_dict, f, indent=2, ensure_ascii=False, 
                          default=convert_numpy_types)
             
-            self.logger.info(f"✅ Export JSON terminé : {output_path}")
+            self.logger.info(f"✅ JSON export completed: {output_path}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors de l'export JSON : {e}")
+            self.logger.error(f"❌ Error during JSON export: {e}")
             return False
     
     def export_simple_json(self, data: pd.DataFrame, output_path: str) -> bool:
         """
-        Export simple vers JSON sans schéma
+        Simple export to JSON without schema
         
         Args:
-            data: Données à exporter
-            output_path: Chemin de sortie
+            data: Data to export
+            output_path: Output path
         
         Returns:
-            True si succès, False sinon
+            True if success, False otherwise
         """
         self.logger.info(f"Export JSON simple vers {output_path}")
         
         try:
-            # Export simple du DataFrame
+            # Simple export of the DataFrame
             data.to_json(output_path, orient='records', indent=2, force_ascii=False)
             
-            self.logger.info(f"✅ Export JSON simple terminé : {output_path}")
+            self.logger.info(f"✅ Simple JSON export completed: {output_path}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors de l'export JSON simple : {e}")
+            self.logger.error(f"❌ Error during simple JSON export: {e}")
             return False
     
     def export_split_by_samples(self, data: pd.DataFrame, 
                                output_dir: str,
                                id_column: str = 'patient_id') -> bool:
         """
-        Exporte les données avec un fichier JSON par échantillon
+        Exports data with one JSON file per sample
         
         Args:
-            data: Données à exporter
-            output_dir: Répertoire de sortie
-            id_column: Colonne contenant les IDs d'échantillon
+            data: Data to export
+            output_dir: Output directory
+            id_column: Column containing sample IDs
         
         Returns:
-            True si succès, False sinon
+            True if success, False otherwise
         """
-        self.logger.info(f"Export par échantillon vers {output_dir}")
+        self.logger.info(f"Export by sample to {output_dir}")
         
         try:
             import os
             os.makedirs(output_dir, exist_ok=True)
             
             if id_column not in data.columns:
-                self.logger.error(f"Colonne ID {id_column} non trouvée")
+                self.logger.error(f"ID column {id_column} not found")
                 return False
             
             exported_count = 0
             for idx, row in data.iterrows():
                 sample_id = str(row[id_column])
                 
-                # Préparer les données de l'échantillon
+                # Prepare sample data
                 sample_data = {
                     "sample_id": sample_id,
                     "data": row.to_dict(),
                     "export_timestamp": datetime.now().isoformat()
                 }
                 
-                # Sauvegarder
+                # Save
                 output_path = os.path.join(output_dir, f"{sample_id}.json")
                 with open(output_path, 'w', encoding='utf-8') as f:
                     json.dump(sample_data, f, indent=2, ensure_ascii=False)
                 
                 exported_count += 1
             
-            self.logger.info(f"✅ Export par échantillon terminé : {exported_count} fichiers")
+            self.logger.info(f"✅ Export by sample completed: {exported_count} files")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors de l'export par échantillon : {e}")
+            self.logger.error(f"❌ Error during export by sample: {e}")
             return False
     
     def create_api_format(self, data: pd.DataFrame, 
                          endpoint_name: str = "multi_omics_data") -> Dict[str, Any]:
         """
-        Crée un format compatible API REST
+        Creates a format compatible with REST API
         
         Args:
-            data: Données à formater
-            endpoint_name: Nom de l'endpoint API
+            data: Data to format
+            endpoint_name: API endpoint name
         
         Returns:
-            Structure API formatée
+            Formatted API structure
         """
         return {
             "api_version": "1.0",
@@ -218,23 +218,23 @@ class JSONExporter:
     
     def validate_json_schema(self, data: Dict[str, Any]) -> bool:
         """
-        Valide la structure JSON contre le schéma
+        Validates JSON structure against the schema
         
         Args:
-            data: Données JSON à valider
+            data: JSON data to validate
         
         Returns:
-            True si valide, False sinon
+            True if valid, False otherwise
         """
         required_fields = ['data', 'metadata']
         
         for field in required_fields:
             if field not in data:
-                self.logger.error(f"Champ requis manquant : {field}")
+                self.logger.error(f"Required field missing: {field}")
                 return False
         
         if not isinstance(data['data'], list):
-            self.logger.error("Le champ 'data' doit être une liste")
+            self.logger.error("Field 'data' must be a list")
             return False
         
         return True
