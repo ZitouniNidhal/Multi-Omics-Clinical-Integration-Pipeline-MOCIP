@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Pipeline principal multi-omiques
+Main multi-omics pipeline
 """
 import pandas as pd
 import yaml
@@ -9,34 +9,34 @@ import logging
 from datetime import datetime
 
 class MultiOmicsPipeline:
-    """Pipeline principal pour l'intégration de données multi-omiques"""
+    """Main pipeline for multi-omics data integration"""
     
     def __init__(self, config_path="config/config.yaml"):
-        """Initialise le pipeline avec la configuration"""
+        """Initializes the pipeline with the configuration"""
         try:
             with open(config_path, 'r') as f:
                 self.config = yaml.safe_load(f)
             
-            print(f"✅ Pipeline initialisé : {self.config['general']['project_name']}")
-            print(f"📋 Version : {self.config['general']['version']}")
+            print(f" Pipeline initialized: {self.config['general']['project_name']}")
+            print(f"📋 Version: {self.config['general']['version']}")
             
-            # Configuration du logging
+            # Logging configuration
             self.setup_logging()
             
         except FileNotFoundError:
-            print(f"❌ Erreur : Fichier de configuration '{config_path}' non trouvé")
+            print(f" Error: Configuration file '{config_path}' not found")
             raise
         except yaml.YAMLError as e:
-            print(f"❌ Erreur : Configuration YAML invalide - {e}")
+            print(f" Error: Invalid YAML configuration - {e}")
             raise
     
     def setup_logging(self):
-        """Configure le système de logging"""
+        """Configures the logging system"""
         log_config = self.config.get('logging', {})
         log_level = log_config.get('level', 'INFO')
         log_file = log_config.get('file', 'logs/pipeline.log')
         
-        # Créer le répertoire logs si nécessaire
+        # Create logs directory if necessary
         Path(log_file).parent.mkdir(exist_ok=True)
         
         logging.basicConfig(
@@ -49,47 +49,47 @@ class MultiOmicsPipeline:
         )
         
         self.logger = logging.getLogger('MultiOmicsPipeline')
-        self.logger.info("Système de logging configuré")
+        self.logger.info("Logging system configured")
     
     def run(self, omic_data_path, clinical_data_path, output_dir="results"):
-        """Exécute le pipeline complet"""
-        self.logger.info("🚀 Démarrage du pipeline multi-omiques")
+        """Executes the complete pipeline"""
+        self.logger.info(" Starting multi-omics pipeline")
         
         try:
-            # 1. Chargement des données
-            self.logger.info("📊 Chargement des données")
+            # 1. Data loading
+            self.logger.info(" Loading data")
             omic_data = self.load_data(omic_data_path)
             clinical_data = self.load_data(clinical_data_path)
             
-            self.logger.info(f"Données omiques : {omic_data.shape}")
-            self.logger.info(f"Données cliniques : {clinical_data.shape}")
+            self.logger.info(f"Omics data: {omic_data.shape}")
+            self.logger.info(f"Clinical data: {clinical_data.shape}")
             
-            # 2. Prétraitement
-            self.logger.info("🔧 Prétraitement des données")
+            # 2. Preprocessing
+            self.logger.info(" Data preprocessing")
             processed_data = self.preprocess_data(omic_data, clinical_data)
             
-            # 3. Intégration
-            self.logger.info("🔗 Intégration des données")
+            # 3. Integration
+            self.logger.info(" Data integration")
             integrated_data = self.integrate_data(processed_data)
             
-            # 4. Modélisation ML
-            self.logger.info("🤖 Modélisation ML")
+            # 4. ML Modeling
+            self.logger.info(" ML Modeling")
             target = self.config.get('general', {}).get('target_variable', 'treatment_response')
             ml_data, model_results = self.run_model(integrated_data, target_variable=target)
             
             # 5. Export
-            self.logger.info("📤 Export des résultats")
+            self.logger.info(" Results export")
             output_paths = self.export_data(integrated_data, output_dir)
             
-            # Export du dataset ML si la modélisation a réussi
+            # Export ML dataset if modeling succeeded
             if ml_data is not None:
-                self.logger.info("📤 Export des données ML")
-                from .export.ml_exporter import MLExporter
+                self.logger.info(" ML data export")
+                from export.ml_exporter import MLExporter
                 exporter = MLExporter(config=self.config.get('ml', {}))
                 ml_export_results = exporter.save_ml_dataset(ml_data, f"{output_dir}/ml_data")
                 output_paths['ml_dataset'] = ml_export_results['output_directory']
             
-            self.logger.info("✅ Pipeline terminé avec succès")
+            self.logger.info(" Pipeline completed successfully")
             
             return {
                 'status': 'success',
@@ -99,33 +99,33 @@ class MultiOmicsPipeline:
             }
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors de l'exécution : {str(e)}")
+            self.logger.error(f" Error during execution: {str(e)}")
             return {
                 'status': 'error',
                 'error': str(e)
             }
     
     def load_data(self, data_path):
-        """Charge les données depuis un fichier CSV"""
+        """Loads data from a CSV file"""
         try:
             data = pd.read_csv(data_path)
-            self.logger.info(f"✅ Données chargées depuis {data_path} : {data.shape}")
+            self.logger.info(f" Data loaded from {data_path}: {data.shape}")
             return data
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors du chargement de {data_path} : {str(e)}")
+            self.logger.error(f" Error loading {data_path}: {str(e)}")
             raise
     
     def preprocess_data(self, omic_data, clinical_data):
-        """Prétraite les données avec les modules de préprocessing"""
+        """Preprocesses data using preprocessing modules"""
         
-        # Importer les modules de préprocessing
-        from .preprocessing.missing_values import MissingValueHandler
-        from .preprocessing.normalization import OmicsNormalizer
+        # Import preprocessing modules
+        from preprocessing.missing_values import MissingValueHandler
+        from preprocessing.normalization import DataNormalizer
         
-        self.logger.info("🔧 Prétraitement des données")
+        self.logger.info(" Data preprocessing")
         
-        # Gérer les valeurs manquantes
-        self.logger.info("Gestion des valeurs manquantes")
+        # Handle missing values
+        self.logger.info("Missing values handling")
         missing_handler = MissingValueHandler(
             strategy=self.config['preprocessing']['missing_values']['strategy'],
             k=self.config['preprocessing']['missing_values'].get('k', 5)
@@ -134,15 +134,17 @@ class MultiOmicsPipeline:
         omic_clean = missing_handler.fit_transform(omic_data)
         clinical_clean = missing_handler.fit_transform(clinical_data)
         
-        # Normaliser les données omiques
-        self.logger.info("Normalisation des données omiques")
-        normalizer = OmicsNormalizer(
+        # Normalize omics data
+        self.logger.info("Omics data normalization")
+        normalizer = DataNormalizer(config=self.config)
+        
+        omic_normalized = normalizer.fit_transform(
+            omic_clean,
+            data_type='gene_expression',
             method=self.config['preprocessing']['normalization']['method']
         )
         
-        omic_normalized = normalizer.normalize(omic_clean)
-        
-        # Statistiques de préprocessing
+        # Preprocessing statistics
         preprocessing_info = {
             'omic_missing_values_before': omic_data.isnull().sum().sum(),
             'omic_missing_values_after': omic_clean.isnull().sum().sum(),
@@ -151,8 +153,8 @@ class MultiOmicsPipeline:
             'normalization_method': self.config['preprocessing']['normalization']['method']
         }
         
-        self.logger.info(f"Valeurs manquantes omiques : {preprocessing_info['omic_missing_values_before']} → {preprocessing_info['omic_missing_values_after']}")
-        self.logger.info(f"Valeurs manquantes cliniques : {preprocessing_info['clinical_missing_values_before']} → {preprocessing_info['clinical_missing_values_after']}")
+        self.logger.info(f"Omics missing values: {preprocessing_info['omic_missing_values_before']} → {preprocessing_info['omic_missing_values_after']}")
+        self.logger.info(f"Clinical missing values: {preprocessing_info['clinical_missing_values_before']} → {preprocessing_info['clinical_missing_values_after']}")
         
         return {
             'omic': omic_normalized,
@@ -161,19 +163,19 @@ class MultiOmicsPipeline:
         }
     
     def integrate_data(self, processed_data):
-        """Intègre les données multi-modalités avec les modules d'intégration"""
+        """Integrates multi-modality data using integration modules"""
         
-        # Importer les modules d'intégration
-        from .integration.sample_alignment import SampleAlignment
-        from .integration.data_fusion import MultiOmicsFusion
+        # Import integration modules
+        from integration.sample_alignment import SampleAlignment
+        from integration.data_fusion import MultiOmicsFusion
         
-        self.logger.info("🔗 Intégration des données")
+        self.logger.info(" Data integration")
         
         omic_data = processed_data['omic']
         clinical_data = processed_data['clinical']
         
-        # Aligner les échantillons
-        self.logger.info("Alignement des échantillons")
+        # Align samples
+        self.logger.info("Sample alignment")
         aligner = SampleAlignment(
             fuzzy_matching=self.config['integration']['sample_alignment'].get('fuzzy_matching', False)
         )
@@ -183,39 +185,39 @@ class MultiOmicsPipeline:
             {'omic': 'patient_id', 'clinical': 'patient_id'}
         )
         
-        # Validation de l'alignement
+        # Alignment validation
         validation_report = aligner.validate_alignment(
             {'omic': omic_data, 'clinical': clinical_data}, 
             aligned_data
         )
         
         if not validation_report['alignment_successful']:
-            self.logger.error("❌ Échec de l'alignement des échantillons")
-            raise ValueError("Impossible d'aligner les échantillons")
+            self.logger.error(" Sample alignment failed")
+            raise ValueError("Could not align samples")
         
-        # Fusionner les données
-        self.logger.info("Fusion multi-modalités")
+        # Fuse data
+        self.logger.info("Multi-modality fusion")
         fusion = MultiOmicsFusion(
             fusion_method=self.config['integration']['data_fusion']['method']
         )
         
         integrated = fusion.horizontal_fusion(aligned_data, sample_key='patient_id')
         
-        # Scaling optionnel des features
+        # Optional feature scaling
         if self.config['integration']['data_fusion'].get('scale_features', False):
-            self.logger.info("Scaling des features")
+            self.logger.info("Feature scaling")
             integrated = fusion.scale_features(integrated, method='standard')
         
-        self.logger.info(f"✅ Intégration terminée : {integrated.shape}")
+        self.logger.info(f" Integration complete: {integrated.shape}")
         return integrated
     
     def run_model(self, integrated_data, target_variable='treatment_response'):
-        """Prépare les données ML et lance une évaluation rapide du modèle"""
-        from .export.ml_exporter import MLExporter
+        """Prepares ML data and launches a quick model evaluation"""
+        from export.ml_exporter import MLExporter
         
-        self.logger.info("🤖 Exécution du modèle de Machine Learning")
+        self.logger.info(" Executing Machine Learning model")
         
-        # Configuration ML de base si non présente
+        # Basic ML configuration if not present
         ml_config = self.config.get('ml', {
             'test_size': 0.2,
             'random_state': 42,
@@ -225,47 +227,47 @@ class MultiOmicsPipeline:
         
         exporter = MLExporter(config=ml_config)
         
-        # L'exportateur ML attend un dictionnaire avec la clé 'integrated_data'
+        # ML exporter expects a dictionary with 'integrated_data' key
         data_dict = {'integrated_data': integrated_data}
         
         try:
-            # Vérifier si la variable cible existe
+            # Check if target variable exists
             if target_variable not in integrated_data.columns:
-                self.logger.warning(f"⚠️ Variable cible '{target_variable}' introuvable. Modélisation ignorée.")
+                self.logger.warning(f"⚠️ Target variable '{target_variable}' not found. Modeling skipped.")
                 return None, {'error': f"Target variable '{target_variable}' not found"}
                 
-            # 1. Préparer les données ML
-            self.logger.info("Préparation des données pour le ML...")
+            # 1. Prepare ML data
+            self.logger.info("Preparing data for ML...")
             ml_data = exporter.prepare_ml_data(data_dict, target_variable=target_variable)
             
-            # 2. Évaluer le modèle
-            self.logger.info("Évaluation du modèle (Random Forest)...")
+            # 2. Evaluate model
+            self.logger.info("Evaluating model (Random Forest)...")
             eval_results = exporter.quick_model_evaluation(ml_data, model_type='random_forest')
             
             if 'test_accuracy' in eval_results:
-                self.logger.info(f"✅ Modèle évalué. Précision test : {eval_results.get('test_accuracy', 0):.3f}")
+                self.logger.info(f" Model evaluated. Test accuracy: {eval_results.get('test_accuracy', 0):.3f}")
             else:
-                self.logger.warning(f"⚠️ Modèle évalué mais précision non disponible: {eval_results.get('error', 'Erreur inconnue')}")
+                self.logger.warning(f"⚠️ Model evaluated but accuracy not available: {eval_results.get('error', 'Unknown error')}")
                 
             return ml_data, eval_results
             
         except Exception as e:
-            self.logger.error(f"❌ Erreur lors de l'exécution du modèle : {str(e)}")
+            self.logger.error(f" Error during model execution: {str(e)}")
             return None, {'error': str(e)}
     
     def export_data(self, integrated_data, output_dir):
-        """Exporte les données dans différents formats avec les modules d'export"""
+        """Exports data in different formats using export modules"""
         
-        # Importer les modules d'export
-        from .standardization.json_export import JSONExporter
-        from .standardization.csv_export import CSVExporter
+        # Import export modules
+        from standardization.json_export import JSONExporter
+        from standardization.csv_export import CSVExporter
         
         Path(output_dir).mkdir(exist_ok=True)
         
         output_paths = {}
         
-        # Export CSV standardisé
-        self.logger.info("📤 Export CSV")
+        # Standardized CSV export
+        self.logger.info(" CSV Export")
         csv_exporter = CSVExporter(
             separator=self.config['export']['csv'].get('separator', '\t'),
             include_header=self.config['export']['csv'].get('include_header', True)
@@ -285,10 +287,10 @@ class MultiOmicsPipeline:
         
         if csv_success:
             output_paths['csv'] = csv_path
-            self.logger.info(f"✅ Données exportées en CSV : {csv_path}")
+            self.logger.info(f" Data exported to CSV: {csv_path}")
         
-        # Export JSON avec schéma
-        self.logger.info("📤 Export JSON")
+        # JSON export with schema
+        self.logger.info(" JSON Export")
         json_exporter = JSONExporter(
             schema_version=self.config['export']['json']['schema_version']
         )
@@ -302,18 +304,18 @@ class MultiOmicsPipeline:
         
         if json_success:
             output_paths['json'] = json_path
-            self.logger.info(f"✅ Données exportées en JSON : {json_path}")
+            self.logger.info(f" Data exported to JSON: {json_path}")
         
-        # FHIR OPTIONNEL (si temps disponible)
+        # OPTIONAL FHIR (if time permits)
         if 'fhir' in self.config['export'] and self.config['export']['fhir'].get('enabled', False):
-            self.logger.info("📤 Export FHIR (optionnel)")
-            # TODO: Implémenter FHIR export si temps disponible
+            self.logger.info(" FHIR Export (optional)")
+            # TODO: Implement FHIR export if time available
             pass
         
         return output_paths
     
     def generate_summary(self, data):
-        """Génère un résumé des données traitées"""
+        """Generates a summary of the processed data"""
         return {
             'n_samples': len(data),
             'n_features': len(data.columns),
@@ -325,30 +327,30 @@ class MultiOmicsPipeline:
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description="Pipeline Multi-Omiques")
-    parser.add_argument("--config", default="config/config.yaml", help="Chemin du fichier de configuration")
-    parser.add_argument("--omic-data", required=True, help="Chemin des données omiques")
-    parser.add_argument("--clinical-data", required=True, help="Chemin des données cliniques")
-    parser.add_argument("--output-dir", default="results", help="Répertoire de sortie")
+    parser = argparse.ArgumentParser(description="Multi-Omics Pipeline")
+    parser.add_argument("--config", default="config/config.yaml", help="Path to configuration file")
+    parser.add_argument("--omic-data", required=True, help="Path to omics data")
+    parser.add_argument("--clinical-data", required=True, help="Path to clinical data")
+    parser.add_argument("--output-dir", default="results", help="Output directory")
     
     args = parser.parse_args()
     
-    print(f"🧬 Pipeline Multi-Omiques - Version 1.0")
+    print(f"🧬 Multi-Omics Pipeline - Version 1.0")
     print("=" * 50)
     
     pipeline = MultiOmicsPipeline(args.config)
     result = pipeline.run(args.omic_data, args.clinical_data, args.output_dir)
     
-    print("\\n" + "=" * 50)
-    print("📊 Résultats du pipeline :")
+    print("\n" + "=" * 50)
+    print(" Pipeline results:")
     
     if result['status'] == 'success':
-        print("✅ Pipeline exécuté avec succès!")
-        print(f"📁 Fichiers de sortie : {result['output_paths']}")
-        print(f"📈 Résumé : {result['summary']}")
+        print(" Pipeline executed successfully!")
+        print(f"📁 Output files: {result['output_paths']}")
+        print(f"📈 Summary: {result['summary']}")
         
         if 'model_results' in result and 'test_accuracy' in result['model_results']:
             acc = result['model_results']['test_accuracy']
-            print(f"🤖 Précision du modèle ML : {acc:.3f}")
+            print(f" ML model accuracy: {acc:.3f}")
     else:
-        print(f"❌ Erreur : {result['error']}")
+        print(f" Error: {result['error']}")

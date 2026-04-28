@@ -2,7 +2,7 @@
 general:
   project_name: "multi_omics_pipeline"
   version: "1.0.0"
-  author: "Votre Nom"
+  author: "Your Name"
 
 data_collection:
   tcga:
@@ -20,7 +20,7 @@ preprocessing:
     threshold_missing: 0.5
   
   normalization:
-    method: "tmm"
+    method: "standard"
     log_transform: true
     
   quality_control:

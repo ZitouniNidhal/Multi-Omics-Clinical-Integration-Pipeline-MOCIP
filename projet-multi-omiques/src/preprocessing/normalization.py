@@ -5,7 +5,7 @@ import numpy as np
 from typing import Dict, Any, List, Optional, Union
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, PowerTransformer
 import logging
-from ..exceptions import PreprocessingError
+from exceptions import PreprocessingError
 
 logger = logging.getLogger(__name__)
 

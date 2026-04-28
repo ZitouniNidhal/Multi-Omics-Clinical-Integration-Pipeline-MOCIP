@@ -7,7 +7,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 import logging
-from ..exceptions import IntegrationError
+from exceptions import IntegrationError
 
 logger = logging.getLogger(__name__)
 

@@ -8,7 +8,7 @@ from sklearn.impute import IterativeImputer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 import logging
-from ..exceptions import PreprocessingError, MissingDataError
+from exceptions import PreprocessingError, MissingDataError
 
 logger = logging.getLogger(__name__)
 

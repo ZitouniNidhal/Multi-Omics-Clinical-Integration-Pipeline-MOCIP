@@ -6,7 +6,7 @@ from typing import Dict, Any, List, Optional, Union, Tuple
 from difflib import SequenceMatcher
 import re
 import logging
-from ..exceptions import IntegrationError, SampleAlignmentError
+from exceptions import IntegrationError, SampleAlignmentError
 
 logger = logging.getLogger(__name__)
 

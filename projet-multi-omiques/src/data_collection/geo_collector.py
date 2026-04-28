@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional, Union
 from datetime import datetime
 from .base_collector import BaseCollector
-from ..exceptions import GEOError, DataCollectionError
+from exceptions import GEOError, DataCollectionError
 
 logger = logging.getLogger(__name__)
 

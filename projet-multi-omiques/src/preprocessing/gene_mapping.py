@@ -7,7 +7,7 @@ import requests
 import json
 from pathlib import Path
 import pickle
-from ..exceptions import PreprocessingError
+from exceptions import PreprocessingError
 
 logger = logging.getLogger(__name__)
 

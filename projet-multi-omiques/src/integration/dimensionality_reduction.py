@@ -8,7 +8,7 @@ from sklearn.cross_decomposition import PLSRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.feature_selection import SelectKBest, f_classif, mutual_info_classif
 import logging
-from ..exceptions import IntegrationError
+from exceptions import IntegrationError
 
 logger = logging.getLogger(__name__)
 

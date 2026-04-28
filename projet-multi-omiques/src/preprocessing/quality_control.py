@@ -10,7 +10,7 @@ from sklearn.metrics import pairwise_distances
 from scipy import stats
 from scipy.spatial.distance import pdist, squareform
 import logging
-from ..exceptions import QualityControlError
+from exceptions import QualityControlError
 
 logger = logging.getLogger(__name__)
 

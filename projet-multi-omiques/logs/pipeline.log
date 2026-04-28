@@ -31,3 +31,129 @@
 2025-11-21 23:42:54,227 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
 2025-11-21 23:42:54,227 - MultiOmicsPipeline - INFO - 🔧 Prétraitement des données
 2025-11-21 23:42:54,228 - MultiOmicsPipeline - ERROR - ❌ Erreur lors de l'exécution : attempted relative import with no known parent package
+2026-04-27 02:39:02,783 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-27 02:39:03,294 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-27 02:39:03,294 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-27 02:40:09,171 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-27 02:40:09,239 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-27 02:40:09,240 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-27 02:41:59,212 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-27 02:41:59,287 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-27 02:41:59,287 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-27 02:42:55,077 - MultiOmicsPipeline - INFO - Logging system configured
+2026-04-27 02:42:55,090 - MultiOmicsPipeline - INFO - 🚀 Starting the multi-omics pipeline
+2026-04-27 02:42:55,090 - MultiOmicsPipeline - INFO - 📊 Loading data
+2026-04-27 02:42:55,104 - MultiOmicsPipeline - INFO - ✅ Data loaded from demo_expression_data.csv: (10, 6)
+2026-04-27 02:42:55,113 - MultiOmicsPipeline - INFO - ✅ Data loaded from demo_clinical_data.csv: (10, 6)
+2026-04-27 02:42:55,124 - MultiOmicsPipeline - INFO - Omics data: (10, 6)
+2026-04-27 02:42:55,128 - MultiOmicsPipeline - INFO - Clinical data: (10, 6)
+2026-04-27 02:42:55,138 - MultiOmicsPipeline - INFO - 🔧 Preprocessing data
+2026-04-27 02:43:11,394 - MultiOmicsPipeline - ERROR - ❌ Error during execution: attempted relative import beyond top-level package
+2026-04-27 02:58:22,242 - MultiOmicsPipeline - INFO - Système de logging configuré
+2026-04-27 02:58:22,800 - MultiOmicsPipeline - INFO -  Démarrage du pipeline multi-omiques
+2026-04-27 02:58:22,904 - MultiOmicsPipeline - INFO -  Chargement des données
+2026-04-27 02:58:23,376 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_expression_data.csv : (10, 6)
+2026-04-27 02:58:23,662 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_clinical_data.csv : (10, 6)
+2026-04-27 02:58:23,760 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2026-04-27 02:58:23,839 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2026-04-27 02:58:23,926 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:00:09,197 - MultiOmicsPipeline - ERROR -  Erreur lors de l'exécution : cannot import name 'OmicsNormalizer' from 'preprocessing.normalization' (C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\preprocessing\normalization.py)
+2026-04-27 03:07:14,612 - MultiOmicsPipeline - INFO - Système de logging configuré
+2026-04-27 03:07:14,614 - MultiOmicsPipeline - INFO -  Démarrage du pipeline multi-omiques
+2026-04-27 03:07:14,614 - MultiOmicsPipeline - INFO -  Chargement des données
+2026-04-27 03:07:14,622 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_expression_data.csv : (10, 6)
+2026-04-27 03:07:14,630 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_clinical_data.csv : (10, 6)
+2026-04-27 03:07:14,632 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2026-04-27 03:07:14,634 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2026-04-27 03:07:14,648 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:07:31,405 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:07:31,413 - MultiOmicsPipeline - INFO - Gestion des valeurs manquantes
+2026-04-27 03:07:31,433 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:07:31,445 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 2
+2026-04-27 03:07:31,493 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:07:31,499 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:07:31,501 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 1
+2026-04-27 03:07:31,509 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:07:31,510 - MultiOmicsPipeline - INFO - Normalisation des données omiques
+2026-04-27 03:07:31,512 - preprocessing.normalization - INFO - Initialized DataNormalizer
+2026-04-27 03:07:31,518 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-27 03:07:31,536 - preprocessing.normalization - INFO - Normalizing gene expression data (method: tmm)
+2026-04-27 03:07:31,554 - MultiOmicsPipeline - ERROR -  Erreur lors de l'exécution : Unknown gene expression normalization method: tmm
+2026-04-27 03:14:07,987 - MultiOmicsPipeline - INFO - Système de logging configuré
+2026-04-27 03:14:08,743 - MultiOmicsPipeline - INFO -  Démarrage du pipeline multi-omiques
+2026-04-27 03:14:08,829 - MultiOmicsPipeline - INFO -  Chargement des données
+2026-04-27 03:14:08,951 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_expression_data.csv : (10, 6)
+2026-04-27 03:14:09,061 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_clinical_data.csv : (10, 6)
+2026-04-27 03:14:09,100 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2026-04-27 03:14:09,224 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2026-04-27 03:14:09,296 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:14:54,119 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:14:54,265 - MultiOmicsPipeline - INFO - Gestion des valeurs manquantes
+2026-04-27 03:14:54,392 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:14:54,460 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 2
+2026-04-27 03:14:54,530 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:14:54,636 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:14:54,674 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 1
+2026-04-27 03:14:54,776 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:14:54,915 - MultiOmicsPipeline - INFO - Normalisation des données omiques
+2026-04-27 03:14:55,051 - preprocessing.normalization - INFO - Initialized DataNormalizer
+2026-04-27 03:14:55,173 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-27 03:14:55,345 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-04-27 03:14:55,466 - preprocessing.normalization - INFO - Applying standard scaling
+2026-04-27 03:14:55,530 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-04-27 03:14:55,610 - MultiOmicsPipeline - INFO - Valeurs manquantes omiques : 0 → 0
+2026-04-27 03:14:55,704 - MultiOmicsPipeline - INFO - Valeurs manquantes cliniques : 0 → 0
+2026-04-27 03:14:55,772 - MultiOmicsPipeline - INFO -  Intégration des données
+2026-04-27 03:14:55,901 - MultiOmicsPipeline - ERROR -  Erreur lors de l'exécution : cannot import name 'SampleAlignment' from 'integration.sample_alignment' (C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\integration\sample_alignment.py)
+2026-04-27 03:35:21,885 - MultiOmicsPipeline - INFO - Système de logging configuré
+2026-04-27 03:35:21,895 - MultiOmicsPipeline - INFO -  Démarrage du pipeline multi-omiques
+2026-04-27 03:35:21,900 - MultiOmicsPipeline - INFO -  Chargement des données
+2026-04-27 03:35:21,907 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_expression_data.csv : (10, 6)
+2026-04-27 03:35:21,921 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_clinical_data.csv : (10, 6)
+2026-04-27 03:35:21,923 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2026-04-27 03:35:21,924 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2026-04-27 03:35:21,924 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:35:37,793 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:35:37,809 - MultiOmicsPipeline - INFO - Gestion des valeurs manquantes
+2026-04-27 03:35:37,825 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:35:37,848 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 2
+2026-04-27 03:35:37,898 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:35:37,912 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:35:37,935 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 1
+2026-04-27 03:35:37,954 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:35:37,969 - MultiOmicsPipeline - INFO - Normalisation des données omiques
+2026-04-27 03:35:38,007 - preprocessing.normalization - INFO - Initialized DataNormalizer
+2026-04-27 03:35:38,016 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-27 03:35:38,034 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-04-27 03:35:38,042 - preprocessing.normalization - INFO - Applying standard scaling
+2026-04-27 03:35:38,054 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-04-27 03:35:38,097 - MultiOmicsPipeline - INFO - Valeurs manquantes omiques : 0 → 0
+2026-04-27 03:35:38,112 - MultiOmicsPipeline - INFO - Valeurs manquantes cliniques : 0 → 0
+2026-04-27 03:35:38,117 - MultiOmicsPipeline - INFO -  Intégration des données
+2026-04-27 03:35:38,142 - MultiOmicsPipeline - ERROR -  Erreur lors de l'exécution : cannot import name 'SampleAlignment' from 'integration.sample_alignment' (C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\integration\sample_alignment.py)
+2026-04-27 03:52:44,740 - MultiOmicsPipeline - INFO - Système de logging configuré
+2026-04-27 03:52:44,748 - MultiOmicsPipeline - INFO -  Démarrage du pipeline multi-omiques
+2026-04-27 03:52:44,748 - MultiOmicsPipeline - INFO -  Chargement des données
+2026-04-27 03:52:44,751 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_expression_data.csv : (10, 6)
+2026-04-27 03:52:44,757 - MultiOmicsPipeline - INFO -  Données chargées depuis demo_clinical_data.csv : (10, 6)
+2026-04-27 03:52:44,760 - MultiOmicsPipeline - INFO - Données omiques : (10, 6)
+2026-04-27 03:52:44,762 - MultiOmicsPipeline - INFO - Données cliniques : (10, 6)
+2026-04-27 03:52:44,762 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:52:57,879 - MultiOmicsPipeline - INFO -  Prétraitement des données
+2026-04-27 03:52:57,889 - MultiOmicsPipeline - INFO - Gestion des valeurs manquantes
+2026-04-27 03:52:57,896 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:52:57,914 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 2
+2026-04-27 03:52:57,965 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:52:57,970 - MissingValueHandler - INFO - Imputation des valeurs manquantes avec stratégie : knn
+2026-04-27 03:52:57,984 - MissingValueHandler - INFO - Valeurs manquantes avant imputation : 1
+2026-04-27 03:52:58,030 - MissingValueHandler - INFO - ✅ Imputation KNN terminée. Valeurs manquantes après : 0
+2026-04-27 03:52:58,040 - MultiOmicsPipeline - INFO - Normalisation des données omiques
+2026-04-27 03:52:58,046 - preprocessing.normalization - INFO - Initialized DataNormalizer
+2026-04-27 03:52:58,054 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-04-27 03:52:58,059 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-04-27 03:52:58,064 - preprocessing.normalization - INFO - Applying standard scaling
+2026-04-27 03:52:58,079 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-04-27 03:52:58,099 - MultiOmicsPipeline - INFO - Valeurs manquantes omiques : 0 → 0
+2026-04-27 03:52:58,112 - MultiOmicsPipeline - INFO - Valeurs manquantes cliniques : 0 → 0
+2026-04-27 03:52:58,120 - MultiOmicsPipeline - INFO -  Intégration des données
+2026-04-27 03:52:58,147 - MultiOmicsPipeline - ERROR -  Erreur lors de l'exécution : cannot import name 'SampleAlignment' from 'integration.sample_alignment' (C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\integration\sample_alignment.py)

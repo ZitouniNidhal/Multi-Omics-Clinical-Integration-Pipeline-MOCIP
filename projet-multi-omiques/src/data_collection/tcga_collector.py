@@ -7,7 +7,7 @@ from typing import Dict, Any, List, Optional, Union
 from datetime import datetime
 import logging
 from .base_collector import BaseCollector
-from ..exceptions import TCGAError, DataCollectionError
+from exceptions import TCGAError, DataCollectionError
 
 logger = logging.getLogger(__name__)
 

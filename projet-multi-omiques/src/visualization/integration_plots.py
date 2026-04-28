@@ -10,7 +10,7 @@ import umap
 from typing import Dict, Any, List, Optional, Union, Tuple
 from pathlib import Path
 import logging
-from ..exceptions import VisualizationError
+from exceptions import VisualizationError
 
 logger = logging.getLogger(__name__)
 

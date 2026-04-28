@@ -8,7 +8,7 @@ from pathlib import Path
 from typing import Dict, Any, Optional, List, Union
 from urllib.parse import urljoin, urlparse
 import pandas as pd
-from ..exceptions import DataCollectionError, ConfigurationError
+from exceptions import DataCollectionError, ConfigurationError
 
 logger = logging.getLogger(__name__)
 

@@ -7,7 +7,7 @@ from pathlib import Path
 import pandera as pa
 from pandera import Column, DataFrameSchema, Check
 import logging
-from ..exceptions import ValidationError
+from exceptions import ValidationError
 
 logger = logging.getLogger(__name__)
 

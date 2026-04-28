@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test complet du pipeline multi-omiques - Version finale pour livraison rapide
+Complete multi-omics pipeline test - Final version for rapid delivery
 """
 import sys
 import os
@@ -13,111 +13,111 @@ from pipeline import MultiOmicsPipeline
 import logging
 
 def test_pipeline_complet():
-    """Test complet du pipeline avec données de démonstration"""
+    """Complete pipeline test with demonstration data"""
     
-    print("🧬 TEST COMPLET DU PIPELINE MULTI-OMIQUES")
+    print(" COMPLETE MULTI-OMICS PIPELINE TEST")
     print("=" * 60)
     
-    # Configuration du test
+    # Test configuration
     config_path = "config/config.yaml"
     omic_data_path = "demo_expression_data.csv"
     clinical_data_path = "demo_clinical_data.csv"
     output_dir = "test_results_complet"
     
     try:
-        # Étape 1: Initialiser le pipeline
-        print("\n1️⃣ Initialisation du pipeline...")
+        # Step 1: Initialize the pipeline
+        print("\n Initializing pipeline...")
         pipeline = MultiOmicsPipeline(config_path)
-        print("✅ Pipeline initialisé avec succès")
+        print(" Pipeline initialized successfully")
         
-        # Étape 2: Exécuter le pipeline
-        print(f"\n2️⃣ Exécution du pipeline sur les données...")
-        print(f"   Données omiques: {omic_data_path}")
-        print(f"   Données cliniques: {clinical_data_path}")
+        # Step 2: Execute the pipeline
+        print(f"\n Executing pipeline on data...")
+        print(f"   Omics data: {omic_data_path}")
+        print(f"   Clinical data: {clinical_data_path}")
         
         results = pipeline.run(omic_data_path, clinical_data_path, output_dir)
         
-        # Étape 3: Vérifier les résultats
-        print(f"\n3️⃣ Vérification des résultats...")
+        # Step 3: Verify results
+        print(f"\n Verifying results...")
         
         if results['status'] == 'success':
-            print("✅ Pipeline exécuté avec succès!")
+            print(" Pipeline executed successfully!")
             
-            # Afficher le résumé
-            print(f"\n📊 RÉSUMÉ DES RÉSULTATS:")
+            # Display summary
+            print(f"\n RESULTS SUMMARY:")
             summary = results['summary']
-            print(f"   • Échantillons traités: {summary['n_samples']}")
-            print(f"   • Features intégrées: {summary['n_features']}")
-            print(f"   • Mémoire utilisée: {summary['memory_usage_mb']:.2f} MB")
-            print(f"   • Complétude: {summary['completeness']:.1%}")
+            print(f"   • Processed samples: {summary['n_samples']}")
+            print(f"   • Integrated features: {summary['n_features']}")
+            print(f"   • Memory usage: {summary['memory_usage_mb']:.2f} MB")
+            print(f"   • Completeness: {summary['completeness']:.1%}")
             
-            # Afficher les fichiers de sortie
-            print(f"\n📁 FICHIERS DE SORTIE:")
+            # Display output files
+            print(f"\n📁 OUTPUT FILES:")
             for format_name, file_path in results['output_paths'].items():
                 print(f"   • {format_name.upper()}: {file_path}")
                 
-                # Vérifier que le fichier existe
+                # Check that the file exists
                 if Path(file_path).exists():
                     file_size = Path(file_path).stat().st_size
-                    print(f"     ✅ Fichier créé ({file_size} bytes)")
+                    print(f"      File created ({file_size} bytes)")
                 else:
-                    print(f"     ❌ Fichier manquant")
+                    print(f"      File missing")
             
-            # Étape 4: Validation des données
-            print(f"\n4️⃣ Validation des données de sortie...")
+            # Step 4: Data validation
+            print(f"\n4️⃣ Output data validation...")
             
-            # Charger et vérifier le CSV
+            # Load and verify CSV
             if 'csv' in results['output_paths']:
                 csv_path = results['output_paths']['csv']
                 if Path(csv_path).exists():
                     output_data = pd.read_csv(csv_path)
-                    print(f"   ✅ Données CSV chargées: {output_data.shape}")
-                    print(f"   • Aperçu des premières lignes:")
+                    print(f"    CSV data loaded: {output_data.shape}")
+                    print(f"   • Preview of first rows:")
                     print(output_data.head(3))
                     
-                    # Vérifier la qualité
+                    # Verify quality
                     missing_values = output_data.isnull().sum().sum()
-                    print(f"   • Valeurs manquantes: {missing_values}")
+                    print(f"   • Missing values: {missing_values}")
                     
                     if missing_values == 0:
-                        print("   ✅ Aucune valeur manquante - Données complètes!")
+                        print("    No missing values - Data complete!")
                     else:
-                        print(f"   ⚠️  {missing_values} valeurs manquantes détectées")
+                        print(f"   ⚠️  {missing_values} missing values detected")
             
-            # Étape 5: Tests supplémentaires
-            print(f"\n5️⃣ Tests supplémentaires...")
+            # Step 5: Additional tests
+            print(f"\n5️⃣ Additional tests...")
             
-            # Vérifier la structure du répertoire de sortie
+            # Verify output directory structure
             output_path = Path(output_dir)
             if output_path.exists():
                 files = list(output_path.glob('*'))
-                print(f"   ✅ Répertoire de sortie créé avec {len(files)} fichier(s)")
+                print(f"    Output directory created with {len(files)} file(s)")
                 
-                # Lister les fichiers
+                # List files
                 for file in files:
                     print(f"     • {file.name} ({file.stat().st_size} bytes)")
             
-            # Test de reproductibilité
-            print(f"\n🔄 Test de reproductibilité...")
-            print("   Exécution du pipeline une deuxième fois...")
+            # Reproducibility test
+            print(f"\n🔄 Reproducibility test...")
+            print("   Executing pipeline a second time...")
             
             results_2 = pipeline.run(omic_data_path, clinical_data_path, f"{output_dir}_2")
             
             if results_2['status'] == 'success':
-                # Comparer les résultats
+                # Compare results
                 summary1 = results['summary']
                 summary2 = results_2['summary']
                 
                 if (summary1['n_samples'] == summary2['n_samples'] and 
                     summary1['n_features'] == summary2['n_features']):
-                    print("   ✅ Pipeline reproductible - Résultats identiques!")
+                    print("    Pipeline reproducible - Identical results!")
                 else:
-                    print("   ⚠️  Différences détectées entre les exécutions")
+                    print("   ⚠️  Differences detected between executions")
             
-            print(f"\n🎉 TEST TERMINÉ AVEC SUCCÈS!")
+            print(f"\n🎉 TEST COMPLETED SUCCESSFULLY!")
             print("=" * 60)
             
-            # Retourner les résultats pour analyse
+            # Return results for analysis
             return {
                 'success': True,
                 'results': results,
@@ -129,8 +129,8 @@ def test_pipeline_complet():
             }
             
         else:
-            print(f"\n❌ ÉCHEC DU PIPELINE")
-            print(f"Erreur : {results.get('error', 'Erreur inconnue')}")
+            print(f"\n PIPELINE FAILED")
+            print(f"Error: {results.get('error', 'Unknown error')}")
             print("=" * 60)
             
             return {
@@ -139,8 +139,8 @@ def test_pipeline_complet():
             }
             
     except Exception as e:
-        print(f"\n❌ ERREUR FATALE DANS LE TEST")
-        print(f"Erreur : {str(e)}")
+        print(f"\n FATAL ERROR IN TEST")
+        print(f"Error: {str(e)}")
         print("=" * 60)
         
         return {
@@ -149,9 +149,9 @@ def test_pipeline_complet():
         }
 
 def main():
-    """Fonction principale de test"""
+    """Main test function"""
     
-    # Vérifier que les fichiers de test existent
+    # Verify that test files exist
     required_files = [
         "demo_expression_data.csv",
         "demo_clinical_data.csv", 
@@ -164,25 +164,25 @@ def main():
             missing_files.append(file)
     
     if missing_files:
-        print("❌ Fichiers manquants pour le test :")
+        print(" Missing files for test:")
         for file in missing_files:
             print(f"   • {file}")
-        print("\nAssurez-vous d'être dans le répertoire du projet")
+        print("\nMake sure you are in the project directory")
         return
     
-    # Exécuter le test
+    # Execute test
     results = test_pipeline_complet()
     
-    # Afficher un résumé final
-    print(f"\n📋 RÉSUMÉ FINAL DU TEST:")
+    # Display final summary
+    print(f"\n FINAL TEST SUMMARY:")
     if results['success']:
-        print("✅ Pipeline fonctionnel et prêt pour la livraison!")
-        print(f"   • Fichiers exportés : {results['validation']['files_created']}")
-        print(f"   • Intégrité données : {'✅ OK' if results['validation']['data_integrity'] else '❌ Problème'}")
-        print(f"   • Reproductibilité : {'✅ OK' if results['validation']['reproducible'] else '❌ Problème'}")
+        print(" Pipeline functional and ready for delivery!")
+        print(f"   • Exported files: {results['validation']['files_created']}")
+        print(f"   • Data integrity: {' OK' if results['validation']['data_integrity'] else ' Issue'}")
+        print(f"   • Reproducibility: {' OK' if results['validation']['reproducible'] else ' Issue'}")
     else:
-        print("❌ Pipeline nécessite des corrections")
-        print(f"   Erreur : {results.get('error', 'Erreur inconnue')}")
+        print(" Pipeline requires corrections")
+        print(f"   Error: {results.get('error', 'Unknown error')}")
 
 if __name__ == "__main__":
-    main()
+    main()

@@ -8,7 +8,7 @@ from typing import Dict, Any, List, Optional, Tuple
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import pandas as pd
 import requests
-from ..exceptions import DataCollectionError
+from exceptions import DataCollectionError
 
 logger = logging.getLogger(__name__)
 
