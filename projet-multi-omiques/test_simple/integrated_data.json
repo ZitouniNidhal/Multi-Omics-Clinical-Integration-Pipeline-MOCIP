@@ -1,0 +1,209 @@
+{
+  "data": [
+    {
+      "sample_id": -1.5666989036012806,
+      "omic_TP53": -0.39632238925368507,
+      "omic_BRCA1": 0.05266844622454014,
+      "omic_EGFR": 2.8481498294160477,
+      "omic_KRAS": -0.46019371411032345,
+      "omic_PTEN": 1.2409592884370952,
+      "clinical_age": 0.030579228621675593,
+      "clinical_survival_months": -0.06292121232041525
+    },
+    {
+      "sample_id": -1.2185435916898848,
+      "omic_TP53": -0.7578735332240347,
+      "omic_BRCA1": 0.04917798955198264,
+      "omic_EGFR": -0.2861507201573092,
+      "omic_KRAS": 2.7213740551530785,
+      "omic_PTEN": 0.10445065834386476,
+      "clinical_age": 0.23444075276617976,
+      "clinical_survival_months": -0.8683127300217305
+    },
+    {
+      "sample_id": -0.8703882797784892,
+      "omic_TP53": 0.2734156933643626,
+      "omic_BRCA1": 1.7299376299755798,
+      "omic_EGFR": -0.04484079572706674,
+      "omic_KRAS": -0.1479079295403402,
+      "omic_PTEN": -0.2508443208753922,
+      "clinical_age": -1.498382202462104,
+      "clinical_survival_months": -0.7424703053809
+    },
+    {
+      "sample_id": -0.5222329678670935,
+      "omic_TP53": 1.7593646768916675,
+      "omic_BRCA1": -0.9859804307010406,
+      "omic_EGFR": -0.7806600421718232,
+      "omic_KRAS": -0.6190471578868005,
+      "omic_PTEN": -0.4274548593556488,
+      "clinical_age": 0.5402330389829355,
+      "clinical_survival_months": -0.8683127300217305
+    },
+    {
+      "sample_id": -0.17407765595569785,
+      "omic_TP53": -0.788296494558427,
+      "omic_BRCA1": -0.9298903826624833,
+      "omic_EGFR": -0.47931015974922025,
+      "omic_KRAS": 0.6441036823377229,
+      "omic_PTEN": -0.9941601946815009,
+      "clinical_age": 1.1773003019345105,
+      "clinical_survival_months": 0.6166278807400695
+    },
+    {
+      "sample_id": 0.17407765595569785,
+      "omic_TP53": -0.7882916512222261,
+      "omic_BRCA1": -0.08453709844170694,
+      "omic_EGFR": -0.0027408348715529814,
+      "omic_KRAS": -0.663195690474182,
+      "omic_PTEN": -0.7155144535772959,
+      "clinical_age": 1.0498868493441955,
+      "clinical_survival_months": -0.33977454653024236
+    },
+    {
+      "sample_id": 0.5222329678670935,
+      "omic_TP53": 2.0006664677950194,
+      "omic_BRCA1": -0.5555472450617441,
+      "omic_EGFR": -0.7134451554598572,
+      "omic_KRAS": 0.014072244424238269,
+      "omic_PTEN": -0.5530672546248209,
+      "clinical_age": -1.7532091076427343,
+      "clinical_survival_months": 0.16359515203307964
+    },
+    {
+      "sample_id": 0.8703882797784892,
+      "omic_TP53": -0.10145747205648213,
+      "omic_BRCA1": 1.9960818201884862,
+      "omic_EGFR": 0.2977822611485764,
+      "omic_KRAS": -0.8045231587738947,
+      "omic_PTEN": 2.2690016706873615,
+      "clinical_age": -0.8613149395105294,
+      "clinical_survival_months": 2.6804436448496896
+    },
+    {
+      "sample_id": 1.2185435916898848,
+      "omic_TP53": -0.8467874934186148,
+      "omic_BRCA1": -0.46822123525045833,
+      "omic_EGFR": -0.5074713877495737,
+      "omic_KRAS": -0.6892563513902878,
+      "omic_PTEN": 0.3782232026134355,
+      "clinical_age": 0.030579228621675593,
+      "clinical_survival_months": -0.46561697117107287
+    },
+    {
+      "sample_id": 1.5666989036012806,
+      "omic_TP53": -0.3544178043175796,
+      "omic_BRCA1": -0.8036894938231557,
+      "omic_EGFR": -0.3313129946782212,
+      "omic_KRAS": 0.004574020260788596,
+      "omic_PTEN": -1.0515937369670982,
+      "clinical_age": 1.0498868493441955,
+      "clinical_survival_months": -0.11325818217674744
+    }
+  ],
+  "metadata": {
+    "export_timestamp": "2026-04-28T01:40:22.189094",
+    "n_samples": 10,
+    "n_columns": 8
+  },
+  "schema": {
+    "schema_version": "1.0",
+    "created_at": "2026-04-28T01:40:22.189094",
+    "dataset_info": {
+      "n_samples": 10,
+      "n_features": 8,
+      "memory_usage_mb": 0.000736236572265625,
+      "completeness": 1.0
+    },
+    "columns": {
+      "sample_id": {
+        "name": "sample_id",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -1.5666989036012806,
+        "max": 1.5666989036012806,
+        "mean": -6.661338147750939e-17,
+        "median": 0.0,
+        "std": 1.0540925533894598
+      },
+      "omic_TP53": {
+        "name": "omic_TP53",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -0.8467874934186148,
+        "max": 2.0006664677950194,
+        "mean": 2.7755575615628914e-17,
+        "median": -0.3753700967856323,
+        "std": 1.05409255338946
+      },
+      "omic_BRCA1": {
+        "name": "omic_BRCA1",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -0.9859804307010406,
+        "max": 1.9960818201884862,
+        "mean": 0.0,
+        "median": -0.27637916684608266,
+        "std": 1.0540925533894598
+      },
+      "omic_EGFR": {
+        "name": "omic_EGFR",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -0.7806600421718232,
+        "max": 2.8481498294160477,
+        "mean": -1.1102230246251566e-17,
+        "median": -0.3087318574177652,
+        "std": 1.0540925533894598
+      },
+      "omic_KRAS": {
+        "name": "omic_KRAS",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -0.8045231587738947,
+        "max": 2.7213740551530785,
+        "mean": -6.392456008974534e-17,
+        "median": -0.30405082182533183,
+        "std": 1.0540925533894598
+      },
+      "omic_PTEN": {
+        "name": "omic_PTEN",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -1.0515937369670982,
+        "max": 2.2690016706873615,
+        "mean": 2.2204460492503132e-17,
+        "median": -0.3391495901155205,
+        "std": 1.0540925533894598
+      },
+      "clinical_age": {
+        "name": "clinical_age",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -1.7532091076427343,
+        "max": 1.1773003019345105,
+        "mean": -2.2204460492503132e-17,
+        "median": 0.1325099906939277,
+        "std": 1.05409255338946
+      },
+      "clinical_survival_months": {
+        "name": "clinical_survival_months",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": -0.8683127300217305,
+        "max": 2.6804436448496896,
+        "mean": -5.551115123125783e-18,
+        "median": -0.2265163643534949,
+        "std": 1.0540925533894598
+      }
+    }
+  }
+}

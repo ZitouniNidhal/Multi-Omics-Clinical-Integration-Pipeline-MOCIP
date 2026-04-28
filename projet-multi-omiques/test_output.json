@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "patient_id": "P001",
+      "gene1": 1.5,
+      "age": 45
+    },
+    {
+      "patient_id": "P002",
+      "gene1": 2.3,
+      "age": 50
+    }
+  ],
+  "metadata": {
+    "export_timestamp": "2026-04-28T01:40:22.114609",
+    "n_samples": 2,
+    "n_columns": 3
+  },
+  "schema": {
+    "schema_version": "1.0",
+    "created_at": "2026-04-28T01:40:22.114609",
+    "dataset_info": {
+      "n_samples": 2,
+      "n_features": 3,
+      "memory_usage_mb": 0.0002574920654296875,
+      "completeness": 1.0
+    },
+    "columns": {
+      "patient_id": {
+        "name": "patient_id",
+        "dtype": "object",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "unique_values": 2,
+        "top_values": {
+          "P001": 1,
+          "P002": 1
+        }
+      },
+      "gene1": {
+        "name": "gene1",
+        "dtype": "float64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": 1.5,
+        "max": 2.3,
+        "mean": 1.9,
+        "median": 1.9,
+        "std": 0.5656854249492379
+      },
+      "age": {
+        "name": "age",
+        "dtype": "int64",
+        "n_missing": 0,
+        "missing_percentage": 0.0,
+        "min": 45.0,
+        "max": 50.0,
+        "mean": 47.5,
+        "median": 47.5,
+        "std": 3.5355339059327378
+      }
+    }
+  }
+}

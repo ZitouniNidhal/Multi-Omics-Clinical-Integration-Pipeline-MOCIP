@@ -17,8 +17,8 @@ class MultiOmicsPipeline:
             with open(config_path, 'r') as f:
                 self.config = yaml.safe_load(f)
             
-            print(f" Pipeline initialized: {self.config['general']['project_name']}")
-            print(f"📋 Version: {self.config['general']['version']}")
+            print(f" [OK] Pipeline initialized: {self.config['general']['project_name']}")
+            print(f"[*] Version: {self.config['general']['version']}")
             
             # Logging configuration
             self.setup_logging()
@@ -120,7 +120,7 @@ class MultiOmicsPipeline:
         
         # Import preprocessing modules
         from preprocessing.missing_values import MissingValueHandler
-        from preprocessing.normalization import DataNormalizer
+        from preprocessing.normalization import OmicsNormalizer
         
         self.logger.info(" Data preprocessing")
         
@@ -136,7 +136,7 @@ class MultiOmicsPipeline:
         
         # Normalize omics data
         self.logger.info("Omics data normalization")
-        normalizer = DataNormalizer(config=self.config)
+        normalizer = OmicsNormalizer(config=self.config)
         
         omic_normalized = normalizer.fit_transform(
             omic_clean,
@@ -153,8 +153,8 @@ class MultiOmicsPipeline:
             'normalization_method': self.config['preprocessing']['normalization']['method']
         }
         
-        self.logger.info(f"Omics missing values: {preprocessing_info['omic_missing_values_before']} → {preprocessing_info['omic_missing_values_after']}")
-        self.logger.info(f"Clinical missing values: {preprocessing_info['clinical_missing_values_before']} → {preprocessing_info['clinical_missing_values_after']}")
+        self.logger.info(f"Omics missing values: {preprocessing_info['omic_missing_values_before']} -> {preprocessing_info['omic_missing_values_after']}")
+        self.logger.info(f"Clinical missing values: {preprocessing_info['clinical_missing_values_before']} -> {preprocessing_info['clinical_missing_values_after']}")
         
         return {
             'omic': omic_normalized,
@@ -233,7 +233,7 @@ class MultiOmicsPipeline:
         try:
             # Check if target variable exists
             if target_variable not in integrated_data.columns:
-                self.logger.warning(f"⚠️ Target variable '{target_variable}' not found. Modeling skipped.")
+                self.logger.warning(f"Target variable '{target_variable}' not found. Modeling skipped.")
                 return None, {'error': f"Target variable '{target_variable}' not found"}
                 
             # 1. Prepare ML data
@@ -247,7 +247,7 @@ class MultiOmicsPipeline:
             if 'test_accuracy' in eval_results:
                 self.logger.info(f" Model evaluated. Test accuracy: {eval_results.get('test_accuracy', 0):.3f}")
             else:
-                self.logger.warning(f"⚠️ Model evaluated but accuracy not available: {eval_results.get('error', 'Unknown error')}")
+                self.logger.warning(f"Model evaluated but accuracy not available: {eval_results.get('error', 'Unknown error')}")
                 
             return ml_data, eval_results
             
@@ -335,7 +335,7 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    print(f"🧬 Multi-Omics Pipeline - Version 1.0")
+    print(f"[OK] Multi-Omics Pipeline - Version 1.0")
     print("=" * 50)
     
     pipeline = MultiOmicsPipeline(args.config)

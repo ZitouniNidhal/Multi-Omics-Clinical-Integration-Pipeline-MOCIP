@@ -11,10 +11,10 @@ from exceptions import IntegrationError, SampleAlignmentError
 logger = logging.getLogger(__name__)
 
 
-class SampleAligner:
+class SampleAlignment:
     """Align samples across different omics datasets."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config: Dict[str, Any] = None, **kwargs):
         """
         Initialize sample aligner.
         
@@ -22,12 +22,13 @@ class SampleAligner:
             config: Configuration dictionary
         """
         self.config = config or {}
+        self.config.update(kwargs)
         self.method = self.config.get('method', 'match_by_patient_id')
         self.fuzzy_matching = self.config.get('fuzzy_matching', True)
         self.tolerance = self.config.get('tolerance', 0.8)
         self.id_patterns = self.config.get('id_patterns', [])
         
-        logger.info(f"Initialized SampleAligner with method: {self.method}")
+        logger.info(f"Initialized SampleAlignment with method: {self.method}")
     
     def align_samples(self, omics_data: Dict[str, pd.DataFrame], 
                      sample_id_columns: Optional[Dict[str, str]] = None,
@@ -99,6 +100,27 @@ class SampleAligner:
         logger.info(f"Sample alignment complete: {len(matched_samples)} matched samples")
         
         return result
+    def align_by_patient_id(self, omics_dict: Dict[str, pd.DataFrame], 
+                           sample_id_columns: Dict[str, str], **kwargs) -> Dict[str, pd.DataFrame]:
+        """Alias for align_samples to maintain compatibility with legacy code."""
+        # Update method if not already set
+        self.method = 'match_by_patient_id'
+        result = self.align_samples(omics_dict, sample_id_columns, **kwargs)
+        return result['aligned_data']
+
+    def validate_alignment(self, original_data: Dict[str, pd.DataFrame], 
+                          aligned_data: Dict[str, pd.DataFrame]) -> Dict[str, Any]:
+        """Validates the alignment and returns a report."""
+        # Identify sample ID columns (simplified)
+        sample_id_columns = {k: 'patient_id' if 'patient_id' in v.columns else v.columns[0] for k, v in aligned_data.items()}
+        results = self.validate_sample_consistency(aligned_data, sample_id_columns)
+        
+        return {
+            'alignment_successful': results['consistent'],
+            'errors': results['errors'],
+            'warnings': results['warnings'],
+            'samples_count': len(next(iter(aligned_data.values()))) if aligned_data else 0
+        }
     
     def _identify_sample_id_columns(self, omics_data: Dict[str, pd.DataFrame]) -> Dict[str, str]:
         """Automatically identify sample ID columns in each dataset."""

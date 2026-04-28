@@ -61,7 +61,7 @@ class JSONExporter:
     
     def export_with_schema(self, data: pd.DataFrame, 
                           output_path: str,
-                          include_schema: bool = True) -> bool:
+                          include_schema: bool = True, **kwargs) -> bool:
         """
         Exports the data with its schema
         
@@ -108,11 +108,11 @@ class JSONExporter:
                 json.dump(data_dict, f, indent=2, ensure_ascii=False, 
                          default=convert_numpy_types)
             
-            self.logger.info(f"✅ JSON export completed: {output_path}")
+            self.logger.info(f"[OK] JSON export completed: {output_path}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error during JSON export: {e}")
+            self.logger.error(f"[Error] Error during JSON export: {e}")
             return False
     
     def export_simple_json(self, data: pd.DataFrame, output_path: str) -> bool:
@@ -132,11 +132,11 @@ class JSONExporter:
             # Simple export of the DataFrame
             data.to_json(output_path, orient='records', indent=2, force_ascii=False)
             
-            self.logger.info(f"✅ Simple JSON export completed: {output_path}")
+            self.logger.info(f"[OK] Simple JSON export completed: {output_path}")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error during simple JSON export: {e}")
+            self.logger.error(f"[Error] Error during simple JSON export: {e}")
             return False
     
     def export_split_by_samples(self, data: pd.DataFrame, 
@@ -181,11 +181,11 @@ class JSONExporter:
                 
                 exported_count += 1
             
-            self.logger.info(f"✅ Export by sample completed: {exported_count} files")
+            self.logger.info(f"[OK] Export by sample completed: {exported_count} files")
             return True
             
         except Exception as e:
-            self.logger.error(f"❌ Error during export by sample: {e}")
+            self.logger.error(f"[Error] Error during export by sample: {e}")
             return False
     
     def create_api_format(self, data: pd.DataFrame, 
@@ -258,25 +258,25 @@ if __name__ == "__main__":
     exporter = JSONExporter(schema_version='1.0')
     success = exporter.export_with_schema(test_data, 'test_export.json')
     
-    print(f"\nExport avec schéma : {'✅ Succès' if success else '❌ Échec'}")
+    print(f"\nExport avec schéma : {'[OK] Succès' if success else '[Error] Échec'}")
     
     # Test export simple
     success_simple = exporter.export_simple_json(test_data, 'test_simple.json')
-    print(f"Export simple : {'✅ Succès' if success_simple else '❌ Échec'}")
+    print(f"Export simple : {'[OK] Succès' if success else '[Error] Échec'}")
     
     # Lire et vérifier le fichier exporté
     try:
         with open('test_export.json', 'r') as f:
             exported_data = json.load(f)
         
-        print(f"\nStructure exportée :")
-        print(f"- Nombre d'échantillons : {len(exported_data['data'])}")
-        print(f"- Avec schéma : {'schema' in exported_data}")
-        print(f"- Métadonnées présentes : {'metadata' in exported_data}")
+        print(f"\nExported structure:")
+        print(f"- Number of samples: {len(exported_data['data'])}")
+        print(f"- With schema: {'schema' in exported_data}")
+        print(f"- Metadata present: {'metadata' in exported_data}")
         
         # Validation
         is_valid = exporter.validate_json_schema(exported_data)
-        print(f"- Structure valide : {'✅ Oui' if is_valid else '❌ Non'}")
+        print(f"- Valid structure: {'[OK] Yes' if is_valid else '[Error] No'}")
         
     except Exception as e:
-        print(f"Erreur lors de la lecture
+        print(f"Error during reading: {e}")

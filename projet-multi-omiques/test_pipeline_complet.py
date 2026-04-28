@@ -26,19 +26,19 @@ def test_pipeline_complet():
     
     try:
         # Step 1: Initialize the pipeline
-        print("\n Initializing pipeline...")
+        print("\n [*] Initializing pipeline...")
         pipeline = MultiOmicsPipeline(config_path)
         print(" Pipeline initialized successfully")
         
         # Step 2: Execute the pipeline
-        print(f"\n Executing pipeline on data...")
+        print(f"\n [*] Executing pipeline on data...")
         print(f"   Omics data: {omic_data_path}")
         print(f"   Clinical data: {clinical_data_path}")
         
         results = pipeline.run(omic_data_path, clinical_data_path, output_dir)
         
         # Step 3: Verify results
-        print(f"\n Verifying results...")
+        print(f"\n [*] Verifying results...")
         
         if results['status'] == 'success':
             print(" Pipeline executed successfully!")
@@ -46,15 +46,15 @@ def test_pipeline_complet():
             # Display summary
             print(f"\n RESULTS SUMMARY:")
             summary = results['summary']
-            print(f"   • Processed samples: {summary['n_samples']}")
-            print(f"   • Integrated features: {summary['n_features']}")
-            print(f"   • Memory usage: {summary['memory_usage_mb']:.2f} MB")
-            print(f"   • Completeness: {summary['completeness']:.1%}")
+            print(f"   * Processed samples: {summary['n_samples']}")
+            print(f"   * Integrated features: {summary['n_features']}")
+            print(f"   * Memory usage: {summary['memory_usage_mb']:.2f} MB")
+            print(f"   * Completeness: {summary['completeness']:.1%}")
             
             # Display output files
-            print(f"\n📁 OUTPUT FILES:")
+            print(f"\n[Files] OUTPUT FILES:")
             for format_name, file_path in results['output_paths'].items():
-                print(f"   • {format_name.upper()}: {file_path}")
+                print(f"   * {format_name.upper()}: {file_path}")
                 
                 # Check that the file exists
                 if Path(file_path).exists():
@@ -64,7 +64,7 @@ def test_pipeline_complet():
                     print(f"      File missing")
             
             # Step 4: Data validation
-            print(f"\n4️⃣ Output data validation...")
+            print(f"\n[4] Output data validation...")
             
             # Load and verify CSV
             if 'csv' in results['output_paths']:
@@ -72,20 +72,20 @@ def test_pipeline_complet():
                 if Path(csv_path).exists():
                     output_data = pd.read_csv(csv_path)
                     print(f"    CSV data loaded: {output_data.shape}")
-                    print(f"   • Preview of first rows:")
+                    print(f"   * Preview of first rows:")
                     print(output_data.head(3))
                     
                     # Verify quality
                     missing_values = output_data.isnull().sum().sum()
-                    print(f"   • Missing values: {missing_values}")
+                    print(f"   * Missing values: {missing_values}")
                     
                     if missing_values == 0:
                         print("    No missing values - Data complete!")
                     else:
-                        print(f"   ⚠️  {missing_values} missing values detected")
+                        print(f"   [Warning] {missing_values} missing values detected")
             
             # Step 5: Additional tests
-            print(f"\n5️⃣ Additional tests...")
+            print(f"\n[5] Additional tests...")
             
             # Verify output directory structure
             output_path = Path(output_dir)
@@ -95,10 +95,10 @@ def test_pipeline_complet():
                 
                 # List files
                 for file in files:
-                    print(f"     • {file.name} ({file.stat().st_size} bytes)")
+                    print(f"     * {file.name} ({file.stat().st_size} bytes)")
             
             # Reproducibility test
-            print(f"\n🔄 Reproducibility test...")
+            print(f"\n[Reproducibility] Reproducibility test...")
             print("   Executing pipeline a second time...")
             
             results_2 = pipeline.run(omic_data_path, clinical_data_path, f"{output_dir}_2")
@@ -114,7 +114,7 @@ def test_pipeline_complet():
                 else:
                     print("   ⚠️  Differences detected between executions")
             
-            print(f"\n🎉 TEST COMPLETED SUCCESSFULLY!")
+            print(f"\n[OK] TEST COMPLETED SUCCESSFULLY!")
             print("=" * 60)
             
             # Return results for analysis
@@ -166,7 +166,7 @@ def main():
     if missing_files:
         print(" Missing files for test:")
         for file in missing_files:
-            print(f"   • {file}")
+            print(f"   * {file}")
         print("\nMake sure you are in the project directory")
         return
     
@@ -177,9 +177,9 @@ def main():
     print(f"\n FINAL TEST SUMMARY:")
     if results['success']:
         print(" Pipeline functional and ready for delivery!")
-        print(f"   • Exported files: {results['validation']['files_created']}")
-        print(f"   • Data integrity: {' OK' if results['validation']['data_integrity'] else ' Issue'}")
-        print(f"   • Reproducibility: {' OK' if results['validation']['reproducible'] else ' Issue'}")
+        print(f"   * Exported files: {results['validation']['files_created']}")
+        print(f"   * Data integrity: {' OK' if results['validation']['data_integrity'] else ' Issue'}")
+        print(f"   * Reproducibility: {' OK' if results['validation']['reproducible'] else ' Issue'}")
     else:
         print(" Pipeline requires corrections")
         print(f"   Error: {results.get('error', 'Unknown error')}")

@@ -54,10 +54,10 @@ class MissingValueHandler:
             for col in categorical_cols:
                 if data[col].isnull().sum() > 0:
                     mode_value = data[col].mode()[0] if not data[col].mode().empty else 'Unknown'
-                    data[col].fillna(mode_value, inplace=True)
+                    data[col] = data[col].fillna(mode_value)
             
             missing_after = data.isnull().sum().sum()
-            self.logger.info(f"✅ KNN imputation completed. Missing values after: {missing_after}")
+            self.logger.info(f"[OK] KNN imputation completed. Missing values after: {missing_after}")
             
             return data
             
@@ -77,16 +77,16 @@ class MissingValueHandler:
         for col in numeric_cols:
             if data[col].isnull().sum() > 0:
                 median_val = data[col].median()
-                data[col].fillna(median_val, inplace=True)
+                data[col] = data[col].fillna(median_val)
         
         # Mode for categorical
         for col in categorical_cols:
             if data[col].isnull().sum() > 0:
                 mode_val = data[col].mode()[0] if not data[col].mode().empty else 'Unknown'
-                data[col].fillna(mode_val, inplace=True)
+                data[col] = data[col].fillna(mode_val)
         
         missing_after = data.isnull().sum().sum()
-        self.logger.info(f"✅ Median imputation completed. Missing values after: {missing_after}")
+        self.logger.info(f"[OK] Median imputation completed. Missing values after: {missing_after}")
         
         return data
     
@@ -101,16 +101,16 @@ class MissingValueHandler:
         for col in numeric_cols:
             if data[col].isnull().sum() > 0:
                 mean_val = data[col].mean()
-                data[col].fillna(mean_val, inplace=True)
+                data[col] = data[col].fillna(mean_val)
         
         # Mode for categorical
         for col in categorical_cols:
             if data[col].isnull().sum() > 0:
                 mode_val = data[col].mode()[0] if not data[col].mode().empty else 'Unknown'
-                data[col].fillna(mode_val, inplace=True)
+                data[col] = data[col].fillna(mode_val)
         
         missing_after = data.isnull().sum().sum()
-        self.logger.info(f"✅ Mean imputation completed. Missing values after: {missing_after}")
+        self.logger.info(f"[OK] Mean imputation completed. Missing values after: {missing_after}")
         
         return data
     

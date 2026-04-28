@@ -10,10 +10,10 @@ from exceptions import PreprocessingError
 logger = logging.getLogger(__name__)
 
 
-class DataNormalizer:
+class OmicsNormalizer:
     """Handle data normalization for multi-omics datasets."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config: Dict[str, Any] = None, **kwargs):
         """
         Initialize the normalizer.
         
@@ -21,10 +21,11 @@ class DataNormalizer:
             config: Configuration dictionary
         """
         self.config = config or {}
+        self.config.update(kwargs)
         self.scalers = {}  # Store fitted scalers
         self.fitted_params = {}
         
-        logger.info("Initialized DataNormalizer")
+        logger.info("Initialized OmicsNormalizer")
     
     def fit_transform(self, data: Union[pd.DataFrame, Dict[str, pd.DataFrame]], 
                      data_type: str = None, **kwargs) -> Union[pd.DataFrame, Dict[str, pd.DataFrame]]:
@@ -75,6 +76,12 @@ class DataNormalizer:
             logger.warning("Empty DataFrame, returning unchanged")
             return df
         
+        # Save sample ID column if it exists
+        sample_id_col = kwargs.get('sample_id_col', 'patient_id')
+        sample_ids = None
+        if sample_id_col in df.columns:
+            sample_ids = df[sample_id_col]
+
         # Determine normalization method based on data type
         if data_type == 'gene_expression':
             normalized_df = self._normalize_gene_expression(df, fit=True, **kwargs)
@@ -88,6 +95,10 @@ class DataNormalizer:
             # Default normalization
             normalized_df = self._normalize_generic(df, fit=True, **kwargs)
         
+        # Restore sample ID column if it was lost
+        if sample_ids is not None and sample_id_col not in normalized_df.columns:
+            normalized_df.insert(0, sample_id_col, sample_ids)
+            
         return normalized_df
     
     def _fit_transform_multi_omics(self, data_dict: Dict[str, pd.DataFrame], 
@@ -121,6 +132,12 @@ class DataNormalizer:
             logger.warning("Normalizer not fitted. Returning original data.")
             return df
         
+        # Save sample ID column if it exists
+        sample_id_col = kwargs.get('sample_id_col', 'patient_id')
+        sample_ids = None
+        if sample_id_col in df.columns:
+            sample_ids = df[sample_id_col]
+
         # Determine normalization method based on data type
         if data_type == 'gene_expression':
             normalized_df = self._normalize_gene_expression(df, fit=False, **kwargs)
@@ -134,6 +151,10 @@ class DataNormalizer:
             # Default normalization
             normalized_df = self._normalize_generic(df, fit=False, **kwargs)
         
+        # Restore sample ID column if it was lost
+        if sample_ids is not None and sample_id_col not in normalized_df.columns:
+            normalized_df.insert(0, sample_id_col, sample_ids)
+            
         return normalized_df
     
     def _transform_multi_omics(self, data_dict: Dict[str, pd.DataFrame], 
@@ -162,6 +183,11 @@ class DataNormalizer:
                 normalized_data[omics_type] = df
         
         return normalized_data
+    def normalize(self, data: pd.DataFrame, **kwargs) -> pd.DataFrame:
+        """Alias for fit_transform to maintain compatibility with legacy code."""
+        # Determine data type from column names if possible
+        data_type = 'gene_expression' if any(c.startswith('gene') or c.isupper() for c in data.columns) else 'clinical'
+        return self.fit_transform(data, data_type=data_type, **kwargs)
     
     def _normalize_gene_expression(self, df: pd.DataFrame, fit: bool = True, 
                                   method: str = 'tpm', **kwargs) -> pd.DataFrame:

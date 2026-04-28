@@ -12,10 +12,10 @@ from exceptions import IntegrationError
 logger = logging.getLogger(__name__)
 
 
-class DataFusion:
+class MultiOmicsFusion:
     """Multi-omics data fusion using different integration strategies."""
     
-    def __init__(self, config: Dict[str, Any] = None):
+    def __init__(self, config: Dict[str, Any] = None, **kwargs):
         """
         Initialize data fusion.
         
@@ -23,6 +23,11 @@ class DataFusion:
             config: Configuration dictionary
         """
         self.config = config or {}
+        self.config.update(kwargs)
+        # Handle parameter names from pipeline config
+        if 'fusion_method' in self.config and 'methods' not in self.config:
+            self.config['methods'] = [self.config['fusion_method']]
+            
         self.integration_methods = self.config.get('methods', ['early_integration'])
         self.scaling_method = self.config.get('scaling_method', 'standard')
         self.feature_selection = self.config.get('feature_selection', True)
@@ -31,7 +36,7 @@ class DataFusion:
         self.fitted_scalers = {}
         self.selected_features = {}
         
-        logger.info(f"Initialized DataFusion with methods: {self.integration_methods}")
+        logger.info(f"Initialized MultiOmicsFusion with methods: {self.integration_methods}")
     
     def integrate(self, omics_data: Dict[str, pd.DataFrame], 
                   clinical_data: Optional[pd.DataFrame] = None,
@@ -94,6 +99,21 @@ class DataFusion:
         logger.info("Data integration complete")
         
         return integration_results
+    def horizontal_fusion(self, aligned_data: Dict[str, pd.DataFrame], 
+                          sample_key: str = 'patient_id', **kwargs) -> pd.DataFrame:
+        """Alias for _early_integration to maintain compatibility with legacy code."""
+        result = self._early_integration(aligned_data, sample_id_column=sample_key, **kwargs)
+        if isinstance(result, dict) and 'integrated_data' in result:
+            return result['integrated_data']
+        return result
+
+    def scale_features(self, data: pd.DataFrame, method: str = 'standard') -> pd.DataFrame:
+        """Scales numeric features in a DataFrame."""
+        self.scaling_method = method
+        numeric_cols = data.select_dtypes(include=[np.number]).columns
+        if len(numeric_cols) > 0:
+            return self._scale_features(data, 'integrated', fit=True)
+        return data
     
     def _align_samples(self, omics_data: Dict[str, pd.DataFrame], 
                       sample_id_column: str) -> Dict[str, pd.DataFrame]:
