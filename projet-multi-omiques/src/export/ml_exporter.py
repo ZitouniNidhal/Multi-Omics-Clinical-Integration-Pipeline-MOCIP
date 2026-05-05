@@ -519,7 +519,27 @@ class MLExporter:
                 model = LogisticRegression(random_state=self.random_state, max_iter=1000)
             elif model_type == 'svm':
                 from sklearn.svm import SVC
-                model = SVC(random_state=self.random_state)
+                model = SVC(random_state=self.random_state, probability=True)
+            elif model_type == 'catboost':
+                try:
+                    from catboost import CatBoostClassifier
+                    model = CatBoostClassifier(iterations=100, random_seed=self.random_state, verbose=False)
+                except ImportError:
+                    logger.warning("CatBoost not installed, falling back to RandomForest")
+                    from sklearn.ensemble import RandomForestClassifier
+                    model = RandomForestClassifier(n_estimators=100, random_state=self.random_state)
+            elif model_type == 'xgboost':
+                try:
+                    from xgboost import XGBClassifier
+                    model = XGBClassifier(n_estimators=100, random_state=self.random_state, use_label_encoder=False, eval_metric='logloss')
+                except ImportError:
+                    logger.warning("XGBoost not installed, falling back to RandomForest")
+                    from sklearn.ensemble import RandomForestClassifier
+                    model = RandomForestClassifier(n_estimators=100, random_state=self.random_state)
+            elif model_type == 'qda':
+                from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+                # Regularized QDA as mentioned in the report (reg_param=0.1)
+                model = QuadraticDiscriminantAnalysis(reg_param=0.1)
             else:
                 return {'error': f'Unknown model type: {model_type}'}
             
