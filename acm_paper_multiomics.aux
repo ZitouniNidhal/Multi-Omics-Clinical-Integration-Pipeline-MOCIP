@@ -6,61 +6,59 @@
 \citation{leek2010}
 \citation{colaprico2016}
 \citation{mandel2016}
-\citation{jolliffe2002}
 \@writefile{toc}{\contentsline {section}{Abstract}{1}{section*.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {2}Background and Related Work}{1}{section.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Multi-Omics Data Taxonomy}{1}{subsection.2.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Taxonomy of multi-omics data layers.}}{1}{table.caption.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Taxonomy of molecular layers in multi-omics cohorts.}}{1}{table.caption.5}\protected@file@percent }
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{tab:taxonomy}{{1}{1}{Taxonomy of multi-omics data layers}{table.caption.5}{}}
+\newlabel{tab:taxonomy}{{1}{1}{Taxonomy of molecular layers in multi-omics cohorts}{table.caption.5}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Integration Paradigms}{1}{subsection.2.2}\protected@file@percent }
-\citation{mckinney2010}
-\citation{pedregosa2011}
-\citation{rocklin2015}
-\citation{weinstein2013,tcganetwork2012}
+\citation{weinstein2013}
 \citation{troyanskaya2001}
-\citation{love2014}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Identified Gaps}{2}{subsection.2.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Workflow gaps and proposed solutions.}}{2}{table.caption.6}\protected@file@percent }
-\newlabel{tab:gaps}{{2}{2}{Workflow gaps and proposed solutions}{table.caption.6}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Workflow bottlenecks and MultiOmicsPipeline solutions.}}{2}{table.caption.6}\protected@file@percent }
+\newlabel{tab:gaps}{{2}{2}{Workflow bottlenecks and MultiOmicsPipeline solutions}{table.caption.6}{}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Pipeline Architecture}{2}{section.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Design Principles}{2}{subsection.3.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Five-Layer Architecture}{2}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Hexagonal Orchestration}{2}{subsection.3.2}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Implementation: Core Classes}{2}{subsection.3.3}\protected@file@percent }
 \@writefile{lol}{\contentsline {lstlisting}{\numberline {1}{\ignorespaces Simplified pipeline orchestration snippet.}}{2}{lstlisting.1}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Technology Stack}{2}{subsection.3.4}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {4}Dataset: TCGA-BRCA}{2}{section.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Pipeline technology stack.}}{2}{table.caption.8}\protected@file@percent }
-\newlabel{tab:stack}{{3}{2}{Pipeline technology stack}{table.caption.8}{}}
-\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces TCGA-BRCA dataset characteristics.}}{2}{table.caption.9}\protected@file@percent }
-\newlabel{tab:dataset}{{4}{2}{TCGA-BRCA dataset characteristics}{table.caption.9}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Preprocessing}{2}{section.5}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Missing Value Imputation}{2}{subsection.5.1}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}{\ignorespaces Imputation handler initialization.}}{2}{lstlisting.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Normalisation}{2}{subsection.5.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}{\ignorespaces YAML configuration for normalisation.}}{2}{lstlisting.3}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Multi-Omics Integration}{2}{section.6}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Sample Alignment}{2}{subsection.6.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces The MultiOmicsPipeline technology stack.}}{2}{table.caption.8}\protected@file@percent }
+\newlabel{tab:stack}{{3}{2}{The MultiOmicsPipeline technology stack}{table.caption.8}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Dataset: TCGA-BRCA Validation}{2}{section.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Characteristics of the TCGA-BRCA validation cohort.}}{2}{table.caption.9}\protected@file@percent }
+\newlabel{tab:dataset}{{4}{2}{Characteristics of the TCGA-BRCA validation cohort}{table.caption.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Data Preprocessing Strategies}{2}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Adaptive Missing Value Imputation}{2}{subsection.5.1}\protected@file@percent }
 \citation{jolliffe2002}
-\citation{jolliffe2002}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces The MultiOmicsPipeline data flow. Raw multi-modal data is imputed and normalized before cross-modal sample alignment. The data then undergoes dimensionality reduction (PCA) prior to being exported to interoperable clinical formats.}}{3}{figure.caption.7}\protected@file@percent }
-\newlabel{fig:pipeline_dag}{{1}{3}{The MultiOmicsPipeline data flow. Raw multi-modal data is imputed and normalized before cross-modal sample alignment. The data then undergoes dimensionality reduction (PCA) prior to being exported to interoperable clinical formats}{figure.caption.7}{}}
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}{\ignorespaces TCGA barcode extraction logic.}}{3}{lstlisting.4}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Sample alignment retention rates.}}{3}{table.caption.10}\protected@file@percent }
-\newlabel{tab:alignment}{{5}{3}{Sample alignment retention rates}{table.caption.10}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Data Fusion Strategies}{3}{subsection.6.2}\protected@file@percent }
-\@writefile{lol}{\contentsline {lstlisting}{\numberline {5}{\ignorespaces Example of early integration execution.}}{3}{lstlisting.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Architectural Workflow: From raw multi-modal sequencing data to interoperable clinical reporting. The pipeline is structured into four distinct phases ensuring reproducibility and rigorous standardization.}}{3}{figure.caption.7}\protected@file@percent }
+\newlabel{fig:pipeline_dag}{{1}{3}{Architectural Workflow: From raw multi-modal sequencing data to interoperable clinical reporting. The pipeline is structured into four distinct phases ensuring reproducibility and rigorous standardization}{figure.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Multi-Modal Normalization}{3}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Multi-Omics Integration Strategies}{3}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Cross-Modal Sample Alignment}{3}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Fusion Paradigms}{3}{subsection.6.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Cross-modal sample alignment and retention rates.}}{3}{table.caption.10}\protected@file@percent }
+\newlabel{tab:alignment}{{5}{3}{Cross-modal sample alignment and retention rates}{table.caption.10}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {6.3}PCA-based Dimensionality Reduction}{3}{subsection.6.3}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {7}Export and Interoperability}{3}{section.7}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Comparison of export formats.}}{3}{table.caption.11}\protected@file@percent }
-\newlabel{tab:export}{{6}{3}{Comparison of export formats}{table.caption.11}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {8}Results}{3}{section.8}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Global Pipeline Performance}{3}{subsection.8.1}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Performance metrics on the TCGA-BRCA cohort.}}{3}{table.caption.12}\protected@file@percent }
-\newlabel{tab:results}{{7}{3}{Performance metrics on the TCGA-BRCA cohort}{table.caption.12}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Multidimensional Quality Scoring}{3}{subsection.8.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Computational Scalability}{3}{subsection.8.3}\protected@file@percent }
+\citation{argelaguet2018}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Interoperability metrics across supported export formats.}}{4}{table.caption.11}\protected@file@percent }
+\newlabel{tab:export}{{6}{4}{Interoperability metrics across supported export formats}{table.caption.11}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Experimental Results}{4}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}Quantifying Pipeline Performance}{4}{subsection.8.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces End-to-end pipeline performance on TCGA-BRCA.}}{4}{table.caption.12}\protected@file@percent }
+\newlabel{tab:results}{{7}{4}{End-to-end pipeline performance on TCGA-BRCA}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Multidimensional Quality Benchmarking}{4}{subsection.8.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Computational Scalability and Efficiency}{4}{subsection.8.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Multidimensional quality assessment of the integrated output.}}{4}{table.caption.13}\protected@file@percent }
+\newlabel{tab:quality}{{8}{4}{Multidimensional quality assessment of the integrated output}{table.caption.13}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {9}Discussion and Future Horizons}{4}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Methodological Implications}{4}{subsection.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Limitations and Constraints}{4}{subsection.9.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Development Roadmap}{4}{subsection.9.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{4}{section.10}\protected@file@percent }
 \bibstyle{ACM-Reference-Format}
 \bibcite{tomczak2015}{{1}{}{{}}{{}}}
 \bibcite{argelaguet2018}{{2}{}{{}}{{}}}
@@ -93,15 +91,8 @@
 \newlabel{tocindent4}{0pt}
 \newlabel{tocindent5}{0pt}
 \providecommand\NAT@force@numbers{}\NAT@force@numbers
-\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Six-dimension quality assessment of final output.}}{4}{table.caption.13}\protected@file@percent }
-\newlabel{tab:quality}{{8}{4}{Six-dimension quality assessment of final output}{table.caption.13}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {9}Discussion}{4}{section.9}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Methodological Findings}{4}{subsection.9.1}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Limitations}{4}{subsection.9.2}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Future Work}{4}{subsection.9.3}\protected@file@percent }
-\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Planned development roadmap.}}{4}{table.caption.14}\protected@file@percent }
-\newlabel{tab:roadmap}{{9}{4}{Planned development roadmap}{table.caption.14}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {10}Conclusion}{4}{section.10}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{References}{4}{section*.17}\protected@file@percent }
-\newlabel{TotPages}{{4}{4}{}{page.4}{}}
-\gdef \@abspage@last{4}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Projected development roadmap (2026--2027).}}{5}{table.caption.14}\protected@file@percent }
+\newlabel{tab:roadmap}{{9}{5}{Projected development roadmap (2026--2027)}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {section}{References}{5}{section*.17}\protected@file@percent }
+\newlabel{TotPages}{{5}{5}{}{page.5}{}}
+\gdef \@abspage@last{5}
