@@ -217,16 +217,6 @@ python test_final.py
 
 ---
 
-## 🎉 Success!
-
- **complete and functional multi-omics pipeline**:
-
-✅ **Fast installation** (5 minutes)
-✅ **Simple usage** (one command line)
-✅ **Professional outputs** (standard formats)
-✅ **Complete documentation** (guides and examples)
-
-
 
 ---
 
