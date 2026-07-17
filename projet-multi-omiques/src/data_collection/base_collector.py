@@ -76,8 +76,7 @@ class BaseCollector(ABC):
         """
         pass
     
-    def download_file(self, url: str, filename: Optional[str] = None, 
-                     chunk_size: int = 8192) -> Path:
+    def download_file(self, url: str, filename: Optional[str] = None, chunk_size: int = 8192) -> Path:
         """
         Download a file with retry logic.
         
