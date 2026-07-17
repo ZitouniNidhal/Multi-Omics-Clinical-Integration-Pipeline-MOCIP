@@ -1,0 +1,20 @@
+\subsection{Tiered Integration Algorithm}
+The core logic for multi-modal synchronization and dimensionality reduction is summarized in Algorithm~\ref{alg:integration}.
+
+\begin{algorithm}[h]
+\caption{Tiered Multi-Omics Integration}\label{alg:integration}
+\begin{algorithmic}[1]
+\REQUIRE $\mathcal{X} = \{X_1, X_2, \dots, X_M\}$ (Modalities), $\alpha = 0.95$ (Variance)
+\ENSURE $\mathcal{F}$ (Integrated Latent Space)
+\FOR{$m = 1$ to $M$}
+    \STATE $X_m \gets \text{Impute}(X_m, \text{method='k-NN'})$
+    \STATE $X_m \gets \text{Normalize}(X_m, \text{method='TPM'})$
+\ENDFOR
+\STATE $\mathcal{S} \gets \text{AlignSamples}(\mathcal{X})$
+\FOR{$m = 1$ to $M$}
+    \STATE $\mathcal{Z}_m \gets \text{PCA}(X_{m, \mathcal{S}}, \text{variance}=\alpha)$
+\ENDFOR
+\STATE $\mathcal{F} \gets \text{Concatenate}(\mathcal{Z}_1, \mathcal{Z}_2, \dots, \mathcal{Z}_M)$
+\RETURN $\mathcal{F}$
+\end{algorithmic}
+\end{algorithm}

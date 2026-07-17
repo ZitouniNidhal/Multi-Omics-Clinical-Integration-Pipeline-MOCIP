@@ -1250,3 +1250,323 @@
 2026-04-28 12:42:12,353 - JSONExporter - INFO - [OK] JSON export completed: test_simple/integrated_data.json
 2026-04-28 12:42:12,354 - MultiOmicsPipeline - INFO -  Data exported to JSON: test_simple/integrated_data.json
 2026-04-28 12:42:12,354 - MultiOmicsPipeline - INFO -  Pipeline completed successfully
+2026-05-06 00:59:31,226 - MultiOmicsPipeline - INFO - Logging system configured
+2026-05-06 00:59:31,227 - utils.perfermance - INFO - Initialized PerformanceMonitor
+2026-05-06 00:59:31,230 - utils.validation - INFO - Initialized DataValidator with level: strict
+2026-05-06 00:59:31,230 - MultiOmicsPipeline - INFO - Pipeline initialized: multi_omics_pipeline v1.0.0
+2026-05-06 00:59:31,230 - MultiOmicsPipeline - INFO - Starting multi-omics pipeline execution
+2026-05-06 00:59:31,231 - utils.perfermance - INFO - Performance monitoring started for: full_pipeline_run
+2026-05-06 00:59:31,231 - MultiOmicsPipeline - INFO - Step 1: Data loading
+2026-05-06 00:59:31,270 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-05-06 00:59:31,277 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-05-06 00:59:31,277 - MultiOmicsPipeline - INFO - Validating input data
+2026-05-06 00:59:31,277 - utils.validation - INFO - Validating multi-omics data
+2026-05-06 00:59:31,281 - utils.validation - INFO - Validating DataFrame against schema: clinical
+2026-05-06 00:59:36,322 - utils.perfermance - INFO - Performance monitoring stopped
+2026-05-06 00:59:36,322 - utils.perfermance - INFO - Execution summary: {'peak_memory_mb': 165.4375, 'avg_memory_mb': 165.4375, 'peak_cpu_percent': 6.1, 'avg_cpu_percent': 6.1, 'peak_disk_usage_percent': 99.9266328057872, 'n_measurements': 1, 'resource_efficiency_score': 85.0, 'total_execution_time': 5.091094255447388, 'monitoring_duration': 5.091094255447388}
+2026-05-06 00:59:36,322 - MultiOmicsPipeline - ERROR - Pipeline failed: 'NpString' object has no attribute 'lower'
+Traceback (most recent call last):
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\utils\validation.py", line 120, in validate_dataframe
+    validated_df = schema.validate(df, lazy=True)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandera\api\pandas\container.py", line 125, in validate
+    return self._validate(
+           ^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandera\api\pandas\container.py", line 145, in _validate
+    return self.get_backend(check_obj).validate(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandera\backends\pandas\container.py", line 144, in validate
+    raise SchemaErrors(
+pandera.errors.SchemaErrors: {
+    "SCHEMA": {
+        "COLUMN_NOT_IN_DATAFRAME": [
+            {
+                "schema": null,
+                "column": "sample_id",
+                "check": "column_in_dataframe",
+                "error": "column 'sample_id' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "age",
+                "check": "column_in_dataframe",
+                "error": "column 'age' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "gender",
+                "check": "column_in_dataframe",
+                "error": "column 'gender' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "tumor_stage",
+                "check": "column_in_dataframe",
+                "error": "column 'tumor_stage' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "survival_time",
+                "check": "column_in_dataframe",
+                "error": "column 'survival_time' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "vital_status",
+                "check": "column_in_dataframe",
+                "error": "column 'vital_status' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "tumor_grade",
+                "check": "column_in_dataframe",
+                "error": "column 'tumor_grade' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "tumor_size",
+                "check": "column_in_dataframe",
+                "error": "column 'tumor_size' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            },
+            {
+                "schema": null,
+                "column": "lymph_nodes",
+                "check": "column_in_dataframe",
+                "error": "column 'lymph_nodes' not in dataframe. Columns in dataframe: ['patient_id', 'TP53', 'BRCA1', 'EGFR', 'KRAS', 'PTEN']"
+            }
+        ]
+    }
+}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\pipeline.py", line 76, in run
+    val_results = self.validator.validate_multi_omics_data({
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\utils\validation.py", line 185, in validate_multi_omics_data
+    validation_result = self.validate_dataframe(df, schema_name)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\utils\validation.py", line 138, in validate_dataframe
+    'statistics': self._calculate_validation_statistics(df, schema)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\utils\validation.py", line 264, in _calculate_validation_statistics
+    type_match = self._check_dtype_match(expected_dtype, actual_dtype)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\utils\validation.py", line 282, in _check_dtype_match
+    expected_lower = expected.lower()
+                     ^^^^^^^^^^^^^^
+AttributeError: 'NpString' object has no attribute 'lower'
+2026-05-06 01:01:11,462 - MultiOmicsPipeline - INFO - Logging system configured
+2026-05-06 01:01:11,464 - utils.perfermance - INFO - Initialized PerformanceMonitor
+2026-05-06 01:01:11,465 - utils.validation - INFO - Initialized DataValidator with level: strict
+2026-05-06 01:01:11,466 - MultiOmicsPipeline - INFO - Pipeline initialized: multi_omics_pipeline v1.0.0
+2026-05-06 01:01:11,466 - MultiOmicsPipeline - INFO - Starting multi-omics pipeline execution
+2026-05-06 01:01:11,467 - utils.perfermance - INFO - Performance monitoring started for: full_pipeline_run
+2026-05-06 01:01:11,467 - MultiOmicsPipeline - INFO - Step 1: Data loading
+2026-05-06 01:01:11,472 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-05-06 01:01:11,472 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-05-06 01:01:11,472 - MultiOmicsPipeline - INFO - Validating input data
+2026-05-06 01:01:11,474 - utils.validation - INFO - Validating multi-omics data
+2026-05-06 01:01:11,474 - utils.validation - INFO - Validating DataFrame against schema: gene_expression
+2026-05-06 01:01:11,497 - utils.validation - INFO - Validating DataFrame against schema: clinical
+2026-05-06 01:01:11,507 - utils.validation - WARNING - Validation error: {'column': 'survival_months', 'failure_case': 'int64', 'index': None, 'schema_context': 'Column', 'check': "dtype('float64')", 'check_number': None}
+2026-05-06 01:01:11,507 - MultiOmicsPipeline - WARNING - Validation warnings: 1 issues found
+2026-05-06 01:01:11,507 - MultiOmicsPipeline - INFO - Step 2: Data preprocessing
+2026-05-06 01:01:11,532 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-05-06 01:01:11,532 - MultiOmicsPipeline - INFO - Missing values handling
+2026-05-06 01:01:11,533 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-05-06 01:01:11,533 - MissingValueHandler - INFO - Missing values before imputation: 2
+2026-05-06 01:01:11,544 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-05-06 01:01:11,544 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-05-06 01:01:11,545 - MissingValueHandler - INFO - Missing values before imputation: 1
+2026-05-06 01:01:11,550 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-05-06 01:01:11,551 - MultiOmicsPipeline - INFO - Omics data normalization
+2026-05-06 01:01:11,551 - preprocessing.normalization - INFO - Initialized OmicsNormalizer
+2026-05-06 01:01:11,551 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-05-06 01:01:11,551 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-05-06 01:01:11,551 - preprocessing.normalization - INFO - Applying standard scaling
+2026-05-06 01:01:11,553 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-05-06 01:01:11,554 - MultiOmicsPipeline - INFO - Omics missing values: 0 -> 0
+2026-05-06 01:01:11,554 - MultiOmicsPipeline - INFO - Clinical missing values: 0 -> 0
+2026-05-06 01:01:11,555 - MultiOmicsPipeline - INFO - Step 3: Data integration
+2026-05-06 01:01:11,564 - MultiOmicsPipeline - INFO -  Data integration
+2026-05-06 01:01:11,564 - MultiOmicsPipeline - INFO - Sample alignment
+2026-05-06 01:01:11,564 - integration.sample_alignment - INFO - Initialized SampleAlignment with method: match_by_patient_id
+2026-05-06 01:01:11,564 - integration.sample_alignment - INFO - Aligning samples across omics datasets
+2026-05-06 01:01:11,566 - integration.sample_alignment - INFO - omic: 10 samples
+2026-05-06 01:01:11,566 - integration.sample_alignment - INFO - clinical: 10 samples
+2026-05-06 01:01:11,566 - integration.sample_alignment - INFO - Matching samples by patient ID
+2026-05-06 01:01:11,567 - integration.sample_alignment - INFO - Found 10 common patient IDs
+2026-05-06 01:01:11,567 - integration.sample_alignment - INFO - Creating aligned datasets
+2026-05-06 01:01:11,570 - integration.sample_alignment - INFO - Aligned omic: 10 samples
+2026-05-06 01:01:11,570 - integration.sample_alignment - INFO - Aligned clinical: 10 samples
+2026-05-06 01:01:11,570 - integration.sample_alignment - INFO - Sample alignment complete: 10 matched samples
+2026-05-06 01:01:11,571 - MultiOmicsPipeline - INFO - Multi-modality fusion and integration
+2026-05-06 01:01:11,571 - integration.data_fusion - INFO - Initialized MultiOmicsFusion with methods: ['early_integration']
+2026-05-06 01:01:11,571 - integration.data_fusion - INFO - Integrating 2 omics datasets
+2026-05-06 01:01:11,571 - integration.data_fusion - INFO - Aligning samples across omics datasets
+2026-05-06 01:01:11,571 - integration.data_fusion - INFO - omic: 10 samples
+2026-05-06 01:01:11,571 - integration.data_fusion - INFO - clinical: 10 samples
+2026-05-06 01:01:11,571 - integration.data_fusion - INFO - Found 10 common samples
+2026-05-06 01:01:11,572 - integration.data_fusion - INFO - Aligned omic: 10 samples
+2026-05-06 01:01:11,572 - integration.data_fusion - INFO - Aligned clinical: 10 samples
+2026-05-06 01:01:11,572 - integration.data_fusion - INFO - Applying integration method: early_integration
+2026-05-06 01:01:11,572 - integration.data_fusion - INFO - Performing early integration
+2026-05-06 01:01:11,577 - integration.data_fusion - INFO - Preparing clinical data
+2026-05-06 01:01:11,577 - integration.data_fusion - ERROR - Integration method early_integration failed: 'sample_id'
+2026-05-06 01:01:11,577 - integration.data_fusion - INFO - Applying Six-Dimension Quality Assessment Framework
+2026-05-06 01:01:11,578 - integration.data_fusion - INFO - Data integration complete
+2026-05-06 01:01:16,590 - utils.perfermance - INFO - Performance monitoring stopped
+2026-05-06 01:01:16,590 - utils.perfermance - INFO - Execution summary: {'peak_memory_mb': 165.43359375, 'avg_memory_mb': 165.43359375, 'peak_cpu_percent': 9.5, 'avg_cpu_percent': 9.5, 'peak_disk_usage_percent': 99.92569824814962, 'n_measurements': 1, 'resource_efficiency_score': 85.0, 'total_execution_time': 5.122689485549927, 'monitoring_duration': 5.122689485549927}
+2026-05-06 01:01:16,591 - MultiOmicsPipeline - ERROR - Pipeline failed: 'integrated_data'
+Traceback (most recent call last):
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\pipeline.py", line 89, in run
+    integrated_data = self.integrate_data(processed_data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\pipeline.py", line 237, in integrate_data
+    integrated = integration_results['integration_methods'][first_method]['integrated_data']
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'integrated_data'
+2026-05-06 01:02:14,406 - MultiOmicsPipeline - INFO - Logging system configured
+2026-05-06 01:02:14,406 - utils.perfermance - INFO - Initialized PerformanceMonitor
+2026-05-06 01:02:14,408 - utils.validation - INFO - Initialized DataValidator with level: strict
+2026-05-06 01:02:14,408 - MultiOmicsPipeline - INFO - Pipeline initialized: multi_omics_pipeline v1.0.0
+2026-05-06 01:02:14,408 - MultiOmicsPipeline - INFO - Starting multi-omics pipeline execution
+2026-05-06 01:02:14,410 - utils.perfermance - INFO - Performance monitoring started for: full_pipeline_run
+2026-05-06 01:02:14,410 - MultiOmicsPipeline - INFO - Step 1: Data loading
+2026-05-06 01:02:14,416 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-05-06 01:02:14,419 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-05-06 01:02:14,420 - MultiOmicsPipeline - INFO - Validating input data
+2026-05-06 01:02:14,420 - utils.validation - INFO - Validating multi-omics data
+2026-05-06 01:02:14,420 - utils.validation - INFO - Validating DataFrame against schema: gene_expression
+2026-05-06 01:02:14,451 - utils.validation - INFO - Validating DataFrame against schema: clinical
+2026-05-06 01:02:14,473 - utils.validation - WARNING - Validation error: {'column': 'survival_months', 'failure_case': 'int64', 'index': None, 'schema_context': 'Column', 'check': "dtype('float64')", 'check_number': None}
+2026-05-06 01:02:14,479 - MultiOmicsPipeline - WARNING - Validation warnings: 1 issues found
+2026-05-06 01:02:14,479 - MultiOmicsPipeline - INFO - Step 2: Data preprocessing
+2026-05-06 01:02:14,488 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-05-06 01:02:14,490 - MultiOmicsPipeline - INFO - Missing values handling
+2026-05-06 01:02:14,490 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-05-06 01:02:14,491 - MissingValueHandler - INFO - Missing values before imputation: 2
+2026-05-06 01:02:14,497 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-05-06 01:02:14,497 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-05-06 01:02:14,497 - MissingValueHandler - INFO - Missing values before imputation: 1
+2026-05-06 01:02:14,502 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-05-06 01:02:14,502 - MultiOmicsPipeline - INFO - Omics data normalization
+2026-05-06 01:02:14,502 - preprocessing.normalization - INFO - Initialized OmicsNormalizer
+2026-05-06 01:02:14,502 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-05-06 01:02:14,503 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-05-06 01:02:14,503 - preprocessing.normalization - INFO - Applying standard scaling
+2026-05-06 01:02:14,504 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-05-06 01:02:14,506 - MultiOmicsPipeline - INFO - Omics missing values: 0 -> 0
+2026-05-06 01:02:14,506 - MultiOmicsPipeline - INFO - Clinical missing values: 0 -> 0
+2026-05-06 01:02:14,506 - MultiOmicsPipeline - INFO - Step 3: Data integration
+2026-05-06 01:02:14,509 - MultiOmicsPipeline - INFO -  Data integration
+2026-05-06 01:02:14,509 - MultiOmicsPipeline - INFO - Sample alignment
+2026-05-06 01:02:14,509 - integration.sample_alignment - INFO - Initialized SampleAlignment with method: match_by_patient_id
+2026-05-06 01:02:14,509 - integration.sample_alignment - INFO - Aligning samples across omics datasets
+2026-05-06 01:02:14,509 - integration.sample_alignment - INFO - omic: 10 samples
+2026-05-06 01:02:14,509 - integration.sample_alignment - INFO - clinical: 10 samples
+2026-05-06 01:02:14,511 - integration.sample_alignment - INFO - Matching samples by patient ID
+2026-05-06 01:02:14,511 - integration.sample_alignment - INFO - Found 10 common patient IDs
+2026-05-06 01:02:14,511 - integration.sample_alignment - INFO - Creating aligned datasets
+2026-05-06 01:02:14,512 - integration.sample_alignment - INFO - Aligned omic: 10 samples
+2026-05-06 01:02:14,512 - integration.sample_alignment - INFO - Aligned clinical: 10 samples
+2026-05-06 01:02:14,512 - integration.sample_alignment - INFO - Sample alignment complete: 10 matched samples
+2026-05-06 01:02:14,513 - MultiOmicsPipeline - INFO - Multi-modality fusion and integration
+2026-05-06 01:02:14,513 - integration.data_fusion - INFO - Initialized MultiOmicsFusion with methods: ['early_integration']
+2026-05-06 01:02:14,513 - integration.data_fusion - INFO - Integrating 2 omics datasets
+2026-05-06 01:02:14,513 - integration.data_fusion - INFO - Aligning samples across omics datasets
+2026-05-06 01:02:14,513 - integration.data_fusion - INFO - omic: 10 samples
+2026-05-06 01:02:14,513 - integration.data_fusion - INFO - clinical: 10 samples
+2026-05-06 01:02:14,513 - integration.data_fusion - INFO - Found 10 common samples
+2026-05-06 01:02:14,514 - integration.data_fusion - INFO - Aligned omic: 10 samples
+2026-05-06 01:02:14,515 - integration.data_fusion - INFO - Aligned clinical: 10 samples
+2026-05-06 01:02:14,516 - integration.data_fusion - INFO - Applying integration method: early_integration
+2026-05-06 01:02:14,516 - integration.data_fusion - INFO - Performing early integration
+2026-05-06 01:02:14,519 - integration.data_fusion - INFO - Preparing clinical data
+2026-05-06 01:02:14,519 - integration.data_fusion - ERROR - Integration method early_integration failed: 'sample_id'
+2026-05-06 01:02:14,519 - integration.data_fusion - INFO - Applying Six-Dimension Quality Assessment Framework
+2026-05-06 01:02:14,519 - integration.data_fusion - INFO - Data integration complete
+2026-05-06 01:02:19,534 - utils.perfermance - INFO - Performance monitoring stopped
+2026-05-06 01:02:19,535 - utils.perfermance - INFO - Execution summary: {'peak_memory_mb': 165.63671875, 'avg_memory_mb': 165.63671875, 'peak_cpu_percent': 8.6, 'avg_cpu_percent': 8.6, 'peak_disk_usage_percent': 99.92570869462364, 'n_measurements': 1, 'resource_efficiency_score': 85.0, 'total_execution_time': 5.1245341300964355, 'monitoring_duration': 5.1245341300964355}
+2026-05-06 01:02:19,535 - MultiOmicsPipeline - ERROR - Pipeline failed: 'integrated_data'
+Traceback (most recent call last):
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\pipeline.py", line 89, in run
+    integrated_data = self.integrate_data(processed_data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\pipeline.py", line 237, in integrate_data
+    integrated = integration_results['integration_methods'][first_method]['integrated_data']
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'integrated_data'
+2026-05-06 01:38:30,455 - MultiOmicsPipeline - INFO - Logging system configured
+2026-05-06 01:38:30,455 - utils.perfermance - INFO - Initialized PerformanceMonitor
+2026-05-06 01:38:30,457 - utils.validation - INFO - Initialized DataValidator with level: strict
+2026-05-06 01:38:30,457 - MultiOmicsPipeline - INFO - Pipeline initialized: multi_omics_pipeline v1.0.0
+2026-05-06 01:38:30,457 - MultiOmicsPipeline - INFO - Starting multi-omics pipeline execution
+2026-05-06 01:38:30,458 - utils.perfermance - INFO - Performance monitoring started for: full_pipeline_run
+2026-05-06 01:38:30,458 - MultiOmicsPipeline - INFO - Step 1: Data loading
+2026-05-06 01:38:30,463 - MultiOmicsPipeline - INFO -  Data loaded from demo_expression_data.csv: (10, 6)
+2026-05-06 01:38:30,464 - MultiOmicsPipeline - INFO -  Data loaded from demo_clinical_data.csv: (10, 6)
+2026-05-06 01:38:30,464 - MultiOmicsPipeline - INFO - Validating input data
+2026-05-06 01:38:30,464 - utils.validation - INFO - Validating multi-omics data
+2026-05-06 01:38:30,464 - utils.validation - INFO - Validating DataFrame against schema: gene_expression
+2026-05-06 01:38:30,488 - utils.validation - INFO - Validating DataFrame against schema: clinical
+2026-05-06 01:38:30,500 - utils.validation - WARNING - Validation error: {'column': 'survival_months', 'failure_case': 'int64', 'index': None, 'schema_context': 'Column', 'check': "dtype('float64')", 'check_number': None}
+2026-05-06 01:38:30,501 - MultiOmicsPipeline - WARNING - Validation warnings: 1 issues found
+2026-05-06 01:38:30,501 - MultiOmicsPipeline - INFO - Step 2: Data preprocessing
+2026-05-06 01:38:30,507 - MultiOmicsPipeline - INFO -  Data preprocessing
+2026-05-06 01:38:30,507 - MultiOmicsPipeline - INFO - Missing values handling
+2026-05-06 01:38:30,507 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-05-06 01:38:30,508 - MissingValueHandler - INFO - Missing values before imputation: 2
+2026-05-06 01:38:30,512 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-05-06 01:38:30,513 - MissingValueHandler - INFO - Imputing missing values with strategy: knn
+2026-05-06 01:38:30,514 - MissingValueHandler - INFO - Missing values before imputation: 1
+2026-05-06 01:38:30,517 - MissingValueHandler - INFO - [OK] KNN imputation completed. Missing values after: 0
+2026-05-06 01:38:30,517 - MultiOmicsPipeline - INFO - Omics data normalization
+2026-05-06 01:38:30,517 - preprocessing.normalization - INFO - Initialized OmicsNormalizer
+2026-05-06 01:38:30,517 - preprocessing.normalization - INFO - Fitting normalizer for data type: gene_expression
+2026-05-06 01:38:30,518 - preprocessing.normalization - INFO - Normalizing gene expression data (method: standard)
+2026-05-06 01:38:30,518 - preprocessing.normalization - INFO - Applying standard scaling
+2026-05-06 01:38:30,520 - preprocessing.normalization - INFO - Standard scaling complete. Shape: (10, 5)
+2026-05-06 01:38:30,521 - MultiOmicsPipeline - INFO - Omics missing values: 0 -> 0
+2026-05-06 01:38:30,521 - MultiOmicsPipeline - INFO - Clinical missing values: 0 -> 0
+2026-05-06 01:38:30,521 - MultiOmicsPipeline - INFO - Step 3: Data integration
+2026-05-06 01:38:30,524 - MultiOmicsPipeline - INFO -  Data integration
+2026-05-06 01:38:30,525 - MultiOmicsPipeline - INFO - Sample alignment
+2026-05-06 01:38:30,525 - integration.sample_alignment - INFO - Initialized SampleAlignment with method: match_by_patient_id
+2026-05-06 01:38:30,525 - integration.sample_alignment - INFO - Aligning samples across omics datasets
+2026-05-06 01:38:30,525 - integration.sample_alignment - INFO - omic: 10 samples
+2026-05-06 01:38:30,525 - integration.sample_alignment - INFO - clinical: 10 samples
+2026-05-06 01:38:30,525 - integration.sample_alignment - INFO - Matching samples by patient ID
+2026-05-06 01:38:30,527 - integration.sample_alignment - INFO - Found 10 common patient IDs
+2026-05-06 01:38:30,527 - integration.sample_alignment - INFO - Creating aligned datasets
+2026-05-06 01:38:30,527 - integration.sample_alignment - INFO - Aligned omic: 10 samples
+2026-05-06 01:38:30,529 - integration.sample_alignment - INFO - Aligned clinical: 10 samples
+2026-05-06 01:38:30,529 - integration.sample_alignment - INFO - Sample alignment complete: 10 matched samples
+2026-05-06 01:38:30,529 - MultiOmicsPipeline - INFO - Multi-modality fusion and integration
+2026-05-06 01:38:30,529 - integration.data_fusion - INFO - Initialized MultiOmicsFusion with methods: ['early_integration']
+2026-05-06 01:38:30,529 - integration.data_fusion - INFO - Integrating 2 omics datasets
+2026-05-06 01:38:30,530 - integration.data_fusion - INFO - Aligning samples across omics datasets
+2026-05-06 01:38:30,530 - integration.data_fusion - INFO - omic: 10 samples
+2026-05-06 01:38:30,530 - integration.data_fusion - INFO - clinical: 10 samples
+2026-05-06 01:38:30,530 - integration.data_fusion - INFO - Found 10 common samples
+2026-05-06 01:38:30,531 - integration.data_fusion - INFO - Aligned omic: 10 samples
+2026-05-06 01:38:30,531 - integration.data_fusion - INFO - Aligned clinical: 10 samples
+2026-05-06 01:38:30,531 - integration.data_fusion - INFO - Applying integration method: early_integration
+2026-05-06 01:38:30,531 - integration.data_fusion - INFO - Performing early integration
+2026-05-06 01:38:30,535 - integration.data_fusion - INFO - Preparing clinical data
+2026-05-06 01:38:30,536 - integration.data_fusion - ERROR - Integration method early_integration failed: 'sample_id'
+2026-05-06 01:38:30,536 - integration.data_fusion - INFO - Applying Six-Dimension Quality Assessment Framework
+2026-05-06 01:38:30,536 - integration.data_fusion - INFO - Data integration complete
+2026-05-06 01:38:35,547 - utils.perfermance - INFO - Performance monitoring stopped
+2026-05-06 01:38:35,547 - utils.perfermance - INFO - Execution summary: {'peak_memory_mb': 165.15234375, 'avg_memory_mb': 165.15234375, 'peak_cpu_percent': 5.1, 'avg_cpu_percent': 5.1, 'peak_disk_usage_percent': 99.9803083964668, 'n_measurements': 1, 'resource_efficiency_score': 85.0, 'total_execution_time': 5.08910059928894, 'monitoring_duration': 5.08910059928894}
+2026-05-06 01:38:35,547 - MultiOmicsPipeline - ERROR - Pipeline failed: 'integrated_data'
+Traceback (most recent call last):
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\pipeline.py", line 89, in run
+    integrated_data = self.integrate_data(processed_data)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\nidha\Desktop\Nouveau dossier (2)\Multi-Omics-Clinical-Integration-Pipeline-MOCIP\projet-multi-omiques\src\pipeline.py", line 237, in integrate_data
+    integrated = integration_results['integration_methods'][first_method]['integrated_data']
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+KeyError: 'integrated_data'

@@ -1,0 +1,61 @@
+\begin{figure*}[ht]
+\centering
+\resizebox{0.95\textwidth}{!}{
+\begin{tikzpicture}[
+  node distance=0.7cm and 1.8cm,
+  dataNode/.style={draw=vibrantblue, thick, top color=white, bottom color=vibrantblue!10, minimum width=3.0cm, minimum height=1.0cm, align=center, font=\small\sffamily, rounded corners=4pt, drop shadow={opacity=0.15, shadow xshift=2pt, shadow yshift=-2pt}},
+  procNode/.style={draw=deepblue, thick, top color=white, bottom color=deepblue!5, minimum width=3.5cm, minimum height=1.1cm, align=center, font=\small\sffamily\bfseries, rounded corners=4pt, drop shadow={opacity=0.2, shadow xshift=2pt, shadow yshift=-2pt}},
+  exportNode/.style={draw=tealaccent, thick, top color=white, bottom color=tealaccent!10, minimum width=3.2cm, minimum height=1.1cm, align=center, font=\small\sffamily\bfseries, rounded corners=4pt, drop shadow={opacity=0.2, shadow xshift=2pt, shadow yshift=-2pt}},
+  groupBox/.style={draw=groupline, thick, dashed, rounded corners=12pt, fill=softbg!30, inner sep=14pt},
+  arrow/.style={-{Stealth[scale=1.0]}, thick, draw=black!70, shorten >=3pt, shorten <=3pt, rounded corners=4pt},
+  groupLabel/.style={font=\small\sffamily\bfseries\color{deepblue}, anchor=south west, yshift=4pt}
+]
+
+% Phase 1: Ingestion
+\node[dataNode] (rna) {RNA-Seq (Expression)};
+\node[dataNode, below=0.6cm of rna] (meth) {Methylation (450K/850K)};
+\node[dataNode, below=0.6cm of meth] (wes) {WES (Somatic Mutations)};
+\node[dataNode, below=0.6cm of wes] (clin) {Clinical Phenotypes};
+
+% Phase 2: Preprocessing
+\node[procNode, right=2.8cm of meth, yshift=-0.2cm] (impute) {Feature Imputation\\(Density k-NN)};
+\node[procNode, right=2.8cm of clin, yshift=0.3cm] (norm) {Multi-Strategy\\Normalization};
+
+% Phase 3: Integration
+\node[procNode, right=2.2cm of impute, yshift=-1.0cm] (align) {Cross-Modal\\Sample Alignment};
+\node[procNode, right=2.2cm of align] (pca) {Dimensionality\\Reduction (PCA)};
+
+% Phase 4: Interoperability
+\node[exportNode, right=2.2cm of pca] (export) {FHIR R4 / JSON\\FAIR Export Engine};
+
+% Background Groups
+\begin{scope}[on background layer]
+  \node[groupBox, fit=(rna) (meth) (wes) (clin)] (groupData) {};
+  \node[groupLabel] at (groupData.north west) {Phase 1: Multi-Modal Ingestion};
+
+  \node[groupBox, fit=(impute) (norm)] (groupPrep) {};
+  \node[groupLabel] at (groupPrep.north west) {Phase 2: Preprocessing};
+
+  \node[groupBox, fit=(align) (pca)] (groupInteg) {};
+  \node[groupLabel] at (groupInteg.north west) {Phase 3: Integration};
+
+  \node[groupBox, fit=(export)] (groupExport) {};
+  \node[groupLabel] at (groupExport.north west) {Phase 4: Interoperability};
+\end{scope}
+
+% Connections with improved routing
+\draw[arrow] (rna.east) -- ++(1.2,0) |- (impute.west);
+\draw[arrow] (meth.east) -- (impute.west);
+\draw[arrow] (wes.east) -- ++(1.2,0) |- (impute.west);
+\draw[arrow] (clin.east) -- (norm.west);
+
+\draw[arrow] (impute.east) -- ++(1.0,0) |- (align.west);
+\draw[arrow] (norm.east) -- ++(1.0,0) |- (align.west);
+
+\draw[arrow] (align.east) -- (pca.west);
+\draw[arrow] (pca.east) -- (export.west);
+
+\end{tikzpicture}
+}
+\caption{Optimized Architectural Workflow: Systematic orchestration from raw multi-omics sequencing to FAIR-compliant clinical outputs. The modular design ensures 100\% reproducibility and semantic integrity.}\label{fig:pipeline_dag}
+\end{figure*}

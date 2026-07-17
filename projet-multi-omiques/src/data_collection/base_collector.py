@@ -191,8 +191,7 @@ class BaseCollector(ABC):
         
         raise DataCollectionError(f"API call failed after {max_retries} attempts")
     
-    def validate_dataframe(self, df: pd.DataFrame, required_columns: List[str], 
-                          dataset_id: str) -> bool:
+    def validate_dataframe(self, df: pd.DataFrame, required_columns: List[str], dataset_id: str) -> bool:
         """
         Validate a dataframe.
         

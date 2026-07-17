@@ -1,0 +1,39 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# LaTeX generated files
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.run.xml
+*.bcf
+*.dvi
+*.4ct
+*.4tc
+*.xdv
+
+# PDF and other compiled/extracted outputs
+*.pdf
+*.eps
+*.ps
+
+# Build directories
+build/
+latex-build/
+
+# Demo or generated output
+demo_output/

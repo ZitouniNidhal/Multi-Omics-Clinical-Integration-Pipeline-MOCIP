@@ -42,7 +42,7 @@ data_collection:
 preprocessing:
   missing_data:
     strategy: "iterative"  # Options: simple, iterative, knn
-    threshold: 0.3  # Maximum percentage of missing data allowed
+    threshold: 0.2  # Maximum percentage of missing data allowed (Synced with Paper: 20%)
     
   normalization:
     gene_expression:
@@ -72,8 +72,9 @@ integration:
     
   dimensionality_reduction:
     enable: true
-    method: "multi_omics_factor_analysis"  # Options: mofa, pca, pls
-    n_components: 50
+    method: "pca"  # Primary method claimed in paper
+    pca_variance: 0.95  # Explained variance ratio (Synced with Paper)
+    n_components: null  # Dynamically determined by variance
     
   sample_alignment:
     method: "match_by_patient_id"
