@@ -37,3 +37,8 @@ latex-build/
 
 # Demo or generated output
 demo_output/
+
+# Ignore data, results, and logs directories containing large/generated files
+data/
+results/
+logs/
