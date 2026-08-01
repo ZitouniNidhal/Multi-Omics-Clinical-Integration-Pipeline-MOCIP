@@ -1,4 +1,4 @@
-# projet-multi-omiques/src/config.py
+# src/config.py
 
 import yaml
 from pathlib import Path

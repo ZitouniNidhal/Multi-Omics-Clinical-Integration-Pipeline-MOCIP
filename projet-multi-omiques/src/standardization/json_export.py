@@ -73,7 +73,7 @@ class JSONExporter:
         Returns:
             True if success, False otherwise
         """
-        self.logger.info(f"Export JSON vers {output_path}")
+        self.logger.info(f"Exporting JSON to {output_path}")
         
         try:
             # Prepare data for JSON serialization
@@ -126,7 +126,7 @@ class JSONExporter:
         Returns:
             True if success, False otherwise
         """
-        self.logger.info(f"Export JSON simple vers {output_path}")
+        self.logger.info(f"Exporting simple JSON to {output_path}")
         
         try:
             # Simple export of the DataFrame
