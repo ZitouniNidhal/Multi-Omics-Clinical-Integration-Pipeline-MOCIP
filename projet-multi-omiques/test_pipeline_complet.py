@@ -12,7 +12,7 @@ from pathlib import Path
 from pipeline import MultiOmicsPipeline
 import logging
 
-def test_pipeline_complet():
+def test_pipeline_complete():
     """Complete pipeline test with demonstration data"""
     
     print(" COMPLETE MULTI-OMICS PIPELINE TEST")
@@ -22,7 +22,7 @@ def test_pipeline_complet():
     config_path = "config/config.yaml"
     omic_data_path = "demo_expression_data.csv"
     clinical_data_path = "demo_clinical_data.csv"
-    output_dir = "test_results_complet"
+    output_dir = "test_results_complete"
     
     try:
         # Step 1: Initialize the pipeline
@@ -171,7 +171,7 @@ def main():
         return
     
     # Execute test
-    results = test_pipeline_complet()
+    results = test_pipeline_complete()
     
     # Display final summary
     print(f"\n FINAL TEST SUMMARY:")
@@ -185,4 +185,4 @@ def main():
         print(f"   Error: {results.get('error', 'Unknown error')}")
 
 if __name__ == "__main__":
-    main()
+    main()

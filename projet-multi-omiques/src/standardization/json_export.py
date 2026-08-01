@@ -239,9 +239,9 @@ class JSONExporter:
         
         return True
 
-# Tests rapides
+# Quick tests
 if __name__ == "__main__":
-    # Créer des données de test
+    # Create test data
     test_data = pd.DataFrame({
         'patient_id': ['P001', 'P002', 'P003'],
         'gene1': [1.5, 2.3, 0.8],
@@ -251,20 +251,20 @@ if __name__ == "__main__":
     })
     
     print("=== TEST JSON EXPORTER ===")
-    print("Données originales :")
+    print("Original data:")
     print(test_data)
     
-    # Test export avec schéma
+    # Test export with schema
     exporter = JSONExporter(schema_version='1.0')
     success = exporter.export_with_schema(test_data, 'test_export.json')
     
-    print(f"\nExport avec schéma : {'[OK] Succès' if success else '[Error] Échec'}")
+    print(f"\nExport with schema: {'[OK] Success' if success else '[Error] Failure'}")
     
-    # Test export simple
+    # Test simple export
     success_simple = exporter.export_simple_json(test_data, 'test_simple.json')
-    print(f"Export simple : {'[OK] Succès' if success else '[Error] Échec'}")
+    print(f"Simple export: {'[OK] Success' if success_simple else '[Error] Failure'}")
     
-    # Lire et vérifier le fichier exporté
+    # Read and verify the exported file
     try:
         with open('test_export.json', 'r') as f:
             exported_data = json.load(f)
@@ -279,4 +279,4 @@ if __name__ == "__main__":
         print(f"- Valid structure: {'[OK] Yes' if is_valid else '[Error] No'}")
         
     except Exception as e:
-        print(f"Error during reading: {e}")
+        print(f"Error during reading: {e}")
