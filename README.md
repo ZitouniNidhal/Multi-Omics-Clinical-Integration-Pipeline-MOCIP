@@ -120,5 +120,3 @@ Run available tests using Python or your preferred test runner:
 python test_final.py
 python test_pipeline_complete.py
 ```
-
-Adjust test names if you renamed the test files locally.
